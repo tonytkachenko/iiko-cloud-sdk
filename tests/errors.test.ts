@@ -52,11 +52,13 @@ describe("responseError", () => {
     const seconds = retryAfterMs(json({}, 429, { "retry-after": "2" }));
     expect(seconds).toBe(2000);
 
+    // An HTTP date carries whole seconds only, so allow one second of truncation slack.
+    const inAnHour = 3_600_000;
     const date = retryAfterMs(
-      json({}, 429, { "retry-after": new Date(Date.now() + 3000).toUTCString() }),
+      json({}, 429, { "retry-after": new Date(Date.now() + inAnHour).toUTCString() }),
     );
-    expect(date).toBeGreaterThan(2000);
-    expect(date).toBeLessThanOrEqual(3000);
+    expect(date).toBeGreaterThan(inAnHour - 1000);
+    expect(date).toBeLessThanOrEqual(inAnHour);
 
     expect(retryAfterMs(json({}, 429, { "retry-after": "nonsense" }))).toBeUndefined();
   });

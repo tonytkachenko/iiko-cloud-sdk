@@ -5,6 +5,7 @@ import {
   IikoError,
   IikoTimeoutError,
   networkError,
+  redact,
   responseError,
   retryAfterMs,
   type ErrorContext,
@@ -53,6 +54,18 @@ function pathOf(url: string): string {
   return new URL(url).pathname;
 }
 
+/**
+ * Parses JSON first so `redact` can catch secret *keys*; a raw string only hides `Bearer` values.
+ * Bodies that are not JSON are logged as strings.
+ */
+function debugBody(raw: string): unknown {
+  try {
+    return redact(JSON.parse(raw));
+  } catch {
+    return redact(raw);
+  }
+}
+
 /** Adds auth, timeout and retries on top of the injected fetch. */
 export function createFetch(options: FetchOptions): typeof fetch {
   return async (input, init) => {
@@ -78,6 +91,14 @@ export function createFetch(options: FetchOptions): typeof fetch {
     const send = (signal: AbortSignal) =>
       options.fetch(new Request(request.url, { ...init, method, headers, body, signal }));
 
+    if (options.debug) {
+      options.logger.debug("iiko: request", {
+        method,
+        path: context.endpoint,
+        ...(body === undefined ? {} : { body: debugBody(body) }),
+      });
+    }
+
     for (let attempt = 0; ; attempt++) {
       const timeoutSignal = AbortSignal.timeout(options.timeoutMs);
       const signal = callerSignal ? AbortSignal.any([callerSignal, timeoutSignal]) : timeoutSignal;
@@ -90,6 +111,15 @@ export function createFetch(options: FetchOptions): typeof fetch {
           status: response.status,
           attempt,
         });
+
+        if (options.debug && response.body !== null) {
+          options.logger.debug("iiko: response body", {
+            method,
+            path: context.endpoint,
+            status: response.status,
+            body: debugBody(await response.clone().text()),
+          });
+        }
 
         if (response.status === 401) return response;
         if (!RETRY_STATUSES.has(response.status) || !retryable || attempt >= options.maxRetries) {
