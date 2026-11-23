@@ -46385,7 +46385,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of cities. */
-            cities: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            cities: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -46454,7 +46454,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of districts. */
-            regions: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            regions: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -46779,7 +46779,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46794,7 +46794,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46809,7 +46809,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46824,7 +46824,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46839,7 +46839,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46854,7 +46854,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46869,7 +46869,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46884,7 +46884,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46899,7 +46899,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46914,7 +46914,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -47005,6 +47005,25 @@ export interface components {
         };
         /**
          *
+         * @description Additional data for credit payment item.
+         */
+        "iikoTransport.PublicApi.Contracts.Deliveries.Common.CreditPaymentAdditionalData": {
+            /**
+             * Format: uuid
+             * @description Counteragent ID.
+             *
+             *      > Allowed from version `9.2.6`.
+             */
+            counteragentId: string;
+        } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Credit";
+        });
+        /**
+         *
          * @description Delivery order statuses.
          * @enum {string}
          */
@@ -47020,7 +47039,11 @@ export interface components {
          * @description Additional data for external payment item.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Common.ExternalPaymentAdditionalData": {
-            /** @description Payment custom data. */
+            /**
+             * @description Payment custom data.
+             *
+             *      > Allowed from version `8.7.6`.
+             */
             customData: string;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
             /**
@@ -47281,8 +47304,11 @@ export interface components {
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
             payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
             /** @description Order tips components. */
@@ -47979,6 +48005,18 @@ export interface components {
         };
         /**
          *
+         * @description Credit payment (cashless payment charged to a counteragent).
+         *     Supported for delivery orders only.
+         */
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CreditPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Credit";
+        };
+        /**
+         *
          * @description Customer base info.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer": {
@@ -48110,8 +48148,11 @@ export interface components {
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
             payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
             /** @description Order tips components. */
@@ -48481,8 +48522,11 @@ export interface components {
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
             payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
             /** @description Order tips components. */
@@ -48561,6 +48605,7 @@ export interface components {
             /**
              * @deprecated
              * @description Whether the payment item is prepay. Unavailable for `paymentKindType.LoyaltyCard`.
+             *     Not supported for `paymentTypeKind.Credit`.
              *
              *      > Allowed from version `8.2.6`.
              */
@@ -48739,6 +48784,7 @@ export interface components {
             /**
              * @deprecated
              * @description Whether the payment item is prepay. Unavailable for `paymentKindType.LoyaltyCard`.
+             *     Not supported for `paymentTypeKind.Credit`.
              *
              *      > Allowed from version `8.2.6`.
              */
@@ -49227,7 +49273,12 @@ export interface components {
              * @description Order ID.
              */
             orderId: string;
-            /** @description Order payments. */
+            /**
+             * @description Order payments.
+             *     > Payment item type Credit is supported for delivery orders only.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
+             */
             payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
             /** @description Order tips. */
             tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
@@ -50295,6 +50346,8 @@ export interface components {
              *      > Allowed from version `7.7.6`.
              */
             isPrepay: boolean;
+            /** @description Additional payment parameters. Filled for payment type kind Credit. */
+            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
         };
         /**
          *
@@ -50558,6 +50611,8 @@ export interface components {
              *      > Allowed from version `7.7.6`.
              */
             isPrepay: boolean;
+            /** @description Additional payment parameters. Filled for payment type kind Credit. */
+            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
         };
         /**
          *
@@ -51227,7 +51282,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of discounts/surcharges. */
-            discounts: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            discounts: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51305,7 +51360,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of courier's locations. */
-            activeCourierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            activeCourierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51409,7 +51464,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of drivers' coordinates broken down by organizations. */
-            courierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            courierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51523,7 +51578,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of drivers. */
-            employees: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            employees: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51536,7 +51591,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of drivers. */
-            employeesWithCheckRoles: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            employeesWithCheckRoles: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -52472,6 +52527,235 @@ export interface components {
         };
         /**
          *
+         * @description Combo meal.
+         *     Consists of component groups, each group offers a choice of products.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Combo": {
+            /**
+             * Format: uuid
+             * @description Unique combo ID.
+             *     Unique within the combos[] array — each combo appears only once.
+             */
+            id: string;
+            /** @description Combo SKU. */
+            sku: string;
+            /**
+             * @description Pricing strategy.
+             *     BY_COMPONENT (default): price is composed from selected components.
+             *     FIXED: fixed combo price.
+             * @default null
+             */
+            priceStrategy: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.PriceStrategy"] | null;
+            /** @description Combo component groups (Burger, Drink, Fries, etc.). */
+            componentGroups: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentGroup"][] | null;
+            /**
+             * @description List of website tags.
+             * @default null
+             */
+            labels: string[] | null;
+            /**
+             * @description List of internal tags.
+             * @default null
+             */
+            tags: string[] | null;
+        };
+        /**
+         *
+         * @description Combo meal component group (e.g. "Burger", "Drink", "Fries").
+         *     Stored inline with original UUIDs for compatibility with external systems.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentGroup": {
+            /**
+             * Format: uuid
+             * @description Unique group ID (original UUID).
+             */
+            id: string;
+            /** @description Group name (e.g. "Drink"). */
+            name: string;
+            /**
+             * @description Whether the group is the main one (primary combo product).
+             *     The main group usually determines the combo name.
+             * @default false
+             */
+            isMainGroup: boolean;
+            /**
+             * @description Skip selection step in UI (auto-select the only/default product).
+             *     Used for mandatory components without choice.
+             * @default false
+             */
+            skipStep: boolean;
+            /**
+             * @description List of products available for selection in this group.
+             *     Contains combo-specific prices (different from retail prices).
+             * @default null
+             */
+            products: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentProduct"][] | null;
+        };
+        /**
+         *
+         * @description Product available for selection in a combo meal component group.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentProduct": {
+            /**
+             * Format: uuid
+             * @description Reference to a product from the Menu.products[] catalog.
+             */
+            productId: string;
+            /**
+             * @description Product prices in combo for different sizes.
+             *     If absent or empty — the product is not available for sale in the combo.
+             *     CRITICAL: prices differ from retail by 8-39%.
+             */
+            sizePrices: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboSizePrice"][] | null;
+            /**
+             * @description List of modifier IDs that cannot be applied to this product in a combo.
+             * @default null
+             */
+            forbiddenModifiers: string[] | null;
+            /**
+             * Format: double
+             * @description Extra charge or discount for this product within the combo (in rubles).
+             *     Positive = extra charge, negative = discount.
+             *     Depends on PriceStrategy: always 0 for BY_COMPONENT.
+             * @default 0
+             */
+            priceModificationAmount: number;
+        };
+        /**
+         *
+         * @description Combo size with visualization info.
+         *     Used in Item.sizes[] for COMBO elements.
+         *     Contains data specific to placement in a group.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboSize": {
+            /**
+             * Format: uuid
+             * @description Combo size ID.
+             *     Corresponds to product size IDs (Product.sizePrices[].sizeId).
+             */
+            sizeId: string;
+            /** @description Size name. IMPORTANT: may be an empty string "" — this is a valid value. */
+            name: string;
+            /**
+             * @description Short name (e.g. "L").
+             * @default null
+             */
+            shortName: string | null;
+            /**
+             * @description Whether this size is hidden.
+             * @default false
+             */
+            isHidden: boolean;
+            /**
+             * @deprecated
+             * @description Button image URL.
+             * @default null
+             */
+            buttonImageUrl: string | null;
+            /**
+             * @description Combo size image (placement-specific). Replaces ButtonImageUrl.
+             * @default null
+             */
+            image: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Image"] | null;
+        };
+        /**
+         *
+         * @description Product price within a combo meal for a specific size combination.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboSizePrice": {
+            /**
+             * Format: uuid
+             * @description Combo size ID (from ComboSize.sizeId).
+             */
+            comboSizeId: string;
+            /**
+             * Format: uuid
+             * @description Product size ID (from Product.sizePrices[].sizeId).
+             *     Can be null for products without a size.
+             * @default null
+             */
+            productSizeId: string | null;
+            /**
+             * Format: double
+             * @description Product price in combo for this size combination.
+             *     Can be null — the product/size is not available for sale.
+             *     Can be 0 — the component is included in the combo at no extra charge.
+             *     This is NOT a retail price (8-39% lower).
+             * @default null
+             */
+            price: number | null;
+        };
+        /**
+         *
+         * @description Conformity confirmation of the product.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Conformity": {
+            /**
+             * @description Conformity confirmation status.
+             *     Known values: `not_required`, `certification` (certificates), `declaration` (declarations),
+             *     `certification_and_declaration` (both). New values may be added.
+             *     Always present in the block.
+             */
+            status: string;
+            /**
+             * @description Certificates of conformity. Never returned as an empty array.
+             *     Default: null. Omitted from the response when status is neither `certification` nor
+             *     `certification_and_declaration`, or there are no certificates.
+             * @default null
+             */
+            certificates: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ConformityDocument"][] | null;
+            /**
+             * @description Declarations of conformity. Never returned as an empty array.
+             *     Default: null. Omitted from the response when status is neither `declaration` nor
+             *     `certification_and_declaration`, or there are no declarations.
+             * @default null
+             */
+            declarations: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ConformityDocument"][] | null;
+        };
+        /**
+         *
+         * @description Certificate or declaration of conformity.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ConformityDocument": {
+            /**
+             * @description Document number.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            number: string | null;
+            /**
+             * @description Start of validity. Expected format: `YYYY-MM-DD`.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            validFrom: string | null;
+            /**
+             * @description End of validity. Expected format: `YYYY-MM-DD`.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            validTo: string | null;
+            /**
+             * @description Link to the document. Expected format: an `http://` or `https://` URL.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            link: string | null;
+            /**
+             * @description Manufacturer stated in the document.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            manufacturer: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Manufacturer"] | null;
+            /**
+             * @description Production site addresses. Never returned as an empty array.
+             *     Default: null. Omitted from the response when no addresses.
+             * @default null
+             */
+            productionAddresses: string[] | null;
+        };
+        /**
+         *
          * @description Customer tag group.
          */
         "iikoTransport.PublicApi.Contracts.NomenclatureV3.CustomerTagGroup": {
@@ -52502,6 +52786,28 @@ export interface components {
             customerTagGroupId: string;
             /** @description Set of selected tag IDs within the group. */
             selectedTagIds: string[];
+        };
+        /**
+         *
+         * @description Unified image object.
+         *     Replaces the deprecated buttonImageUrl field across all entities.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Image": {
+            /** @description Public URL of the image in the file storage. */
+            url: string;
+            /**
+             * @description SHA-1 hash of the image file bytes.
+             *     Used for detecting changes without re-downloading.
+             * @default null
+             */
+            hash: string | null;
+            /**
+             * Format: yyyy-MM-dd HH:mm:ss.fff
+             * @description Date and time of the last image update (UTC).
+             * @default null
+             * @example 2019-08-24 14:15:22.123
+             */
+            updatedAt: string | null;
         };
         /**
          *
@@ -52564,6 +52870,24 @@ export interface components {
              * @default null
              */
             menuItemId: string | null;
+            /**
+             * @description OKPD2 product classification code.
+             *     Expected format: `NN`, `NN.N`, `NN.NN`, `NN.NN.N`, `NN.NN.NN` or `NN.NN.NN.NNN`, e.g. `10.85.19.000`.
+             *     No value is substituted if the code is not filled in.
+             *     Not returned for combo items.
+             *     Default: null. Omitted from the response when the code is not filled in.
+             * @default null
+             */
+            okpd2Code: string | null;
+            /**
+             * @description Regulatory information about the item: state registration and conformity confirmation
+             *     (certificates and declarations), returned as entered by the user.
+             *     No values are substituted: absence means "not filled in", not "not required".
+             *     Not returned for combo items.
+             *     Default: null. Omitted from the response when nothing is filled in.
+             * @default null
+             */
+            legalRequirements: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.LegalRequirements"] | null;
         };
         /**
          *
@@ -52609,6 +52933,42 @@ export interface components {
              * @default null
              */
             items: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Item"][] | null;
+        };
+        /**
+         *
+         * @description Regulatory information about the item.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.LegalRequirements": {
+            /**
+             * @description State registration of the product.
+             *     Default: null. Omitted from the response when not specified.
+             * @default null
+             */
+            stateRegistration: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.StateRegistration"] | null;
+            /**
+             * @description Conformity confirmation of the product.
+             *     Default: null. Omitted from the response when not specified.
+             * @default null
+             */
+            conformity: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Conformity"] | null;
+        };
+        /**
+         *
+         * @description Manufacturer of the product.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Manufacturer": {
+            /**
+             * @description Manufacturer name.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            name: string | null;
+            /**
+             * @description Manufacturer address.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            location: string | null;
         };
         /**
          *
@@ -52983,6 +53343,12 @@ export interface components {
         };
         /**
          *
+         * @description Combo meal pricing strategy.
+         * @enum {string}
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.PriceStrategy": "BY_COMPONENT" | "FIXED";
+        /**
+         *
          * @description Product.
          */
         "iikoTransport.PublicApi.Contracts.NomenclatureV3.Product": {
@@ -53227,6 +53593,43 @@ export interface components {
         };
         /**
          *
+         * @description State registration of the product.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.StateRegistration": {
+            /**
+             * @description State registration status.
+             *     Known values: `required` means the product is subject to state registration and registration
+             *     details are provided; `not_required` means it is not. New values may be added.
+             *     Always present in the block.
+             */
+            status: string;
+            /**
+             * @description State registration certificate number.
+             *     Default: null. Omitted from the response when status is not `required`.
+             * @default null
+             */
+            certificateNumber: string | null;
+            /**
+             * @description Link to the state registration certificate. Expected format: an `http://` or `https://` URL.
+             *     Default: null. Omitted from the response when status is not `required`.
+             * @default null
+             */
+            certificateLink: string | null;
+            /**
+             * @description Registration date. Expected format: `YYYY-MM-DD`.
+             *     Default: null. Omitted from the response when status is not `required`.
+             * @default null
+             */
+            registrationDate: string | null;
+            /**
+             * @description Product name as stated in the certificate.
+             *     Default: null. Omitted from the response when not filled in (optional even when status is `required`).
+             * @default null
+             */
+            productName: string | null;
+        };
+        /**
+         *
          * @description Tag.
          */
         "iikoTransport.PublicApi.Contracts.NomenclatureV3.TagItem": {
@@ -53402,7 +53805,12 @@ export interface components {
              *     Can be obtained by `/api/1/organizations` operation.
              */
             organizationId: string;
-            /** @description Order payments. */
+            /**
+             * @description Order payments.
+             *     > Payment item type Credit is supported for delivery orders only.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
+             */
             payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
         };
         /**
@@ -53499,7 +53907,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of order types. */
-            orderTypes: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            orderTypes: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -54074,7 +54482,12 @@ export interface components {
              *     Can be obtained by `/api/1/organizations` operation.
              */
             organizationId: string;
-            /** @description Order payments. */
+            /**
+             * @description Order payments.
+             *     > Payment item type Credit is supported for delivery orders only.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
+             */
             payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
         };
         /**
@@ -54394,8 +54807,11 @@ export interface components {
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
             payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
             /** @description Order tips components. */
@@ -55116,7 +55532,7 @@ export interface components {
              */
             correlationId: string;
             /** @description Set of out-of-stock lists */
-            terminalGroupStopLists: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            terminalGroupStopLists: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -55453,8 +55869,11 @@ export interface components {
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
             payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
             /** @description Order tips components. */
@@ -55873,13 +56292,13 @@ export interface components {
              */
             correlationId: string;
             /** @description List of terminal groups broken down by organizations. */
-            terminalGroups: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            terminalGroups: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
             /**
              * @description Terminal groups are in sleep mode because they are not active.
              *
              *     Can be awakened by `/api/1/terminal_groups/awake` operation.
              */
-            terminalGroupsInSleep: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            terminalGroupsInSleep: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *

@@ -2,7 +2,8 @@
 
 Source of requirements: `SPECS.md` (v1.0.0 scope). This plan is the execution order, not a re-statement of the spec.
 
-**Status:** P0–P9 done. 43 tests, 98.5% statements / 100% lines. Live smoke run against production with real credentials, read-only.
+**Status:** P0–P9 done. 45 tests, 98.1% statements / 99.4% lines. Live smoke run against production with real credentials, read-only.
+**Spec snapshot:** `iikoTransport` **9.9.4.2**, 417 paths, 1095 schemas, verified against `api-ru.iiko.services` on 2026-11-23.
 
 ## Locked decisions
 
@@ -33,7 +34,7 @@ Source of requirements: `SPECS.md` (v1.0.0 scope). This plan is the execution or
 
 ## Facts verified against the live spec
 
-- `GET https://api-ru.iiko.services/api-docs/docs` returns OpenAPI **3.0.4 JSON, 2.7 MB, 417 paths** — the `iiko:download` script works as written.
+- `GET https://api-ru.iiko.services/api-docs/docs` returns OpenAPI **3.0.4 JSON, 417 paths, 1095 schemas, iikoTransport 9.9.4.2** — the `iiko:download` script works as written. Regenerating from the committed document reproduces `schema.ts` byte for byte.
 - `POST /api/v2/access_token` returns `{ correlationId, token }` — **no expiry field**, so proactive refresh must read the JWT `exp` claim locally.
 - `GET /api/1/organizations` returns a simple list; `POST /api/1/organizations` accepts `{ organizationIds, ... }` → use for `getById`.
 - `POST /api/1/terminal_groups` with `{ organizationIds }` (it is a POST, not a GET).
