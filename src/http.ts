@@ -36,9 +36,6 @@ interface FetchOptions {
 const RETRY_STATUSES = new Set([408, 429, 500, 502, 503, 504]);
 const IDEMPOTENT_METHODS = new Set(["GET", "PUT", "DELETE"]);
 
-/** Set on a request to opt a POST into retries; stripped before sending. */
-export const RETRY_HEADER = "x-iiko-retry";
-
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 function retryDelay(attempt: number, retryAfter?: number): number {
@@ -72,9 +69,8 @@ export function createFetch(options: FetchOptions): typeof fetch {
 
     const headers = new Headers(request.headers);
     new Headers(init?.headers).forEach((value, key) => headers.set(key, value));
-    const retryPost = headers.get(RETRY_HEADER) === "true";
-    headers.delete(RETRY_HEADER);
-    const retryable = IDEMPOTENT_METHODS.has(method) || (method === "POST" && retryPost);
+    // POST is never retried: iiko orders and commands are not safe to replay.
+    const retryable = IDEMPOTENT_METHODS.has(method);
 
     headers.set("authorization", `Bearer ${await options.auth.getToken()}`);
     const callerSignal = request.signal;

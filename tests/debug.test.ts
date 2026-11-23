@@ -21,12 +21,14 @@ describe("debug logging", () => {
   it("logs redacted bodies only when debug is on", async () => {
     const body = { correlationId: "c", organizations: [{ id: "org-1", apiKey: "leak-me" }] };
     const off = recorder();
-    await testClient(() => json(body), { logger: off.logger }).client.organizations.list();
+    await testClient(() => json(body), {
+      logger: off.logger,
+    }).client.transport.organizations.list();
     expect(off.entries.some((entry) => entry.message.endsWith("iiko: response body"))).toBe(false);
 
     const on = recorder();
     const { client } = testClient(() => json(body), { logger: on.logger, debug: true });
-    await client.organizations.getById("org-1");
+    await client.transport.organizations.getById("org-1");
 
     const logged = JSON.stringify(on.entries);
     expect(logged).toContain("org-1");

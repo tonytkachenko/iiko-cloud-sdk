@@ -116,7 +116,7 @@ describe("redact", () => {
       { logger },
     );
 
-    const { error } = await client.organizations.list();
+    const { error } = await client.transport.organizations.list();
     expect(error).toBeInstanceOf(IikoServerError);
 
     const serialized = [

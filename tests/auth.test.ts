@@ -10,8 +10,8 @@ describe("auth", () => {
   it("adds a bearer token and reuses it", async () => {
     const { client, server, token } = testClient(() => json(organizations));
 
-    await client.organizations.list();
-    await client.organizations.list();
+    await client.transport.organizations.list();
+    await client.transport.organizations.list();
 
     expect(server.count("/api/v2/access_token")).toBe(1);
     expect(server.calls[1]?.headers.get("authorization")).toBe(`Bearer ${token}`);
@@ -21,9 +21,9 @@ describe("auth", () => {
     const { client, server } = testClient(() => json(organizations));
 
     await Promise.all([
-      client.organizations.list(),
-      client.terminals.list("org-1"),
-      client.organizations.getById("org-1"),
+      client.transport.organizations.list(),
+      client.transport.terminalGroups.list({ organizationIds: ["org-1"] }),
+      client.transport.organizations.getById("org-1"),
     ]);
 
     expect(server.count("/api/v2/access_token")).toBe(1);
@@ -37,7 +37,7 @@ describe("auth", () => {
         : json(organizations),
     );
 
-    const { data } = await client.organizations.list();
+    const { data } = await client.transport.organizations.list();
 
     expect(data?.organizations).toEqual([]);
     expect(server.count("/api/v2/access_token")).toBe(2);
@@ -58,9 +58,9 @@ describe("auth", () => {
       fetch: server.fetch,
     });
 
-    await client.organizations.list();
+    await client.transport.organizations.list();
     expect(tokenCalls).toBe(0);
-    await client.organizations.list();
+    await client.transport.organizations.list();
 
     // Both calls were inside the 60s refresh margin.
     expect(server.count("/api/v2/access_token")).toBe(2);
@@ -76,7 +76,7 @@ describe("auth", () => {
       fetch: server.fetch,
     });
 
-    const { error } = await client.organizations.list();
+    const { error } = await client.transport.organizations.list();
 
     expect(error).toBeInstanceOf(IikoAuthError);
     expect(error?.message).toBe("bad credentials");
@@ -91,7 +91,7 @@ describe("auth", () => {
       fetch: server.fetch,
     });
 
-    const { error } = await client.organizations.list();
+    const { error } = await client.transport.organizations.list();
 
     expect(error).toBeInstanceOf(IikoAuthError);
     expect(error?.message).toContain("did not contain a token");
@@ -108,7 +108,7 @@ describe("auth", () => {
       fetch: server.fetch,
     });
 
-    const { error } = await client.organizations.list();
+    const { error } = await client.transport.organizations.list();
 
     expect(error).toBeInstanceOf(IikoAuthError);
     expect(error?.message).toContain("access token endpoint");

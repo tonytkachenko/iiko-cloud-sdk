@@ -1,10 +1,22 @@
-import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { noopLogger } from "../src/logger.js";
 import { IikoNetworkError, IikoServerError, IikoTimeoutError } from "../src/errors.js";
-import { createFetch, RETRY_HEADER } from "../src/http.js";
-import { fakeServer, hang, json, testClient, type Call } from "./helpers.js";
+import { createFetch } from "../src/http.js";
+import { fakeServer, hang, json, testClient, type FakeServer } from "./helpers.js";
 
-const organizations = { correlationId: "c", organizations: [] };
+const auth = { getToken: async () => "token", invalidate() {} };
+
+function wrapped(server: FakeServer, overrides: Partial<Parameters<typeof createFetch>[0]> = {}) {
+  return createFetch({
+    fetch: server.fetch,
+    auth,
+    timeoutMs: 5000,
+    maxRetries: 2,
+    logger: noopLogger,
+    debug: false,
+    ...overrides,
+  });
+}
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -22,104 +34,88 @@ async function settle<T>(promise: Promise<T>, ms: number): Promise<T> {
 describe("retries", () => {
   it("retries a 500 on an idempotent request and succeeds", async () => {
     let calls = 0;
-    const { client, server } = testClient(() =>
-      ++calls === 1 ? json({ errorDescription: "boom" }, 500) : json(organizations),
-    );
+    const server = fakeServer(() => (++calls === 1 ? json({}, 500) : json({ ok: true })));
 
-    const result = await settle(client.organizations.list(), 1000);
+    const response = await settle(wrapped(server)("https://example.test/action"), 1000);
 
-    expect(result.data?.organizations).toEqual([]);
-    expect(server.count("/api/1/organizations")).toBe(2);
+    expect(response.status).toBe(200);
+    expect(server.calls).toHaveLength(2);
   });
 
   it("waits for Retry-After on 429", async () => {
     let calls = 0;
-    const { client, server } = testClient(() =>
-      ++calls === 1 ? json({}, 429, { "retry-after": "1" }) : json(organizations),
+    const server = fakeServer(() =>
+      ++calls === 1 ? json({}, 429, { "retry-after": "1" }) : json({ ok: true }),
     );
 
-    const promise = client.organizations.list();
+    const promise = wrapped(server)("https://example.test/action");
     await vi.advanceTimersByTimeAsync(900);
-    expect(server.count("/api/1/organizations")).toBe(1);
+    expect(server.calls).toHaveLength(1);
     await vi.advanceTimersByTimeAsync(200);
 
-    await expect(promise).resolves.toHaveProperty("data");
-    expect(server.count("/api/1/organizations")).toBe(2);
+    await expect(promise).resolves.toHaveProperty("status", 200);
+    expect(server.calls).toHaveLength(2);
   });
 
-  it("gives up after maxRetries and reports a server error", async () => {
-    const { client, server } = testClient(() => json({ errorDescription: "down" }, 503), {
-      maxRetries: 1,
-    });
+  it("gives up after maxRetries and returns the last response", async () => {
+    const server = fakeServer(() => json({ errorDescription: "down" }, 503));
 
-    const result = await settle(client.organizations.list(), 2000);
-
-    expect(result.error).toBeInstanceOf(IikoServerError);
-    expect(server.count("/api/1/organizations")).toBe(2);
-  });
-
-  it("retries network errors", async () => {
-    let calls = 0;
-    const { client, server } = testClient(() => {
-      if (++calls === 1) throw new TypeError("fetch failed");
-      return json(organizations);
-    });
-
-    const result = await settle(client.organizations.list(), 1000);
-
-    expect(result.data).toBeDefined();
-    expect(server.count("/api/1/organizations")).toBe(2);
-  });
-
-  it("reports a network error once retries are exhausted", async () => {
-    const { client } = testClient(
-      () => {
-        throw new TypeError("fetch failed");
-      },
-      { maxRetries: 0 },
+    const response = await settle(
+      wrapped(server, { maxRetries: 1 })("https://example.test/action"),
+      2000,
     );
 
-    const { error } = await client.organizations.list();
-
-    expect(error).toBeInstanceOf(IikoNetworkError);
-    expect(error?.message).toBe("Network request failed");
-    expect(error?.cause).toBeInstanceOf(TypeError);
+    expect(response.status).toBe(503);
+    expect(server.calls).toHaveLength(2);
   });
 
-  it("never retries a POST unless it opts in", async () => {
+  it("retries network errors on an idempotent request", async () => {
+    let calls = 0;
+    const server = fakeServer(() => {
+      if (++calls === 1) throw new TypeError("fetch failed");
+      return json({ ok: true });
+    });
+
+    const response = await settle(wrapped(server)("https://example.test/action"), 1000);
+
+    expect(response.status).toBe(200);
+    expect(server.calls).toHaveLength(2);
+  });
+
+  it("never retries a POST, even when it carries a retry header", async () => {
+    const server = fakeServer(() => json({ errorDescription: "boom" }, 500));
+
+    const response = await settle(
+      wrapped(server)("https://example.test/action", {
+        method: "POST",
+        headers: { "x-iiko-retry": "true" },
+      }),
+      2000,
+    );
+
+    expect(response.status).toBe(500);
+    expect(server.calls).toHaveLength(1);
+  });
+
+  it("never retries a POST after a network error", async () => {
+    const server = fakeServer(() => {
+      throw new TypeError("fetch failed");
+    });
+
+    const promise = wrapped(server)("https://example.test/action", { method: "POST" });
+    await expect(promise).rejects.toThrow("fetch failed");
+    expect(server.calls).toHaveLength(1);
+  });
+
+  it("does not retry a failed transport call", async () => {
     const { client, server } = testClient(() => json({ errorDescription: "boom" }, 500), {
       maxRetries: 2,
     });
 
-    const result = await settle(client.organizations.getById("org-1"), 2000);
+    const result = await settle(client.transport.organizations.list(), 2000);
 
     expect(result.error).toBeInstanceOf(IikoServerError);
     expect(server.count("/api/1/organizations")).toBe(1);
-  });
-
-  it("retries a POST that sets the retry header, and strips the header", async () => {
-    let calls = 0;
-    const server = fakeServer((_call: Call) =>
-      ++calls === 1 ? json({}, 500) : json({ ok: true }),
-    );
-    const wrapped = createFetch({
-      fetch: server.fetch,
-      auth: { getToken: async () => "token", invalidate() {} },
-      timeoutMs: 5000,
-      maxRetries: 1,
-      logger: noopLogger,
-      debug: false,
-    });
-
-    const promise = wrapped("https://example.test/api/action", {
-      method: "POST",
-      headers: { [RETRY_HEADER]: "true" },
-    });
-    const response = await settle(promise, 1000);
-
-    expect(response.status).toBe(200);
-    expect(server.calls).toHaveLength(2);
-    expect(server.calls[0]?.headers.get(RETRY_HEADER)).toBeNull();
   });
 });
 
@@ -128,7 +124,7 @@ describe("timeouts and cancellation", () => {
     vi.useRealTimers();
     const { client, server } = testClient((_call, signal) => hang(signal), { timeoutMs: 25 });
 
-    const { error } = await client.organizations.list();
+    const { error } = await client.transport.organizations.list();
 
     expect(error).toBeInstanceOf(IikoTimeoutError);
     expect(server.count("/api/1/organizations")).toBe(1);
@@ -139,7 +135,7 @@ describe("timeouts and cancellation", () => {
     const { client } = testClient((_call, signal) => hang(signal));
     const controller = new AbortController();
 
-    const promise = client.organizations.list(controller.signal);
+    const promise = client.transport.organizations.list(undefined, { signal: controller.signal });
     controller.abort();
 
     const { error } = await promise;

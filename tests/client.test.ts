@@ -11,16 +11,16 @@ const organizations = {
   ],
 };
 
-describe("resources", () => {
-  it("lists organizations with GET and no body", async () => {
+describe("transport", () => {
+  it("lists organizations with the documented POST and no body", async () => {
     const { client, server } = testClient(() => json(organizations));
 
-    const result = await client.organizations.list();
+    const result = await client.transport.organizations.list();
 
     expect(result.data?.organizations).toHaveLength(2);
     expect(result.error).toBeUndefined();
     const call = server.calls[1];
-    expect(call?.method).toBe("GET");
+    expect(call?.method).toBe("POST");
     expect(call?.path).toBe("/api/1/organizations");
     expect(call?.body).toBeUndefined();
   });
@@ -28,7 +28,7 @@ describe("resources", () => {
   it("fetches a single organization by id", async () => {
     const { client, server } = testClient(() => json(organizations));
 
-    const { data } = await client.organizations.getById("org-2");
+    const { data } = await client.transport.organizations.getById("org-2");
 
     expect(data?.id).toBe("org-1");
     const call = server.calls[1];
@@ -40,7 +40,7 @@ describe("resources", () => {
   it("returns undefined when the organization does not exist", async () => {
     const { client } = testClient(() => json({ correlationId: "c", organizations: [] }));
 
-    const { data } = await client.organizations.getById("missing");
+    const { data } = await client.transport.organizations.getById("missing");
 
     expect(data).toBeUndefined();
   });
@@ -50,7 +50,7 @@ describe("resources", () => {
       json({ correlationId: "c", terminalGroups: [], terminalGroupsInSleep: [] }),
     );
 
-    await client.terminals.list("org-1");
+    await client.transport.terminalGroups.list({ organizationIds: ["org-1"] });
 
     const call = server.calls[1];
     expect(call?.method).toBe("POST");
@@ -58,26 +58,21 @@ describe("resources", () => {
     expect(call?.body).toEqual({ organizationIds: ["org-1"] });
   });
 
-  it("fetches an external menu with its options", async () => {
+  it("fetches a v3 external menu", async () => {
     const { client, server } = testClient(() => json({ id: "menu" }));
 
-    await client.menu.getExternalMenu("org-1", "menu-1", { version: 2, language: "ru" });
+    await client.transport.menu.byIdV3({ organizationId: "org-1", externalMenuId: "menu-1" });
 
     const call = server.calls[1];
     expect(call?.method).toBe("POST");
-    expect(call?.path).toBe("/api/2/menu/by_id");
-    expect(call?.body).toEqual({
-      organizationIds: ["org-1"],
-      externalMenuId: "menu-1",
-      version: 2,
-      language: "ru",
-    });
+    expect(call?.path).toBe("/api/menu/v3/by_id");
+    expect(call?.body).toEqual({ organizationId: "org-1", externalMenuId: "menu-1" });
   });
 
   it("returns a typed error instead of throwing", async () => {
     const { client } = testClient(() => json({ errorDescription: "no access" }, 403));
 
-    const result = await client.terminals.list("org-1");
+    const result = await client.transport.terminalGroups.list({ organizationIds: ["org-1"] });
 
     expect(result.error).toBeInstanceOf(IikoError);
     expect(result.data).toBeUndefined();
@@ -86,7 +81,7 @@ describe("resources", () => {
   it("exposes typed results and options", async () => {
     const { client } = testClient(() => json(organizations));
 
-    const result = await client.organizations.list();
+    const result = await client.transport.organizations.list();
     expectTypeOf(result.error).toEqualTypeOf<IikoError | undefined>();
     if (result.data) expectTypeOf(result.data.organizations).toBeArray();
 
@@ -97,7 +92,7 @@ describe("resources", () => {
   it("narrows data once error is ruled out", async () => {
     const { client } = testClient(() => json(organizations));
 
-    const result = await client.organizations.list();
+    const result = await client.transport.organizations.list();
     if (result.error) {
       expectTypeOf(result.error).toEqualTypeOf<IikoError>();
       return;
@@ -136,11 +131,11 @@ describe("config", () => {
 
   it("defaults to the iikoCloud base URL and trims a trailing slash", async () => {
     const { client, server } = testClient(() => json(organizations));
-    await client.organizations.list();
+    await client.transport.organizations.list();
     expect(server.calls[1]?.url).toBe("https://api-ru.iiko.services/api/1/organizations");
 
     const custom = testClient(() => json(organizations), { baseUrl: "https://proxy.test/" });
-    await custom.client.organizations.list();
+    await custom.client.transport.organizations.list();
     expect(custom.server.calls[1]?.url).toBe("https://proxy.test/api/1/organizations");
   });
 

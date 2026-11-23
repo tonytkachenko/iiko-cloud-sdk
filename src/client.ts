@@ -1,16 +1,13 @@
 import { AuthService } from "./auth.js";
 import { resolveConfig, type IikoClientOptions } from "./config.js";
 import { HttpClient } from "./http.js";
-import { createMenuResource } from "./resources/menu.js";
-import { createOrganizationsResource } from "./resources/organizations.js";
-import { createTerminalsResource } from "./resources/terminals.js";
+import { createTransport, type Transport } from "./transport/index.js";
 
 export type { IikoClientOptions } from "./config.js";
 
 export interface IikoClient {
-  organizations: ReturnType<typeof createOrganizationsResource>;
-  terminals: ReturnType<typeof createTerminalsResource>;
-  menu: ReturnType<typeof createMenuResource>;
+  /** Every active iikoCloud Transport API operation, grouped by domain. */
+  transport: Transport;
 }
 
 /**
@@ -33,8 +30,6 @@ export function createIikoClient(options: IikoClientOptions): IikoClient {
   const http = new HttpClient(config, auth);
 
   return {
-    organizations: createOrganizationsResource(http),
-    terminals: createTerminalsResource(http),
-    menu: createMenuResource(http),
+    transport: createTransport(http),
   };
 }

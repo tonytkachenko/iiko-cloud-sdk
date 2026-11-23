@@ -12,7 +12,7 @@ const iiko = createIikoClient({
   apiKey: required("IIKO_API_KEY"),
 });
 
-const { data, error } = await iiko.organizations.list();
+const { data, error } = await iiko.transport.organizations.list();
 
 if (error) {
   // Errors are returned, not thrown. They already contain no credentials.
@@ -21,6 +21,6 @@ if (error) {
   process.exit(1);
 }
 
-for (const organization of data?.organizations ?? []) {
+for (const organization of data.organizations ?? []) {
   console.log(organization.id, organization.name);
 }
