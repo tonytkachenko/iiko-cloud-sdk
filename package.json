@@ -37,7 +37,8 @@
     "test": "vitest run --coverage",
     "iiko:download": "curl -sS -L https://api-ru.iiko.services/api-docs/docs -o src/generated/openapi.json",
     "iiko:types": "openapi-typescript src/generated/openapi.json -o src/generated/schema.ts",
-    "iiko:sync": "pnpm iiko:download && pnpm iiko:types",
+    "iiko:sync": "pnpm iiko:download && pnpm iiko:types && pnpm iiko:operations",
+    "iiko:operations": "node scripts/generate/operations.mjs",
     "changeset": "changeset",
     "live:check": "node scripts/live-check.mjs"
   },

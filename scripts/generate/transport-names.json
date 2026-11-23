@@ -1,0 +1,606 @@
+{
+  "prefixes": [
+    {
+      "prefix": "/api/1/organizations",
+      "domain": "organizations"
+    },
+    {
+      "prefix": "/api/1/terminal_groups",
+      "domain": "terminalGroups"
+    },
+    {
+      "prefix": "/api/2/menu",
+      "domain": "menu"
+    },
+    {
+      "prefix": "/api/menu/v3",
+      "domain": "menu"
+    },
+    {
+      "prefix": "/api/1/combo",
+      "domain": "menu"
+    },
+    {
+      "prefix": "/api/1/deliveries",
+      "domain": "deliveries"
+    },
+    {
+      "prefix": "/api/1/order",
+      "domain": "tableOrders"
+    },
+    {
+      "prefix": "/api/1/reserve",
+      "domain": "reserves"
+    },
+    {
+      "prefix": "/api/1/loyalty",
+      "domain": "loyalty"
+    },
+    {
+      "prefix": "/api/1/employees",
+      "domain": "employees"
+    },
+    {
+      "prefix": "/api/1/stop_lists",
+      "domain": "stopLists"
+    },
+    {
+      "prefix": "/api/1/webhooks",
+      "domain": "webhooks"
+    },
+    {
+      "prefix": "/api/1/notifications",
+      "domain": "notifications"
+    },
+    {
+      "prefix": "/api/1/commands",
+      "domain": "commands"
+    },
+    {
+      "prefix": "/api/1/regions",
+      "domain": "addresses"
+    },
+    {
+      "prefix": "/api/1/cities",
+      "domain": "addresses"
+    },
+    {
+      "prefix": "/api/1/streets",
+      "domain": "addresses"
+    },
+    {
+      "prefix": "/api/1/cancel_causes",
+      "domain": "dictionaries"
+    },
+    {
+      "prefix": "/api/1/discounts",
+      "domain": "dictionaries"
+    },
+    {
+      "prefix": "/api/1/payment_types",
+      "domain": "dictionaries"
+    },
+    {
+      "prefix": "/api/1/removal_types",
+      "domain": "dictionaries"
+    },
+    {
+      "prefix": "/api/1/tips_types",
+      "domain": "dictionaries"
+    },
+    {
+      "prefix": "/api/1/marketing_sources",
+      "domain": "dictionaries"
+    },
+    {
+      "prefix": "/api/1/delivery_restrictions",
+      "domain": "dictionaries"
+    }
+  ],
+  "operations": {
+    "/api/1/cancel_causes": {
+      "domain": "dictionaries",
+      "name": "cancelCauses"
+    },
+    "/api/1/cities": {
+      "domain": "addresses",
+      "name": "cities"
+    },
+    "/api/1/combo": {
+      "domain": "menu",
+      "name": "combos"
+    },
+    "/api/1/combo/calculate": {
+      "domain": "menu",
+      "name": "calculateCombo"
+    },
+    "/api/1/commands/status": {
+      "domain": "commands",
+      "name": "status"
+    },
+    "/api/1/deliveries/add_items": {
+      "domain": "deliveries",
+      "name": "addItems"
+    },
+    "/api/1/deliveries/add_payments": {
+      "domain": "deliveries",
+      "name": "addPayments"
+    },
+    "/api/1/deliveries/by_delivery_date_and_phone": {
+      "domain": "deliveries",
+      "name": "byDeliveryDateAndPhone"
+    },
+    "/api/1/deliveries/by_delivery_date_and_source_key_and_filter": {
+      "domain": "deliveries",
+      "name": "byDeliveryDateAndSourceKeyAndFilter"
+    },
+    "/api/1/deliveries/by_delivery_date_and_status": {
+      "domain": "deliveries",
+      "name": "byDeliveryDateAndStatus"
+    },
+    "/api/1/deliveries/by_id": {
+      "domain": "deliveries",
+      "name": "byId"
+    },
+    "/api/1/deliveries/by_revision": {
+      "domain": "deliveries",
+      "name": "byRevision"
+    },
+    "/api/1/deliveries/cancel": {
+      "domain": "deliveries",
+      "name": "cancel"
+    },
+    "/api/1/deliveries/cancel_confirmation": {
+      "domain": "deliveries",
+      "name": "cancelConfirmation"
+    },
+    "/api/1/deliveries/change_comment": {
+      "domain": "deliveries",
+      "name": "changeComment"
+    },
+    "/api/1/deliveries/change_complete_before": {
+      "domain": "deliveries",
+      "name": "changeCompleteBefore"
+    },
+    "/api/1/deliveries/change_delivery_point": {
+      "domain": "deliveries",
+      "name": "changeDeliveryPoint"
+    },
+    "/api/1/deliveries/change_driver_info": {
+      "domain": "deliveries",
+      "name": "changeDriverInfo"
+    },
+    "/api/1/deliveries/change_external_data": {
+      "domain": "deliveries",
+      "name": "changeExternalData"
+    },
+    "/api/1/deliveries/change_operator": {
+      "domain": "deliveries",
+      "name": "changeOperator"
+    },
+    "/api/1/deliveries/change_payments": {
+      "domain": "deliveries",
+      "name": "changePayments"
+    },
+    "/api/1/deliveries/change_service_type": {
+      "domain": "deliveries",
+      "name": "changeServiceType"
+    },
+    "/api/1/deliveries/close": {
+      "domain": "deliveries",
+      "name": "close"
+    },
+    "/api/1/deliveries/confirm": {
+      "domain": "deliveries",
+      "name": "confirm"
+    },
+    "/api/1/deliveries/create": {
+      "domain": "deliveries",
+      "name": "create"
+    },
+    "/api/1/deliveries/drafts/by_filter": {
+      "domain": "deliveries",
+      "name": "draftsByFilter"
+    },
+    "/api/1/deliveries/drafts/by_id": {
+      "domain": "deliveries",
+      "name": "draftsById"
+    },
+    "/api/1/deliveries/drafts/commit": {
+      "domain": "deliveries",
+      "name": "draftsCommit"
+    },
+    "/api/1/deliveries/drafts/create": {
+      "domain": "deliveries",
+      "name": "draftsCreate"
+    },
+    "/api/1/deliveries/drafts/delete": {
+      "domain": "deliveries",
+      "name": "draftsDelete"
+    },
+    "/api/1/deliveries/drafts/lock": {
+      "domain": "deliveries",
+      "name": "draftsLock"
+    },
+    "/api/1/deliveries/drafts/save": {
+      "domain": "deliveries",
+      "name": "draftsSave"
+    },
+    "/api/1/deliveries/drafts/unlock": {
+      "domain": "deliveries",
+      "name": "draftsUnlock"
+    },
+    "/api/1/deliveries/history/by_delivery_date_and_phone": {
+      "domain": "deliveries",
+      "name": "historyByDeliveryDateAndPhone"
+    },
+    "/api/1/deliveries/order_types": {
+      "domain": "deliveries",
+      "name": "orderTypes"
+    },
+    "/api/1/deliveries/print_delivery_bill": {
+      "domain": "deliveries",
+      "name": "printDeliveryBill"
+    },
+    "/api/1/deliveries/update_order_delivery_status": {
+      "domain": "deliveries",
+      "name": "updateOrderDeliveryStatus"
+    },
+    "/api/1/deliveries/update_order_problem": {
+      "domain": "deliveries",
+      "name": "updateOrderProblem"
+    },
+    "/api/1/deliveries/update_tracking_link": {
+      "domain": "deliveries",
+      "name": "updateTrackingLink"
+    },
+    "/api/1/delivery_restrictions": {
+      "domain": "dictionaries",
+      "name": "deliveryRestrictions"
+    },
+    "/api/1/delivery_restrictions/allowed": {
+      "domain": "dictionaries",
+      "name": "allowedDeliveryRestrictions"
+    },
+    "/api/1/discounts": {
+      "domain": "dictionaries",
+      "name": "discounts"
+    },
+    "/api/1/employees/couriers": {
+      "domain": "employees",
+      "name": "couriers"
+    },
+    "/api/1/employees/couriers/active_location": {
+      "domain": "employees",
+      "name": "couriersActiveLocation"
+    },
+    "/api/1/employees/couriers/active_location/by_terminal": {
+      "domain": "employees",
+      "name": "couriersActiveLocationByTerminal"
+    },
+    "/api/1/employees/couriers/by_role": {
+      "domain": "employees",
+      "name": "couriersByRole"
+    },
+    "/api/1/employees/couriers/locations/by_time_offset": {
+      "domain": "employees",
+      "name": "couriersLocationsByTimeOffset"
+    },
+    "/api/1/employees/info": {
+      "domain": "employees",
+      "name": "info"
+    },
+    "/api/1/employees/shift/clockin": {
+      "domain": "employees",
+      "name": "clockIn"
+    },
+    "/api/1/employees/shift/clockout": {
+      "domain": "employees",
+      "name": "clockOut"
+    },
+    "/api/1/employees/shift/is_open": {
+      "domain": "employees",
+      "name": "isShiftOpen"
+    },
+    "/api/1/employees/shifts/by_courier": {
+      "domain": "employees",
+      "name": "shiftsByCourier"
+    },
+    "/api/1/loyalty/iiko/calculate": {
+      "domain": "loyalty",
+      "name": "calculate"
+    },
+    "/api/1/loyalty/iiko/check_sms_sending_possibility": {
+      "domain": "loyalty",
+      "name": "checkSmsSendingPossibility"
+    },
+    "/api/1/loyalty/iiko/check_sms_status": {
+      "domain": "loyalty",
+      "name": "checkSmsStatus"
+    },
+    "/api/1/loyalty/iiko/coupons/by_series": {
+      "domain": "loyalty",
+      "name": "couponsBySeries"
+    },
+    "/api/1/loyalty/iiko/coupons/info": {
+      "domain": "loyalty",
+      "name": "couponsInfo"
+    },
+    "/api/1/loyalty/iiko/coupons/series": {
+      "domain": "loyalty",
+      "name": "couponSeries"
+    },
+    "/api/1/loyalty/iiko/customer_category": {
+      "domain": "loyalty",
+      "name": "customerCategories"
+    },
+    "/api/1/loyalty/iiko/customer_category/add": {
+      "domain": "loyalty",
+      "name": "customerCategoryAdd"
+    },
+    "/api/1/loyalty/iiko/customer_category/remove": {
+      "domain": "loyalty",
+      "name": "customerCategoryRemove"
+    },
+    "/api/1/loyalty/iiko/customer/card/add": {
+      "domain": "loyalty",
+      "name": "customerCardAdd"
+    },
+    "/api/1/loyalty/iiko/customer/card/remove": {
+      "domain": "loyalty",
+      "name": "customerCardRemove"
+    },
+    "/api/1/loyalty/iiko/customer/create_or_update": {
+      "domain": "loyalty",
+      "name": "customerCreateOrUpdate"
+    },
+    "/api/1/loyalty/iiko/customer/info": {
+      "domain": "loyalty",
+      "name": "customerInfo"
+    },
+    "/api/1/loyalty/iiko/customer/program/add": {
+      "domain": "loyalty",
+      "name": "customerProgramAdd"
+    },
+    "/api/1/loyalty/iiko/customer/transactions/by_date": {
+      "domain": "loyalty",
+      "name": "customerTransactionsByDate"
+    },
+    "/api/1/loyalty/iiko/customer/transactions/by_revision": {
+      "domain": "loyalty",
+      "name": "customerTransactionsByRevision"
+    },
+    "/api/1/loyalty/iiko/customer/wallet/cancel_hold": {
+      "domain": "loyalty",
+      "name": "customerWalletCancelHold"
+    },
+    "/api/1/loyalty/iiko/customer/wallet/chargeoff": {
+      "domain": "loyalty",
+      "name": "customerWalletChargeoff"
+    },
+    "/api/1/loyalty/iiko/customer/wallet/hold": {
+      "domain": "loyalty",
+      "name": "customerWalletHold"
+    },
+    "/api/1/loyalty/iiko/customer/wallet/topup": {
+      "domain": "loyalty",
+      "name": "customerWalletTopup"
+    },
+    "/api/1/loyalty/iiko/delete_customers": {
+      "domain": "loyalty",
+      "name": "deleteCustomers"
+    },
+    "/api/1/loyalty/iiko/get_counters": {
+      "domain": "loyalty",
+      "name": "counters"
+    },
+    "/api/1/loyalty/iiko/manual_condition": {
+      "domain": "loyalty",
+      "name": "manualConditions"
+    },
+    "/api/1/loyalty/iiko/message/send_email": {
+      "domain": "loyalty",
+      "name": "sendEmail"
+    },
+    "/api/1/loyalty/iiko/message/send_sms": {
+      "domain": "loyalty",
+      "name": "sendSms"
+    },
+    "/api/1/loyalty/iiko/program": {
+      "domain": "loyalty",
+      "name": "programs"
+    },
+    "/api/1/loyalty/iiko/restore_customers": {
+      "domain": "loyalty",
+      "name": "restoreCustomers"
+    },
+    "/api/1/marketing_sources": {
+      "domain": "dictionaries",
+      "name": "marketingSources"
+    },
+    "/api/1/notifications/send": {
+      "domain": "notifications",
+      "name": "send"
+    },
+    "/api/1/order/add_customer": {
+      "domain": "tableOrders",
+      "name": "addCustomer"
+    },
+    "/api/1/order/add_items": {
+      "domain": "tableOrders",
+      "name": "addItems"
+    },
+    "/api/1/order/add_payments": {
+      "domain": "tableOrders",
+      "name": "addPayments"
+    },
+    "/api/1/order/by_id": {
+      "domain": "tableOrders",
+      "name": "byId"
+    },
+    "/api/1/order/by_table": {
+      "domain": "tableOrders",
+      "name": "byTable"
+    },
+    "/api/1/order/cancel": {
+      "domain": "tableOrders",
+      "name": "cancel"
+    },
+    "/api/1/order/change_external_data": {
+      "domain": "tableOrders",
+      "name": "changeExternalData"
+    },
+    "/api/1/order/change_payments": {
+      "domain": "tableOrders",
+      "name": "changePayments"
+    },
+    "/api/1/order/close": {
+      "domain": "tableOrders",
+      "name": "close"
+    },
+    "/api/1/order/create": {
+      "domain": "tableOrders",
+      "name": "create"
+    },
+    "/api/1/order/init_by_posOrder": {
+      "domain": "tableOrders",
+      "name": "initByPosOrder"
+    },
+    "/api/1/order/init_by_table": {
+      "domain": "tableOrders",
+      "name": "initByTable"
+    },
+    "/api/1/order/print_bill": {
+      "domain": "tableOrders",
+      "name": "printBill"
+    },
+    "/api/1/organizations": {
+      "domain": "organizations",
+      "name": "list"
+    },
+    "/api/1/organizations/settings": {
+      "domain": "organizations",
+      "name": "settings"
+    },
+    "/api/1/payment_types": {
+      "domain": "dictionaries",
+      "name": "paymentTypes"
+    },
+    "/api/1/regions": {
+      "domain": "addresses",
+      "name": "regions"
+    },
+    "/api/1/removal_types": {
+      "domain": "dictionaries",
+      "name": "removalTypes"
+    },
+    "/api/1/reserve/add_items": {
+      "domain": "reserves",
+      "name": "addItems"
+    },
+    "/api/1/reserve/add_payments": {
+      "domain": "reserves",
+      "name": "addPayments"
+    },
+    "/api/1/reserve/available_organizations": {
+      "domain": "reserves",
+      "name": "availableOrganizations"
+    },
+    "/api/1/reserve/available_restaurant_sections": {
+      "domain": "reserves",
+      "name": "availableRestaurantSections"
+    },
+    "/api/1/reserve/available_terminal_groups": {
+      "domain": "reserves",
+      "name": "availableTerminalGroups"
+    },
+    "/api/1/reserve/cancel": {
+      "domain": "reserves",
+      "name": "cancel"
+    },
+    "/api/1/reserve/change_estimated_start_time": {
+      "domain": "reserves",
+      "name": "changeEstimatedStartTime"
+    },
+    "/api/1/reserve/change_items": {
+      "domain": "reserves",
+      "name": "changeItems"
+    },
+    "/api/1/reserve/change_tables": {
+      "domain": "reserves",
+      "name": "changeTables"
+    },
+    "/api/1/reserve/create": {
+      "domain": "reserves",
+      "name": "create"
+    },
+    "/api/1/reserve/restaurant_sections_workload": {
+      "domain": "reserves",
+      "name": "restaurantSectionsWorkload"
+    },
+    "/api/1/reserve/status_by_id": {
+      "domain": "reserves",
+      "name": "statusById"
+    },
+    "/api/1/stop_lists": {
+      "domain": "stopLists",
+      "name": "list"
+    },
+    "/api/1/stop_lists/add": {
+      "domain": "stopLists",
+      "name": "add"
+    },
+    "/api/1/stop_lists/check": {
+      "domain": "stopLists",
+      "name": "check"
+    },
+    "/api/1/stop_lists/clear": {
+      "domain": "stopLists",
+      "name": "clear"
+    },
+    "/api/1/stop_lists/remove": {
+      "domain": "stopLists",
+      "name": "remove"
+    },
+    "/api/1/streets/by_city": {
+      "domain": "addresses",
+      "name": "streetsByCity"
+    },
+    "/api/1/streets/by_id": {
+      "domain": "addresses",
+      "name": "streetsById"
+    },
+    "/api/1/terminal_groups": {
+      "domain": "terminalGroups",
+      "name": "list"
+    },
+    "/api/1/terminal_groups/awake": {
+      "domain": "terminalGroups",
+      "name": "awake"
+    },
+    "/api/1/terminal_groups/is_alive": {
+      "domain": "terminalGroups",
+      "name": "isAlive"
+    },
+    "/api/1/tips_types": {
+      "domain": "dictionaries",
+      "name": "tipsTypes"
+    },
+    "/api/1/webhooks/settings": {
+      "domain": "webhooks",
+      "name": "settings"
+    },
+    "/api/1/webhooks/update_settings": {
+      "domain": "webhooks",
+      "name": "updateSettings"
+    },
+    "/api/2/menu": {
+      "domain": "menu",
+      "name": "externalMenus"
+    },
+    "/api/menu/v3/by_id": {
+      "domain": "menu",
+      "name": "byIdV3"
+    }
+  }
+}

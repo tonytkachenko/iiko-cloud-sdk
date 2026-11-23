@@ -1,6 +1,12 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "import", "unicorn", "oxc", "vitest"],
+  "plugins": [
+    "typescript",
+    "import",
+    "unicorn",
+    "oxc",
+    "vitest"
+  ],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
@@ -10,7 +16,12 @@
     "node": true,
     "es2024": true
   },
-  "ignorePatterns": ["src/generated/**", "dist/**", "coverage/**"],
+  "ignorePatterns": [
+    "src/generated/**",
+    "dist/**",
+    "coverage/**",
+    "src/transport/generated/**"
+  ],
   "rules": {
     "no-await-in-loop": "off"
   }
