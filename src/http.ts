@@ -196,9 +196,8 @@ export class HttpClient {
         return { error: responseError(result.response, result.error, context) };
       }
 
-      // `openapi-fetch` types `data` as optional, but a successful response carries one
-      // except `/api/1/deliveries/update_tracking_link`, documented as an empty 200.
-      // That one operation hands callers `undefined` while `T` says otherwise.
+      // `openapi-fetch` marks `data` optional on every response. After `response.ok`
+      // it is present, except for the documented empty 200, where `T` is `void`.
       return { data: result.data as T };
     } catch (error) {
       return { error: networkError(error, context) };
