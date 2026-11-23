@@ -13,10 +13,7 @@ import {
 import type { ILogger } from "./logger.js";
 import type { paths } from "./generated/schema.js";
 
-export interface IikoResult<T> {
-  data?: T;
-  error?: IikoError;
-}
+export type IikoResult<T> = { data: T; error?: never } | { data?: never; error: IikoError };
 
 export interface HttpContext {
   method: string;
@@ -199,7 +196,10 @@ export class HttpClient {
         return { error: responseError(result.response, result.error, context) };
       }
 
-      return { data: result.data };
+      // `openapi-fetch` types `data` as optional, but a successful response carries one
+      // except `/api/1/deliveries/update_tracking_link`, documented as an empty 200.
+      // That one operation hands callers `undefined` while `T` says otherwise.
+      return { data: result.data as T };
     } catch (error) {
       return { error: networkError(error, context) };
     }

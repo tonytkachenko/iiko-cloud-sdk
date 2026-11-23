@@ -1,4 +1,4 @@
-import { createIikoClient } from "@toniq/iiko-cloud-sdk";
+import { createIikoClient } from "iiko-cloud-sdk";
 
 function required(name: string): string {
   const value = process.env[name];

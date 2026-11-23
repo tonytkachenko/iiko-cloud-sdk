@@ -12,7 +12,7 @@
     "noEmit": true,
     "types": ["node"],
     "paths": {
-      "@toniq/iiko-cloud-sdk": ["./src/index.ts"]
+      "iiko-cloud-sdk": ["./src/index.ts"]
     }
   },
   "include": ["src", "tests", "examples"]

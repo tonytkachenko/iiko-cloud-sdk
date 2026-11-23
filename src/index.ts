@@ -1,5 +1,6 @@
 export { createIikoClient } from "./client.js";
 export type { IikoClient, IikoClientOptions } from "./client.js";
+export type { IikoResult } from "./http.js";
 
 export {
   IikoError,

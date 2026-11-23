@@ -93,6 +93,20 @@ describe("resources", () => {
     expectTypeOf(createIikoClient).parameter(0).toHaveProperty("clientSecret");
     expectTypeOf<IikoServerError>().toMatchTypeOf<IikoError>();
   });
+
+  it("narrows data once error is ruled out", async () => {
+    const { client } = testClient(() => json(organizations));
+
+    const result = await client.organizations.list();
+    if (result.error) {
+      expectTypeOf(result.error).toEqualTypeOf<IikoError>();
+      return;
+    }
+
+    // No `!` and no helper: without an error the payload is present by construction.
+    expectTypeOf(result.data).not.toBeUndefined();
+    expect(result.data.organizations).toHaveLength(2);
+  });
 });
 
 describe("config", () => {
