@@ -157,6 +157,8 @@ const oneLine = (text) =>
 const factoryName = (domain) => `create${domain[0].toUpperCase()}${domain.slice(1)}Resource`;
 const fileOf = (domain) => domain.replace(/([A-Z])/g, "-$1").toLowerCase();
 
+// The directory is generated end to end, so a removed domain cannot leave a stale module.
+fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
 const domains = new Map();
@@ -227,6 +229,34 @@ const index = [
   "",
 ].join("\n");
 fs.writeFileSync(path.join(outDir, "index.ts"), index);
+
+/** Exports every schema under a documented prefix, named by its suffix. */
+const aliases = new Map();
+for (const { prefix } of table.types ?? []) {
+  const keys = Object.keys(spec.components.schemas).filter((key) => key.startsWith(`${prefix}.`));
+  if (keys.length === 0) fail(`No schemas under the type prefix: ${prefix}`);
+  for (const key of keys) {
+    const alias = key.slice(prefix.length + 1);
+    if (!/^[A-Za-z_$][\w$]*$/.test(alias)) fail(`Not a usable type name: ${alias} (${key})`);
+    if (aliases.has(alias)) fail(`Duplicate type alias ${alias}: ${aliases.get(alias)} and ${key}`);
+    aliases.set(alias, key);
+  }
+}
+
+if (aliases.size > 0) {
+  const source = [
+    HEADER,
+    'import type { components } from "../../generated/schema.js";',
+    "",
+    ...[...aliases]
+      .toSorted(([a], [b]) => a.localeCompare(b))
+      .map(
+        ([alias, key]) => `export type ${alias} = components["schemas"][${JSON.stringify(key)}];`,
+      ),
+    "",
+  ].join("\n");
+  fs.writeFileSync(path.join(outDir, "types.ts"), source);
+}
 
 console.log(
   written

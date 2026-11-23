@@ -97,6 +97,11 @@
       "domain": "dictionaries"
     }
   ],
+  "types": [
+    {
+      "prefix": "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder"
+    }
+  ],
   "operations": {
     "/api/1/cancel_causes": {
       "domain": "dictionaries",

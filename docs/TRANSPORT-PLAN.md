@@ -116,7 +116,7 @@
    - `organizations.getById(id)`: `POST /api/1/organizations`, первый элемент или `undefined`.
    - `commands.waitFor(correlationId, opts)` — только если ревью признает нужным. По умолчанию нет.
 3. `src/client.ts`: `IikoClient` = `{ transport }`. Старые `organizations`, `terminals`, `menu`, `raw` удалить.
-4. `src/index.ts`: `createIikoClient`, `IikoClient`, `IikoClientOptions`, ошибки, `ILogger`, `IikoResult`. Ничего из `generated/`.
+4. `src/index.ts`: `createIikoClient`, `IikoClient`, `IikoClientOptions`, ошибки, `ILogger`, `IikoResult`, `JsonBody`, `SuccessBody`, `CallOptions` и типы из `src/transport/generated/types.ts`. Сгенерированные доменные модули не экспортируются.
 
 Готово, когда: typecheck зелёный, `iiko.transport` содержит 126 методов, `src/index.ts` не экспортирует сгенерированное.
 

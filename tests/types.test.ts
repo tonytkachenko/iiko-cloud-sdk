@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from "vitest";
-import type { JsonBody, SuccessBody } from "../src/operation.js";
-import type { OrderItem, ProductOrderItem } from "../src/types.js";
+import type { JsonBody, SuccessBody } from "../src/index.js";
+import type { OrderItem, ProductOrderItem } from "../src/index.js";
 
 type CreateOrderBody = JsonBody<"/api/1/deliveries/create", "post">;
 type CreateOrderItem = CreateOrderBody["order"]["items"][number];
