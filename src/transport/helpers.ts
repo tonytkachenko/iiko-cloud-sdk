@@ -16,16 +16,17 @@ export function withHelpers(transport: GeneratedTransport) {
        * Finds one organization by ID.
        *
        * iiko has no by-id operation: this asks the list endpoint for one ID and
-       * returns the single match.
+       * returns the single match. Throws the same typed errors as any call.
        *
        * @param id Organization UUID.
        * @param signal Cancels the request.
-       * @returns `data` is the organization, or `undefined` when no match exists.
        */
       async getById(id: string, signal?: AbortSignal) {
-        const result = await transport.organizations.list({ organizationIds: [id] }, { signal });
-        if (result.error) return { error: result.error };
-        return { data: result.data.organizations?.[0] };
+        const { organizations } = await transport.organizations.list(
+          { organizationIds: [id] },
+          { signal },
+        );
+        return organizations?.[0];
       },
     },
   };

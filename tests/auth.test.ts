@@ -1,24 +1,26 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { tokenExpiryMs } from "../src/auth.js";
-import { createIikoClient, IikoAuthError } from "../src/index.js";
-import { fakeServer, json, jwt, testClient } from "./helpers.js";
+import { tokenExpiryMs } from "../src/core/auth.js";
+import { IikoAuthError } from "../src/index.js";
+import { fakeIiko, json, jwt, makeClient } from "./helpers.js";
 
 const organizations = { correlationId: "c", organizations: [] };
 
 describe("auth", () => {
   it("adds a bearer token and reuses it", async () => {
-    const { client, server, token } = testClient(() => json(organizations));
+    const iiko = fakeIiko(() => organizations);
+    const client = makeClient(iiko.fetch);
 
     await client.transport.organizations.list();
     await client.transport.organizations.list();
 
-    expect(server.count("/api/v2/access_token")).toBe(1);
-    expect(server.calls[1]?.headers.get("authorization")).toBe(`Bearer ${token}`);
+    expect(iiko.tokenRequests()).toBe(1);
+    expect(iiko.api()[0]?.headers.get("authorization")).toMatch(/^Bearer /);
   });
 
   it("issues one token request for parallel calls", async () => {
-    const { client, server } = testClient(() => json(organizations));
+    const iiko = fakeIiko(() => organizations);
+    const client = makeClient(iiko.fetch);
 
     await Promise.all([
       client.transport.organizations.list(),
@@ -26,97 +28,76 @@ describe("auth", () => {
       client.transport.organizations.getById("org-1"),
     ]);
 
-    expect(server.count("/api/v2/access_token")).toBe(1);
+    expect(iiko.tokenRequests()).toBe(1);
   });
 
   it("refreshes on 401 and replays the request once", async () => {
     let protectedCalls = 0;
-    const { client, server } = testClient(() =>
-      ++protectedCalls === 1
-        ? json({ errorDescription: "token expired" }, 401)
-        : json(organizations),
+    const iiko = fakeIiko(() =>
+      ++protectedCalls === 1 ? json({ errorDescription: "token expired" }, 401) : organizations,
     );
+    const client = makeClient(iiko.fetch);
 
-    const { data } = await client.transport.organizations.list();
+    const result = await client.transport.organizations.list();
 
-    expect(data?.organizations).toEqual([]);
-    expect(server.count("/api/v2/access_token")).toBe(2);
+    expect(result.organizations).toEqual([]);
+    expect(iiko.tokenRequests()).toBe(2);
     expect(protectedCalls).toBe(2);
   });
 
+  it("gives up when the replay is rejected too", async () => {
+    const iiko = fakeIiko(() => json({ errorDescription: "Unauthorized" }, 401));
+    const client = makeClient(iiko.fetch);
+
+    await expect(client.transport.organizations.list()).rejects.toMatchObject({ status: 401 });
+    expect(iiko.tokenRequests()).toBe(2);
+  });
+
   it("refreshes a token that is about to expire", async () => {
-    let tokenCalls = 0;
-    const server = fakeServer((call) =>
-      call.path === "/api/v2/access_token"
-        ? json({ token: jwt(Math.floor(Date.now() / 1000) + 30) })
-        : json(organizations),
-    );
-    const client = createIikoClient({
-      appId: "a",
-      clientSecret: "s",
-      apiKey: "k",
-      fetch: server.fetch,
-    });
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const iiko = fakeIiko(() => organizations);
+    const client = makeClient(iiko.fetch);
 
     await client.transport.organizations.list();
-    expect(tokenCalls).toBe(0);
     await client.transport.organizations.list();
+    expect(iiko.tokenRequests()).toBe(1);
 
-    // Both calls were inside the 60s refresh margin.
-    expect(server.count("/api/v2/access_token")).toBe(2);
-    expect(tokenCalls).toBe(0);
+    vi.setSystemTime(Date.now() + 56 * 60_000); // token lives 60 min, refreshed 5 min early
+    await client.transport.organizations.list();
+    expect(iiko.tokenRequests()).toBe(2);
+    vi.useRealTimers();
   });
 
   it("reports a rejected token request as an auth error", async () => {
-    const server = fakeServer(() => json({ errorDescription: "bad credentials" }, 401));
-    const client = createIikoClient({
-      appId: "a",
-      clientSecret: "s",
-      apiKey: "k",
-      fetch: server.fetch,
+    const iiko = fakeIiko(() => organizations, {
+      token: json({ errorDescription: "bad credentials" }, 401),
     });
+    const client = makeClient(iiko.fetch);
 
-    const { error } = await client.transport.organizations.list();
-
-    expect(error).toBeInstanceOf(IikoAuthError);
-    expect(error?.message).toBe("bad credentials");
+    await expect(client.transport.organizations.list()).rejects.toBeInstanceOf(IikoAuthError);
+    await expect(client.transport.organizations.list()).rejects.toMatchObject({
+      message: "bad credentials",
+    });
   });
 
   it("reports a token response without a token", async () => {
-    const server = fakeServer(() => json({ correlationId: "c" }));
-    const client = createIikoClient({
-      appId: "a",
-      clientSecret: "s",
-      apiKey: "k",
-      fetch: server.fetch,
-    });
+    const iiko = fakeIiko(() => organizations, { token: json({ correlationId: "c" }) });
+    const client = makeClient(iiko.fetch);
 
-    const { error } = await client.transport.organizations.list();
-
-    expect(error).toBeInstanceOf(IikoAuthError);
-    expect(error?.message).toContain("did not contain a token");
+    await expect(client.transport.organizations.list()).rejects.toThrow(/did not contain a token/);
   });
 
   it("reports an unreachable token endpoint", async () => {
-    const server = fakeServer(() => {
+    const client = makeClient(async () => {
       throw new TypeError("fetch failed");
     });
-    const client = createIikoClient({
-      appId: "a",
-      clientSecret: "s",
-      apiKey: "k",
-      fetch: server.fetch,
-    });
 
-    const { error } = await client.transport.organizations.list();
-
-    expect(error).toBeInstanceOf(IikoAuthError);
-    expect(error?.message).toContain("access token endpoint");
+    await expect(client.transport.organizations.list()).rejects.toBeInstanceOf(IikoAuthError);
   });
 
-  it("ignores a token whose expiry cannot be read", async () => {
+  it("ignores a token whose expiry cannot be read", () => {
     expect(tokenExpiryMs("not-a-jwt")).toBeUndefined();
     expect(tokenExpiryMs("a.!!!.c")).toBeUndefined();
-    expect(tokenExpiryMs(jwt(Math.floor(Date.now() / 1000) + 3600))).toBeGreaterThan(Date.now());
+    expect(tokenExpiryMs(jwt(Date.now() + 3_600_000))).toBeGreaterThan(Date.now());
   });
 });

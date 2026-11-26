@@ -2114,7 +2114,7 @@ export const OPERATIONS = [
     method: "cities",
     typeName: "AddressesCities",
     path: "/api/1/cities",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2123,7 +2123,7 @@ export const OPERATIONS = [
     method: "regions",
     typeName: "AddressesRegions",
     path: "/api/1/regions",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2132,7 +2132,7 @@ export const OPERATIONS = [
     method: "streetsByCity",
     typeName: "AddressesStreetsByCity",
     path: "/api/1/streets/by_city",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2141,7 +2141,7 @@ export const OPERATIONS = [
     method: "streetsById",
     typeName: "AddressesStreetsById",
     path: "/api/1/streets/by_id",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2150,7 +2150,7 @@ export const OPERATIONS = [
     method: "status",
     typeName: "CommandsStatus",
     path: "/api/1/commands/status",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2159,7 +2159,7 @@ export const OPERATIONS = [
     method: "addItems",
     typeName: "DeliveriesAddItems",
     path: "/api/1/deliveries/add_items",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2168,7 +2168,7 @@ export const OPERATIONS = [
     method: "addPayments",
     typeName: "DeliveriesAddPayments",
     path: "/api/1/deliveries/add_payments",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2177,7 +2177,7 @@ export const OPERATIONS = [
     method: "byDeliveryDateAndPhone",
     typeName: "DeliveriesByDeliveryDateAndPhone",
     path: "/api/1/deliveries/by_delivery_date_and_phone",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2186,7 +2186,7 @@ export const OPERATIONS = [
     method: "byDeliveryDateAndSourceKeyAndFilter",
     typeName: "DeliveriesByDeliveryDateAndSourceKeyAndFilter",
     path: "/api/1/deliveries/by_delivery_date_and_source_key_and_filter",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2195,7 +2195,7 @@ export const OPERATIONS = [
     method: "byDeliveryDateAndStatus",
     typeName: "DeliveriesByDeliveryDateAndStatus",
     path: "/api/1/deliveries/by_delivery_date_and_status",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2204,7 +2204,7 @@ export const OPERATIONS = [
     method: "byId",
     typeName: "DeliveriesById",
     path: "/api/1/deliveries/by_id",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2213,7 +2213,7 @@ export const OPERATIONS = [
     method: "byRevision",
     typeName: "DeliveriesByRevision",
     path: "/api/1/deliveries/by_revision",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2222,7 +2222,7 @@ export const OPERATIONS = [
     method: "cancel",
     typeName: "DeliveriesCancel",
     path: "/api/1/deliveries/cancel",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2231,7 +2231,7 @@ export const OPERATIONS = [
     method: "cancelConfirmation",
     typeName: "DeliveriesCancelConfirmation",
     path: "/api/1/deliveries/cancel_confirmation",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2240,7 +2240,7 @@ export const OPERATIONS = [
     method: "changeComment",
     typeName: "DeliveriesChangeComment",
     path: "/api/1/deliveries/change_comment",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2249,7 +2249,7 @@ export const OPERATIONS = [
     method: "changeCompleteBefore",
     typeName: "DeliveriesChangeCompleteBefore",
     path: "/api/1/deliveries/change_complete_before",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2258,7 +2258,7 @@ export const OPERATIONS = [
     method: "changeDeliveryPoint",
     typeName: "DeliveriesChangeDeliveryPoint",
     path: "/api/1/deliveries/change_delivery_point",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2267,7 +2267,7 @@ export const OPERATIONS = [
     method: "changeDriverInfo",
     typeName: "DeliveriesChangeDriverInfo",
     path: "/api/1/deliveries/change_driver_info",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2276,7 +2276,7 @@ export const OPERATIONS = [
     method: "changeExternalData",
     typeName: "DeliveriesChangeExternalData",
     path: "/api/1/deliveries/change_external_data",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2285,7 +2285,7 @@ export const OPERATIONS = [
     method: "changeOperator",
     typeName: "DeliveriesChangeOperator",
     path: "/api/1/deliveries/change_operator",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2294,7 +2294,7 @@ export const OPERATIONS = [
     method: "changePayments",
     typeName: "DeliveriesChangePayments",
     path: "/api/1/deliveries/change_payments",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2303,7 +2303,7 @@ export const OPERATIONS = [
     method: "changeServiceType",
     typeName: "DeliveriesChangeServiceType",
     path: "/api/1/deliveries/change_service_type",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2312,7 +2312,7 @@ export const OPERATIONS = [
     method: "close",
     typeName: "DeliveriesClose",
     path: "/api/1/deliveries/close",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2321,7 +2321,7 @@ export const OPERATIONS = [
     method: "confirm",
     typeName: "DeliveriesConfirm",
     path: "/api/1/deliveries/confirm",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2330,7 +2330,7 @@ export const OPERATIONS = [
     method: "create",
     typeName: "DeliveriesCreate",
     path: "/api/1/deliveries/create",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2339,7 +2339,7 @@ export const OPERATIONS = [
     method: "draftsByFilter",
     typeName: "DeliveriesDraftsByFilter",
     path: "/api/1/deliveries/drafts/by_filter",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2348,7 +2348,7 @@ export const OPERATIONS = [
     method: "draftsById",
     typeName: "DeliveriesDraftsById",
     path: "/api/1/deliveries/drafts/by_id",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2357,7 +2357,7 @@ export const OPERATIONS = [
     method: "draftsCommit",
     typeName: "DeliveriesDraftsCommit",
     path: "/api/1/deliveries/drafts/commit",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2366,7 +2366,7 @@ export const OPERATIONS = [
     method: "draftsCreate",
     typeName: "DeliveriesDraftsCreate",
     path: "/api/1/deliveries/drafts/create",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2375,7 +2375,7 @@ export const OPERATIONS = [
     method: "draftsDelete",
     typeName: "DeliveriesDraftsDelete",
     path: "/api/1/deliveries/drafts/delete",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2384,7 +2384,7 @@ export const OPERATIONS = [
     method: "draftsLock",
     typeName: "DeliveriesDraftsLock",
     path: "/api/1/deliveries/drafts/lock",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2393,7 +2393,7 @@ export const OPERATIONS = [
     method: "draftsSave",
     typeName: "DeliveriesDraftsSave",
     path: "/api/1/deliveries/drafts/save",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2402,7 +2402,7 @@ export const OPERATIONS = [
     method: "draftsUnlock",
     typeName: "DeliveriesDraftsUnlock",
     path: "/api/1/deliveries/drafts/unlock",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2411,7 +2411,7 @@ export const OPERATIONS = [
     method: "historyByDeliveryDateAndPhone",
     typeName: "DeliveriesHistoryByDeliveryDateAndPhone",
     path: "/api/1/deliveries/history/by_delivery_date_and_phone",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2420,7 +2420,7 @@ export const OPERATIONS = [
     method: "orderTypes",
     typeName: "DeliveriesOrderTypes",
     path: "/api/1/deliveries/order_types",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2429,7 +2429,7 @@ export const OPERATIONS = [
     method: "printDeliveryBill",
     typeName: "DeliveriesPrintDeliveryBill",
     path: "/api/1/deliveries/print_delivery_bill",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2438,7 +2438,7 @@ export const OPERATIONS = [
     method: "updateOrderDeliveryStatus",
     typeName: "DeliveriesUpdateOrderDeliveryStatus",
     path: "/api/1/deliveries/update_order_delivery_status",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2447,7 +2447,7 @@ export const OPERATIONS = [
     method: "updateOrderProblem",
     typeName: "DeliveriesUpdateOrderProblem",
     path: "/api/1/deliveries/update_order_problem",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2456,7 +2456,7 @@ export const OPERATIONS = [
     method: "updateTrackingLink",
     typeName: "DeliveriesUpdateTrackingLink",
     path: "/api/1/deliveries/update_tracking_link",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2465,7 +2465,7 @@ export const OPERATIONS = [
     method: "allowedDeliveryRestrictions",
     typeName: "DictionariesAllowedDeliveryRestrictions",
     path: "/api/1/delivery_restrictions/allowed",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2474,7 +2474,7 @@ export const OPERATIONS = [
     method: "cancelCauses",
     typeName: "DictionariesCancelCauses",
     path: "/api/1/cancel_causes",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2483,7 +2483,7 @@ export const OPERATIONS = [
     method: "deliveryRestrictions",
     typeName: "DictionariesDeliveryRestrictions",
     path: "/api/1/delivery_restrictions",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2492,7 +2492,7 @@ export const OPERATIONS = [
     method: "discounts",
     typeName: "DictionariesDiscounts",
     path: "/api/1/discounts",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2501,7 +2501,7 @@ export const OPERATIONS = [
     method: "marketingSources",
     typeName: "DictionariesMarketingSources",
     path: "/api/1/marketing_sources",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2510,7 +2510,7 @@ export const OPERATIONS = [
     method: "paymentTypes",
     typeName: "DictionariesPaymentTypes",
     path: "/api/1/payment_types",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2519,7 +2519,7 @@ export const OPERATIONS = [
     method: "removalTypes",
     typeName: "DictionariesRemovalTypes",
     path: "/api/1/removal_types",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2537,7 +2537,7 @@ export const OPERATIONS = [
     method: "clockIn",
     typeName: "EmployeesClockIn",
     path: "/api/1/employees/shift/clockin",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2546,7 +2546,7 @@ export const OPERATIONS = [
     method: "clockOut",
     typeName: "EmployeesClockOut",
     path: "/api/1/employees/shift/clockout",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2555,7 +2555,7 @@ export const OPERATIONS = [
     method: "couriers",
     typeName: "EmployeesCouriers",
     path: "/api/1/employees/couriers",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2564,7 +2564,7 @@ export const OPERATIONS = [
     method: "couriersActiveLocation",
     typeName: "EmployeesCouriersActiveLocation",
     path: "/api/1/employees/couriers/active_location",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2573,7 +2573,7 @@ export const OPERATIONS = [
     method: "couriersActiveLocationByTerminal",
     typeName: "EmployeesCouriersActiveLocationByTerminal",
     path: "/api/1/employees/couriers/active_location/by_terminal",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2582,7 +2582,7 @@ export const OPERATIONS = [
     method: "couriersByRole",
     typeName: "EmployeesCouriersByRole",
     path: "/api/1/employees/couriers/by_role",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2591,7 +2591,7 @@ export const OPERATIONS = [
     method: "couriersLocationsByTimeOffset",
     typeName: "EmployeesCouriersLocationsByTimeOffset",
     path: "/api/1/employees/couriers/locations/by_time_offset",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2600,7 +2600,7 @@ export const OPERATIONS = [
     method: "info",
     typeName: "EmployeesInfo",
     path: "/api/1/employees/info",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2609,7 +2609,7 @@ export const OPERATIONS = [
     method: "isShiftOpen",
     typeName: "EmployeesIsShiftOpen",
     path: "/api/1/employees/shift/is_open",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2618,7 +2618,7 @@ export const OPERATIONS = [
     method: "shiftsByCourier",
     typeName: "EmployeesShiftsByCourier",
     path: "/api/1/employees/shifts/by_courier",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2627,7 +2627,7 @@ export const OPERATIONS = [
     method: "calculate",
     typeName: "LoyaltyCalculate",
     path: "/api/1/loyalty/iiko/calculate",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2636,7 +2636,7 @@ export const OPERATIONS = [
     method: "checkSmsSendingPossibility",
     typeName: "LoyaltyCheckSmsSendingPossibility",
     path: "/api/1/loyalty/iiko/check_sms_sending_possibility",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2645,7 +2645,7 @@ export const OPERATIONS = [
     method: "checkSmsStatus",
     typeName: "LoyaltyCheckSmsStatus",
     path: "/api/1/loyalty/iiko/check_sms_status",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2654,7 +2654,7 @@ export const OPERATIONS = [
     method: "counters",
     typeName: "LoyaltyCounters",
     path: "/api/1/loyalty/iiko/get_counters",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2663,7 +2663,7 @@ export const OPERATIONS = [
     method: "couponsBySeries",
     typeName: "LoyaltyCouponsBySeries",
     path: "/api/1/loyalty/iiko/coupons/by_series",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2672,7 +2672,7 @@ export const OPERATIONS = [
     method: "couponSeries",
     typeName: "LoyaltyCouponSeries",
     path: "/api/1/loyalty/iiko/coupons/series",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2681,7 +2681,7 @@ export const OPERATIONS = [
     method: "couponsInfo",
     typeName: "LoyaltyCouponsInfo",
     path: "/api/1/loyalty/iiko/coupons/info",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2690,7 +2690,7 @@ export const OPERATIONS = [
     method: "customerCardAdd",
     typeName: "LoyaltyCustomerCardAdd",
     path: "/api/1/loyalty/iiko/customer/card/add",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2699,7 +2699,7 @@ export const OPERATIONS = [
     method: "customerCardRemove",
     typeName: "LoyaltyCustomerCardRemove",
     path: "/api/1/loyalty/iiko/customer/card/remove",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2708,7 +2708,7 @@ export const OPERATIONS = [
     method: "customerCategories",
     typeName: "LoyaltyCustomerCategories",
     path: "/api/1/loyalty/iiko/customer_category",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2717,7 +2717,7 @@ export const OPERATIONS = [
     method: "customerCategoryAdd",
     typeName: "LoyaltyCustomerCategoryAdd",
     path: "/api/1/loyalty/iiko/customer_category/add",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2726,7 +2726,7 @@ export const OPERATIONS = [
     method: "customerCategoryRemove",
     typeName: "LoyaltyCustomerCategoryRemove",
     path: "/api/1/loyalty/iiko/customer_category/remove",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2735,7 +2735,7 @@ export const OPERATIONS = [
     method: "customerCreateOrUpdate",
     typeName: "LoyaltyCustomerCreateOrUpdate",
     path: "/api/1/loyalty/iiko/customer/create_or_update",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2744,7 +2744,7 @@ export const OPERATIONS = [
     method: "customerInfo",
     typeName: "LoyaltyCustomerInfo",
     path: "/api/1/loyalty/iiko/customer/info",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2753,7 +2753,7 @@ export const OPERATIONS = [
     method: "customerProgramAdd",
     typeName: "LoyaltyCustomerProgramAdd",
     path: "/api/1/loyalty/iiko/customer/program/add",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2762,7 +2762,7 @@ export const OPERATIONS = [
     method: "customerTransactionsByDate",
     typeName: "LoyaltyCustomerTransactionsByDate",
     path: "/api/1/loyalty/iiko/customer/transactions/by_date",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2771,7 +2771,7 @@ export const OPERATIONS = [
     method: "customerTransactionsByRevision",
     typeName: "LoyaltyCustomerTransactionsByRevision",
     path: "/api/1/loyalty/iiko/customer/transactions/by_revision",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2780,7 +2780,7 @@ export const OPERATIONS = [
     method: "customerWalletCancelHold",
     typeName: "LoyaltyCustomerWalletCancelHold",
     path: "/api/1/loyalty/iiko/customer/wallet/cancel_hold",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2789,7 +2789,7 @@ export const OPERATIONS = [
     method: "customerWalletChargeoff",
     typeName: "LoyaltyCustomerWalletChargeoff",
     path: "/api/1/loyalty/iiko/customer/wallet/chargeoff",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2798,7 +2798,7 @@ export const OPERATIONS = [
     method: "customerWalletHold",
     typeName: "LoyaltyCustomerWalletHold",
     path: "/api/1/loyalty/iiko/customer/wallet/hold",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2807,7 +2807,7 @@ export const OPERATIONS = [
     method: "customerWalletTopup",
     typeName: "LoyaltyCustomerWalletTopup",
     path: "/api/1/loyalty/iiko/customer/wallet/topup",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2816,7 +2816,7 @@ export const OPERATIONS = [
     method: "deleteCustomers",
     typeName: "LoyaltyDeleteCustomers",
     path: "/api/1/loyalty/iiko/delete_customers",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2834,7 +2834,7 @@ export const OPERATIONS = [
     method: "programs",
     typeName: "LoyaltyPrograms",
     path: "/api/1/loyalty/iiko/program",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2843,7 +2843,7 @@ export const OPERATIONS = [
     method: "restoreCustomers",
     typeName: "LoyaltyRestoreCustomers",
     path: "/api/1/loyalty/iiko/restore_customers",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2852,7 +2852,7 @@ export const OPERATIONS = [
     method: "sendEmail",
     typeName: "LoyaltySendEmail",
     path: "/api/1/loyalty/iiko/message/send_email",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2861,7 +2861,7 @@ export const OPERATIONS = [
     method: "sendSms",
     typeName: "LoyaltySendSms",
     path: "/api/1/loyalty/iiko/message/send_sms",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2870,7 +2870,7 @@ export const OPERATIONS = [
     method: "byIdV3",
     typeName: "MenuByIdV3",
     path: "/api/menu/v3/by_id",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2879,7 +2879,7 @@ export const OPERATIONS = [
     method: "calculateCombo",
     typeName: "MenuCalculateCombo",
     path: "/api/1/combo/calculate",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2888,7 +2888,7 @@ export const OPERATIONS = [
     method: "combos",
     typeName: "MenuCombos",
     path: "/api/1/combo",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2906,7 +2906,7 @@ export const OPERATIONS = [
     method: "send",
     typeName: "NotificationsSend",
     path: "/api/1/notifications/send",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2933,7 +2933,7 @@ export const OPERATIONS = [
     method: "addItems",
     typeName: "ReservesAddItems",
     path: "/api/1/reserve/add_items",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2942,7 +2942,7 @@ export const OPERATIONS = [
     method: "addPayments",
     typeName: "ReservesAddPayments",
     path: "/api/1/reserve/add_payments",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2960,7 +2960,7 @@ export const OPERATIONS = [
     method: "availableRestaurantSections",
     typeName: "ReservesAvailableRestaurantSections",
     path: "/api/1/reserve/available_restaurant_sections",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2969,7 +2969,7 @@ export const OPERATIONS = [
     method: "availableTerminalGroups",
     typeName: "ReservesAvailableTerminalGroups",
     path: "/api/1/reserve/available_terminal_groups",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2978,7 +2978,7 @@ export const OPERATIONS = [
     method: "cancel",
     typeName: "ReservesCancel",
     path: "/api/1/reserve/cancel",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2987,7 +2987,7 @@ export const OPERATIONS = [
     method: "changeEstimatedStartTime",
     typeName: "ReservesChangeEstimatedStartTime",
     path: "/api/1/reserve/change_estimated_start_time",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -2996,7 +2996,7 @@ export const OPERATIONS = [
     method: "changeItems",
     typeName: "ReservesChangeItems",
     path: "/api/1/reserve/change_items",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3005,7 +3005,7 @@ export const OPERATIONS = [
     method: "changeTables",
     typeName: "ReservesChangeTables",
     path: "/api/1/reserve/change_tables",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3014,7 +3014,7 @@ export const OPERATIONS = [
     method: "create",
     typeName: "ReservesCreate",
     path: "/api/1/reserve/create",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3023,7 +3023,7 @@ export const OPERATIONS = [
     method: "restaurantSectionsWorkload",
     typeName: "ReservesRestaurantSectionsWorkload",
     path: "/api/1/reserve/restaurant_sections_workload",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3032,7 +3032,7 @@ export const OPERATIONS = [
     method: "statusById",
     typeName: "ReservesStatusById",
     path: "/api/1/reserve/status_by_id",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3041,7 +3041,7 @@ export const OPERATIONS = [
     method: "add",
     typeName: "StopListsAdd",
     path: "/api/1/stop_lists/add",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3050,7 +3050,7 @@ export const OPERATIONS = [
     method: "check",
     typeName: "StopListsCheck",
     path: "/api/1/stop_lists/check",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3059,7 +3059,7 @@ export const OPERATIONS = [
     method: "clear",
     typeName: "StopListsClear",
     path: "/api/1/stop_lists/clear",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3068,7 +3068,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "StopListsList",
     path: "/api/1/stop_lists",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3077,7 +3077,7 @@ export const OPERATIONS = [
     method: "remove",
     typeName: "StopListsRemove",
     path: "/api/1/stop_lists/remove",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3086,7 +3086,7 @@ export const OPERATIONS = [
     method: "addCustomer",
     typeName: "TableOrdersAddCustomer",
     path: "/api/1/order/add_customer",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3095,7 +3095,7 @@ export const OPERATIONS = [
     method: "addItems",
     typeName: "TableOrdersAddItems",
     path: "/api/1/order/add_items",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3104,7 +3104,7 @@ export const OPERATIONS = [
     method: "addPayments",
     typeName: "TableOrdersAddPayments",
     path: "/api/1/order/add_payments",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3113,7 +3113,7 @@ export const OPERATIONS = [
     method: "byId",
     typeName: "TableOrdersById",
     path: "/api/1/order/by_id",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3122,7 +3122,7 @@ export const OPERATIONS = [
     method: "byTable",
     typeName: "TableOrdersByTable",
     path: "/api/1/order/by_table",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3131,7 +3131,7 @@ export const OPERATIONS = [
     method: "cancel",
     typeName: "TableOrdersCancel",
     path: "/api/1/order/cancel",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3140,7 +3140,7 @@ export const OPERATIONS = [
     method: "changeExternalData",
     typeName: "TableOrdersChangeExternalData",
     path: "/api/1/order/change_external_data",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3149,7 +3149,7 @@ export const OPERATIONS = [
     method: "changePayments",
     typeName: "TableOrdersChangePayments",
     path: "/api/1/order/change_payments",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3158,7 +3158,7 @@ export const OPERATIONS = [
     method: "close",
     typeName: "TableOrdersClose",
     path: "/api/1/order/close",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3167,7 +3167,7 @@ export const OPERATIONS = [
     method: "create",
     typeName: "TableOrdersCreate",
     path: "/api/1/order/create",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3176,7 +3176,7 @@ export const OPERATIONS = [
     method: "initByPosOrder",
     typeName: "TableOrdersInitByPosOrder",
     path: "/api/1/order/init_by_posOrder",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3185,7 +3185,7 @@ export const OPERATIONS = [
     method: "initByTable",
     typeName: "TableOrdersInitByTable",
     path: "/api/1/order/init_by_table",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3194,7 +3194,7 @@ export const OPERATIONS = [
     method: "printBill",
     typeName: "TableOrdersPrintBill",
     path: "/api/1/order/print_bill",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3203,7 +3203,7 @@ export const OPERATIONS = [
     method: "awake",
     typeName: "TerminalGroupsAwake",
     path: "/api/1/terminal_groups/awake",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3212,7 +3212,7 @@ export const OPERATIONS = [
     method: "isAlive",
     typeName: "TerminalGroupsIsAlive",
     path: "/api/1/terminal_groups/is_alive",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3221,7 +3221,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "TerminalGroupsList",
     path: "/api/1/terminal_groups",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3230,7 +3230,7 @@ export const OPERATIONS = [
     method: "settings",
     typeName: "WebhooksSettings",
     path: "/api/1/webhooks/settings",
-    body: "optional",
+    body: "required",
   },
   {
     service: "transport",
@@ -3239,7 +3239,7 @@ export const OPERATIONS = [
     method: "updateSettings",
     typeName: "WebhooksUpdateSettings",
     path: "/api/1/webhooks/update_settings",
-    body: "optional",
+    body: "required",
   },
 ] as const;
 

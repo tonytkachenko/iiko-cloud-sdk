@@ -26,9 +26,12 @@ export type ResponseOf<P extends Path> =
 
 export interface CallOptions {
   signal?: AbortSignal;
+  /** Server-side timeout for this call, in seconds. Defaults to the client option. */
+  timeoutSec?: number;
 }
 
-/** Arguments of a path-typed call: no body when the operation takes none. */
-export type CallArgs<P extends Path> = [RequestOf<P>] extends [undefined]
-  ? [body?: undefined, options?: CallOptions]
-  : [body: RequestOf<P>, options?: CallOptions];
+/**
+ * Arguments of a path-typed call. The body stays optional here so a caller can omit
+ * an all-optional body and send no payload; generated methods enforce required bodies.
+ */
+export type CallArgs<P extends Path> = [body?: RequestOf<P>, options?: CallOptions];

@@ -74,17 +74,33 @@ const ruleFor = (urlPath) =>
 const indentOf = (depth) => "  ".repeat(depth);
 
 const signature = (op, indent) => {
+  if (op.body === "none") {
+    return `${op.name}: (init?: CallOptions): Promise<${op.typeName}Response> =>\n${indent}  t.call(${JSON.stringify(op.path)}, undefined, init),`;
+  }
   const params =
-    op.body === "none"
-      ? ""
-      : `${op.body === "optional" ? "body?" : "body"}: ${op.typeName}Params, `;
-  const target = op.body === "none" ? "undefined" : "body";
-  return `${op.name}: (${params}init?: CallOptions): Promise<IikoResult<${op.typeName}Response>> =>\n${indent}  call(http, ${JSON.stringify(op.path)}, ${target}, init),`;
+    op.body === "optional" ? `body?: ${op.typeName}Params` : `body: ${op.typeName}Params`;
+  return `${op.name}: (${params}, init?: CallOptions): Promise<${op.typeName}Response> =>\n${indent}  t.call(${JSON.stringify(op.path)}, body, init),`;
+};
+
+const resolveSchema = (node) => {
+  if (!node) return undefined;
+  return node.$ref ? spec.components.schemas[node.$ref.split("/").pop()] : node;
+};
+
+const hasRequired = (node, depth = 0) => {
+  if (!node || depth > 10) return false;
+  const schema = resolveSchema(node);
+  if (!schema) return false;
+  if (schema.required?.length) return true;
+  return ["allOf", "oneOf", "anyOf"].some((key) =>
+    (schema[key] ?? []).some((part) => hasRequired(part, depth + 1)),
+  );
 };
 
 const bodyKind = (op) => {
   if (!op.requestBody) return "none";
-  return op.requestBody.required === true ? "required" : "optional";
+  const schema = op.requestBody.content?.["application/json"]?.schema;
+  return op.requestBody.required === true || hasRequired(schema) ? "required" : "optional";
 };
 
 const restrictionGroup = (description = "") =>
@@ -254,14 +270,13 @@ for (const { service } of services) {
 
     const lines = [
       HEADER,
-      'import type { HttpClient, IikoResult } from "../../http.js";',
-      'import { call } from "../../operation.js";',
+      'import type { Transport } from "../../core/transport.js";',
       'import type { CallOptions } from "../../core/types.js";',
       "import type {",
       ...[...imports].toSorted().map((name) => `  ${name},`),
       '} from "./types.js";',
       "",
-      `export function ${factory}(http: HttpClient) {`,
+      `export function ${factory}(t: Transport) {`,
       "  return {",
     ];
 
@@ -297,12 +312,12 @@ for (const { service } of services) {
   // --- service index
   const index = [
     HEADER,
-    'import type { HttpClient } from "../../http.js";',
+    'import type { Transport } from "../../core/transport.js";',
     ...factories.map(({ factory, file }) => `import { ${factory} } from "./${file}.js";`),
     "",
-    `export function createGenerated${pascal(service)}(http: HttpClient) {`,
+    `export function createGenerated${pascal(service)}(t: Transport) {`,
     "  return {",
-    ...factories.map(({ domain, factory }) => `    ${domain}: ${factory}(http),`),
+    ...factories.map(({ domain, factory }) => `    ${domain}: ${factory}(t),`),
     "  };",
     "}",
     "",

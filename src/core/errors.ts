@@ -1,3 +1,5 @@
+import { redact } from "./redact.js";
+
 export interface IikoErrorOptions {
   status?: number;
   code?: string;
@@ -10,35 +12,15 @@ export interface IikoErrorOptions {
   cause?: unknown;
 }
 
-const SECRET_KEY = /^(appId|clientSecret|apiKey|authorization|token)$/i;
-const BEARER = /(Bearer\s+)[\w.~+/-]+=*/gi;
-const REDACTED = "[redacted]";
-
-/** Replaces credentials found in keys or `Bearer` values, recursively. */
-export function redact(value: unknown, seen = new WeakSet<object>()): unknown {
-  if (typeof value === "string") return value.replace(BEARER, `$1${REDACTED}`);
-  if (Array.isArray(value)) return value.map((item) => redact(item, seen));
-  if (value !== null && typeof value === "object") {
-    if (seen.has(value)) return "[circular]";
-    seen.add(value);
-    const result: Record<string, unknown> = {};
-    for (const [key, item] of Object.entries(value)) {
-      result[key] = SECRET_KEY.test(key) ? REDACTED : redact(item, seen);
-    }
-    return result;
-  }
-  return value;
-}
-
 export class IikoError extends Error {
-  status?: number;
-  code?: string;
-  correlationId?: string;
-  endpoint?: string;
-  method?: string;
-  requestBody?: unknown;
-  responseBody?: unknown;
-  retryAfterMs?: number;
+  readonly status?: number;
+  readonly code?: string;
+  readonly correlationId?: string;
+  readonly endpoint?: string;
+  readonly method?: string;
+  readonly requestBody?: unknown;
+  readonly responseBody?: unknown;
+  readonly retryAfterMs?: number;
 
   constructor(message: string, options: IikoErrorOptions = {}) {
     super(message, options.cause === undefined ? undefined : { cause: options.cause });
@@ -54,12 +36,24 @@ export class IikoError extends Error {
   }
 }
 
-export class IikoAuthError extends IikoError {}
-export class IikoValidationError extends IikoError {}
-export class IikoRateLimitError extends IikoError {}
-export class IikoServerError extends IikoError {}
+/** Any non-2xx answer that does not fit a more specific class. */
+export class IikoApiError extends IikoError {}
+export class IikoAuthError extends IikoApiError {}
+export class IikoValidationError extends IikoApiError {}
+export class IikoRateLimitError extends IikoApiError {}
+export class IikoServerError extends IikoApiError {}
 export class IikoNetworkError extends IikoError {}
 export class IikoTimeoutError extends IikoError {}
+
+/** An asynchronous command finished in state `Error`. */
+export class IikoCommandError extends IikoError {
+  constructor(
+    correlationId: string,
+    readonly reason?: string,
+  ) {
+    super(`iiko command ${correlationId} failed${reason ? `: ${reason}` : ""}`, { correlationId });
+  }
+}
 
 function field(body: unknown, key: string): string | undefined {
   if (body === null || typeof body !== "object") return undefined;
@@ -79,47 +73,38 @@ export function retryAfterMs(response: Response): number | undefined {
 }
 
 function errorClass(status: number): typeof IikoError {
-  if (status === 401) return IikoAuthError;
+  if (status === 401 || status === 403) return IikoAuthError;
   if (status === 408) return IikoTimeoutError;
   if (status === 429) return IikoRateLimitError;
   if (status >= 500) return IikoServerError;
-  if (status === 400 || status === 409 || status === 422) return IikoValidationError;
-  return IikoError;
+  if (status === 400 || status === 404 || status === 409 || status === 422) {
+    return IikoValidationError;
+  }
+  return IikoApiError;
 }
 
 export interface ErrorContext {
-  method: string;
   endpoint: string;
+  method: string;
   requestBody?: unknown;
 }
 
 /** Builds the typed error for a non-2xx response. */
 export function responseError(response: Response, body: unknown, context: ErrorContext): IikoError {
-  const description = field(body, "errorDescription") ?? field(body, "message");
+  const description =
+    field(body, "errorDescription") ??
+    field(body, "message") ??
+    (typeof body === "string" && body !== "" ? body : undefined);
   const status = response.status;
-  const message = description ?? `${status} ${response.statusText || "request failed"}`;
   const ErrorClass = errorClass(status);
-  return new ErrorClass(message, {
+  return new ErrorClass(description ?? `${status} ${response.statusText || "request failed"}`, {
     status,
-    code: field(body, "error"),
+    code: field(body, "error") ?? field(body, "code"),
     correlationId: field(body, "correlationId"),
     endpoint: context.endpoint,
     method: context.method,
     requestBody: context.requestBody,
     responseBody: body,
     retryAfterMs: status === 429 ? retryAfterMs(response) : undefined,
-  });
-}
-
-/** Maps anything thrown by `fetch` to the typed hierarchy. */
-export function networkError(error: unknown, context: ErrorContext): IikoError {
-  if (error instanceof IikoError) return error;
-  const aborted = error instanceof Error && error.name === "AbortError";
-  return new IikoNetworkError(aborted ? "Request aborted" : "Network request failed", {
-    code: aborted ? "ABORTED" : undefined,
-    endpoint: context.endpoint,
-    method: context.method,
-    requestBody: context.requestBody,
-    cause: error,
   });
 }
