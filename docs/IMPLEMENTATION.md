@@ -1,3 +1,5 @@
+> **Исторический документ.** Описывает Transport-only версию на `openapi-fetch`. Заменён `docs/PLAN.md`.
+
 # Implementation plan — `@toniq/iiko-cloud-sdk`
 
 Source of requirements: `SPECS.md` (v1.0.0 scope). This plan is the execution order, not a re-statement of the spec.

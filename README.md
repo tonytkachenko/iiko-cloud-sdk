@@ -99,13 +99,14 @@ Environment variables used by the example: `IIKO_APP_ID`, `IIKO_CLIENT_SECRET`, 
 
 ## Updating the OpenAPI types
 
-`src/generated/` is produced from the live spec and must never be edited by hand.
+`spec/raw.json` is the committed source. `spec/normalized.json` and `src/generated/` are produced from it and must never be edited by hand.
 
 ```bash
-pnpm iiko:sync   # download openapi.json + regenerate schema.ts
+pnpm spec:sync    # download spec/raw.json, normalize, regenerate types and modules
+pnpm spec:build   # regenerate from the committed spec (what CI runs)
 ```
 
-CI re-runs this and fails when the spec changed. An incompatible schema change ships as a major version.
+CI rebuilds from the committed spec and fails when the result differs. An incompatible schema change ships as a major version.
 
 ## Status
 

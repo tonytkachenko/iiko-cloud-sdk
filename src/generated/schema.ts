@@ -3329,7 +3329,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequest"];
+                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequestUnion"];
                 };
             };
             responses: {
@@ -7167,7 +7167,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Notifications.SendNotificationRequest"];
+                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Notifications.SendNotificationRequestUnion"];
                 };
             };
             responses: {
@@ -7264,7 +7264,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponse"];
+                        "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponseUnion"];
                     };
                 };
                 /** @description Bad Request */
@@ -9743,7 +9743,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequest"];
+                    "application/json": components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequestUnion"];
                 };
             };
             responses: {
@@ -41878,7 +41878,7 @@ export interface components {
              */
             name: string;
             /** @default false */
-            isDeleted: Record<string, never>;
+            isDeleted: boolean;
         };
         /**  */
         AllergenGroupListRequest: {
@@ -42475,7 +42475,7 @@ export interface components {
              * Format: uuid
              * @description Category id(can be null)
              */
-            id: Record<string, never>;
+            id: string;
             /** @description Category name */
             name?: string | null;
             /** @description Combos in category */
@@ -42485,11 +42485,12 @@ export interface components {
             /** @description Combo name */
             name: string;
             /**
+             * Format: float
              * @description Combo price, if price strategy is fixed
              * @default 0
              * @example 0
              */
-            price: Record<string, never>;
+            price: number;
             groups?: components["schemas"]["ComboGroupDto"][];
             /** @description Combo image */
             image: (components["schemas"]["ButtonImageDto"] | null)[];
@@ -42500,8 +42501,8 @@ export interface components {
             description: string;
             /** @description Available sizes for combo (can be empty) */
             sizes?: components["schemas"]["ComboSizeDto"][];
-            /** @example {"BY_COMPONENT", "FIXED", "CALCULATE"} */
-            priceStrategy: Record<string, never>;
+            /** @enum {string} */
+            priceStrategy: "BY_COMPONENT" | "FIXED" | "CALCULATE";
             /**
              * @description The date when the combo will be available until
              * @example {"2018-01-01T00:00:00+00:00"}
@@ -42519,7 +42520,8 @@ export interface components {
             id: string;
         };
         ComboGroupDto: {
-            id: Record<string, never>;
+            /** Format: uuid */
+            id: string;
             name: string;
             /** @description Includes main dishes - these are the items around which the combo set is built. If a main dish is added to the order, the system can display a prompt 'build a combo set'. */
             isMainGroup: boolean;
@@ -43786,7 +43788,7 @@ export interface components {
              */
             type: "DISH" | "COMBO";
             /** @default false */
-            canBeDivided: Record<string, never>;
+            canBeDivided: boolean;
             /**
              * @description Can set open price flag
              * @default false
@@ -43910,7 +43912,7 @@ export interface components {
              * @example 00000000-0000-0000-0000-000000000000
              */
             id: string;
-            splittable: Record<string, never>;
+            splittable: boolean;
         };
         ExternalMenuItemSize: {
             /**
@@ -43927,11 +43929,12 @@ export interface components {
              */
             isDefault: boolean;
             /**
+             * Format: float
              * @description Size's weight
              * @default 0
              * @example 0.0
              */
-            portionWeightGrams: Record<string, never>;
+            portionWeightGrams: number;
             itemModifierGroups: components["schemas"]["ExternalMenuModifierGroup"][];
             /**
              * @description ID size, can be empty if the default size is selected and it is the only size in the list
@@ -43980,7 +43983,8 @@ export interface components {
              * @example https://102922.selcdn.ru/ecomm/someimage.png
              */
             buttonImageUrl?: string | null;
-            weight: Record<string, never>;
+            /** Format: float */
+            weight: number;
             /** @example 00000000-0000-0000-0000-000000000000 */
             id: string;
         };
@@ -44000,7 +44004,7 @@ export interface components {
             }) | null;
             items: components["schemas"]["ExternalMenuModifierItem"][];
             /** @default false */
-            canBeDivided: Record<string, never>;
+            canBeDivided: boolean;
             /** @example 00000000-0000-0000-0000-000000000000 */
             itemGroupId?: string | null;
             /** @default false */
@@ -44043,7 +44047,7 @@ export interface components {
              * @default
              */
             sku: string;
-            splittable: Record<string, never>;
+            splittable: boolean;
             /** @example 00000000-0000-0000-0000-000000000000 */
             id?: string | null;
         };
@@ -44068,11 +44072,12 @@ export interface components {
             /** @description Nutrition per 100 g of modifier product */
             nutritionPerHundredGrams?: components["schemas"]["NutritionInfoDto"][] | null;
             /**
+             * Format: float
              * @description Modifier's weight in gramms
              * @default 0
              * @example 0.0
              */
-            portionWeightGrams: Record<string, never>;
+            portionWeightGrams: number;
             /** @description List of tag names */
             tags?: components["schemas"]["TagDto"][];
             /** @description List of label names */
@@ -44144,16 +44149,18 @@ export interface components {
             tags: string[];
             /** Format: uuid */
             id: string;
-            weight: Record<string, never>;
+            /** Format: float */
+            weight: number;
         };
         ExternalMenuPriceByDepartmentsDto: {
             /** @description List of organization GUIDs */
             organizations?: string[];
             /**
+             * Format: float
              * @description Product size prices for the organization, if the value is null, then the product/size is not for sale, the price always belongs to the price category that was selected at the time of the request
              * @example 0
              */
-            price: Record<string, never>;
+            price: number;
             /**
              * Format: uuid
              * @description taxCategory id
@@ -44792,6 +44799,12 @@ export interface components {
              * @enum {string}
              */
             type: "cardNumber";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "cardNumber";
         });
         /**
          *
@@ -44801,6 +44814,12 @@ export interface components {
             /** @description Customer card track. */
             cardTrack?: string;
         } & (Omit<components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequest"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "cardTrack";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -44820,6 +44839,12 @@ export interface components {
              * @enum {string}
              */
             type: "email";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "email";
         });
         /**
          *
@@ -44834,6 +44859,12 @@ export interface components {
              * @enum {string}
              */
             type: "id";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "id";
         });
         /**
          *
@@ -44843,6 +44874,12 @@ export interface components {
             /** @description Customer phone number. */
             phone?: string;
         } & (Omit<components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequest"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "phone";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -45219,7 +45256,7 @@ export interface components {
          */
         "iikoNet.Service.Contracts.Api.iikoTransport.LoyaltyResult.CalculateComboPriceRequest": {
             /** @description Items with modifiers included in combo. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * Format: uuid
              * @description Organization id.
@@ -46693,6 +46730,12 @@ export interface components {
              * @enum {string}
              */
             state: "Error";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            state: "Error";
         });
         /**
          *
@@ -46729,12 +46772,24 @@ export interface components {
              * @enum {string}
              */
             state: "InProgress";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            state: "InProgress";
         };
         /**
          *
          * @description Command completed successfully.
          */
         "iikoTransport.PublicApi.Contracts.Commands.SuccessCommandStatus": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponse"], "state"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            state: "Success";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -46960,6 +47015,12 @@ export interface components {
              * @enum {string}
              */
             type: "Card";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Card";
         });
         /**
          *
@@ -47021,6 +47082,12 @@ export interface components {
              * @enum {string}
              */
             type: "Credit";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Credit";
         });
         /**
          *
@@ -47051,6 +47118,12 @@ export interface components {
              * @enum {string}
              */
             type: "External";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "External";
         });
         /**
          *
@@ -47073,6 +47146,12 @@ export interface components {
             /** @description Guest credential search scope. */
             searchScope: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.IikoCardSearchScope"];
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "LoyaltyCard";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47259,7 +47338,7 @@ export interface components {
              *     - should be used if a customer does not agree to take part in the store's loyalty programs or an aggregator (external system) does not provide customer details
              *     - customer details will NOT be added to the store's customer database and will be used ONLY to complete the current order
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /** @description Guest details. Not equal to the customer who makes an order. */
             guests?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Guests"] | null;
             /**
@@ -47299,7 +47378,7 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
@@ -47310,9 +47389,9 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -47565,7 +47644,7 @@ export interface components {
              */
             organizationId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * @description Combos.
              *
@@ -47774,6 +47853,12 @@ export interface components {
              * @enum {string}
              */
             type: "city";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "city";
         });
         /**
          *
@@ -47813,6 +47898,12 @@ export interface components {
              * @enum {string}
              */
             type: "legacy";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "legacy";
         });
         /**
          *
@@ -47824,6 +47915,12 @@ export interface components {
             /** @description Customer name. */
             name: string;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "one-time";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47847,6 +47944,12 @@ export interface components {
              * @enum {string}
              */
             paymentTypeKind: "Card";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Card";
         });
         /**
          *
@@ -47859,6 +47962,12 @@ export interface components {
              */
             number?: string | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Card";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47878,6 +47987,12 @@ export interface components {
              * @enum {string}
              */
             paymentTypeKind: "Cash";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Cash";
         };
         /**
          *
@@ -47887,6 +48002,12 @@ export interface components {
          *     </remarks>
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CashTipsPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Cash";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47977,6 +48098,12 @@ export interface components {
              * @enum {string}
              */
             type: "Compound";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Compound";
         });
         /**
          *
@@ -48009,6 +48136,12 @@ export interface components {
          *     Supported for delivery orders only.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CreditPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Credit";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48103,7 +48236,7 @@ export interface components {
              *     - should be used if a customer does not agree to take part in the store's loyalty programs or an aggregator (external system) does not provide customer details
              *     - customer details will NOT be added to the store's customer database and will be used ONLY to complete the current order
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /** @description Guest details. Not equal to the customer who makes an order. */
             guests?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Guests"] | null;
             /**
@@ -48143,7 +48276,7 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
@@ -48154,9 +48287,9 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -48189,7 +48322,7 @@ export interface components {
              *
              *     > Can be obtained by `/api/1/organizations` or `/api/1/organizations/settings` operations (`addressFormatType` parameter).
              */
-            address?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Address"], "type"> | null;
+            address?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressUnion"] | null;
             /** @description Delivery location custom code in customer's API system. */
             externalCartographyId?: string | null;
             /** @description Additional information. */
@@ -48225,7 +48358,7 @@ export interface components {
              *
              *      > Type **iikoCard** allowed from version `7.4.4`.
              */
-            discounts?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Discount"][] | null;
+            discounts?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.DiscountUnion"][] | null;
             /** @description Whether loyalty discounts should be fixed. */
             fixedLoyaltyDiscounts?: boolean | null;
         };
@@ -48270,12 +48403,24 @@ export interface components {
              * @enum {string}
              */
             paymentTypeKind: "External";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "External";
         };
         /**
          *
          * @description External tips payment type
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ExternalTipsPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "External";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48315,6 +48460,12 @@ export interface components {
              * @enum {string}
              */
             type: "iikoCard";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "iikoCard";
         });
         /**
          *
@@ -48342,6 +48493,12 @@ export interface components {
          * @description Payment with Card loyalty system.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.LoyaltyCardPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "LoyaltyCard";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48477,7 +48634,7 @@ export interface components {
              *     - should be used if a customer does not agree to take part in the store's loyalty programs or an aggregator (external system) does not provide customer details
              *     - customer details will NOT be added to the store's customer database and will be used ONLY to complete the current order
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /** @description Guest details. Not equal to the customer who makes an order. */
             guests?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Guests"] | null;
             /**
@@ -48517,7 +48674,7 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
@@ -48528,9 +48685,9 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -48595,7 +48752,7 @@ export interface components {
             /** @description Whether payment item is processed by external payment system (made from outside). */
             isProcessedExternally?: boolean;
             /** @description Additional payment parameters. */
-            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
             /**
              * @description Whether the payment item is externally fiscalized.
              *
@@ -48640,6 +48797,12 @@ export interface components {
              */
             positionId?: string | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Product";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48693,6 +48856,12 @@ export interface components {
              * @enum {string}
              */
             type: "regular";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "regular";
         });
         /**
          *
@@ -48718,6 +48887,12 @@ export interface components {
             /** @description Order item positions. */
             selectivePositions?: string[] | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Discount"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "RMS";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48774,7 +48949,7 @@ export interface components {
             /** @description Whether payment item is processed by external payment system (made from outside). */
             isProcessedExternally?: boolean;
             /** @description Additional payment parameters. */
-            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
             /**
              * @description Whether the payment item is externally fiscalized.
              *
@@ -49279,15 +49454,21 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
+            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][];
             /** @description Order tips. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
         };
         /**
          *
          * @description Change order's delivery type to DeliveryByClient.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeDeliveryByClient": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequest"], "newServiceType"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            newServiceType: "DeliveryByClient";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -49302,6 +49483,12 @@ export interface components {
             /** @description Address of delivery. */
             deliveryPoint: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.DeliveryPoint"];
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequest"], "newServiceType"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            newServiceType: "DeliveryByCourier";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -49492,6 +49679,12 @@ export interface components {
              * @enum {string}
              */
             type: "one-time";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "one-time";
         });
         /**
          *
@@ -49585,6 +49778,12 @@ export interface components {
             /** @description Modifier scheme. */
             template?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CompoundItemTemplate"] | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Compound";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -49853,7 +50052,7 @@ export interface components {
              */
             parentDeliveryId?: string | null;
             /** @description Delivery customer. */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion"] | null;
             /** @description Delivery phone number. */
             phone: string;
             /** @description Extension delivery phone number. */
@@ -50070,7 +50269,7 @@ export interface components {
             /** @description Information about order guests. */
             guestsInfo: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.GuestsInfo"] | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion"][];
             /** @description Combo. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderCombo"][] | null;
             /** @description Payments. */
@@ -50347,7 +50546,7 @@ export interface components {
              */
             isPrepay: boolean;
             /** @description Additional payment parameters. Filled for payment type kind Credit. */
-            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
         };
         /**
          *
@@ -50467,6 +50666,12 @@ export interface components {
              * @enum {string}
              */
             type: "Product";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Product";
         });
         /**
          *
@@ -50527,6 +50732,12 @@ export interface components {
              * @enum {string}
              */
             type: "regular";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "regular";
         });
         /**
          *
@@ -50554,6 +50765,12 @@ export interface components {
              */
             cost: number;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Service";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -50612,7 +50829,7 @@ export interface components {
              */
             isPrepay: boolean;
             /** @description Additional payment parameters. Filled for payment type kind Credit. */
-            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
         };
         /**
          *
@@ -53773,6 +53990,12 @@ export interface components {
              * @enum {string}
              */
             messageType: "order_attention";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            messageType: "order_attention";
         });
         /**
          *
@@ -53797,7 +54020,7 @@ export interface components {
              */
             orderId: string;
             /** @description Order tips. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /**
              * Format: uuid
              * @description Organization ID.
@@ -53811,7 +54034,7 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
+            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][];
         };
         /**
          *
@@ -54007,6 +54230,12 @@ export interface components {
              * @enum {string}
              */
             responseType: "Extended";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            responseType: "Extended";
         });
         /**
          *
@@ -54044,7 +54273,7 @@ export interface components {
              *
              *     Can be obtained by `/api/1/organizations` operation.
              */
-            organizations: components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.OrganizationInfo"][];
+            organizations: components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.OrganizationInfoUnion"][];
         };
         /**
          *
@@ -54285,6 +54514,12 @@ export interface components {
              * @enum {string}
              */
             responseType: "Simple";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            responseType: "Simple";
         };
         /**
          *
@@ -54457,7 +54692,7 @@ export interface components {
              */
             organizationId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * @description Combos.
              *
@@ -54488,7 +54723,7 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
+            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][];
         };
         /**
          *
@@ -54528,7 +54763,7 @@ export interface components {
              */
             reserveId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][] | null;
+            items?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][] | null;
             /** @description Combos. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
         };
@@ -54802,7 +55037,7 @@ export interface components {
              */
             menuId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
@@ -54813,9 +55048,9 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -54844,7 +55079,7 @@ export interface components {
          */
         "iikoTransport.PublicApi.Contracts.Reserves.Reserve": {
             /** @description Client that placed the reserve. */
-            customer: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.Customer"], "type">;
+            customer: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion"];
             /**
              * Format: int32
              * @description Estimated guests count.
@@ -55038,7 +55273,7 @@ export interface components {
             /** @description Information about order guests. */
             guestsInfo: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.GuestsInfo"] | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion"][];
             /** @description Combo. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderCombo"][] | null;
             /** @description Payments. */
@@ -55390,7 +55625,7 @@ export interface components {
              */
             terminalGroupId: string;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
         };
         /**
          *
@@ -55608,7 +55843,7 @@ export interface components {
              */
             organizationId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * @description Combos.
              *
@@ -55864,7 +56099,7 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
@@ -55875,9 +56110,9 @@ export interface components {
              *
              *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -56022,7 +56257,7 @@ export interface components {
             /** @description Information about order guests. */
             guestsInfo: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.GuestsInfo"] | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion"][];
             /** @description Combo. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderCombo"][] | null;
             /** @description Payments. */
@@ -56346,8 +56581,9 @@ export interface components {
             /**
              * @description Event type.
              * @example DeliveryOrderError
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "DeliveryOrderError";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56377,8 +56613,9 @@ export interface components {
             /**
              * @description Event type.
              * @example DeliveryOrderUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "DeliveryOrderUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56440,8 +56677,9 @@ export interface components {
             /**
              * @description Event type.
              * @example PersonalShift
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "PersonalShift";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56471,8 +56709,9 @@ export interface components {
             /**
              * @description Event type.
              * @example ReserveError
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "ReserveError";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56502,8 +56741,9 @@ export interface components {
             /**
              * @description Event type.
              * @example ReserveUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "ReserveUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56533,8 +56773,9 @@ export interface components {
             /**
              * @description Event type.
              * @example StopListUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "StopListUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56564,8 +56805,9 @@ export interface components {
             /**
              * @description Event type.
              * @example TableOrderError
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "TableOrderError";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56595,8 +56837,9 @@ export interface components {
             /**
              * @description Event type.
              * @example TableOrderUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "TableOrderUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -60069,7 +60312,7 @@ export interface components {
              * @description Default amount
              * @default 0
              */
-            byDefault: Record<string, never>;
+            byDefault: number;
             /** @default false */
             hideIfDefaultQuantity: boolean;
         };
@@ -60092,7 +60335,7 @@ export interface components {
             /** @default false */
             hideIfDefaultQuantity: boolean;
             /** @description Default amount */
-            defaultQuantity: Record<string, never>;
+            defaultQuantity: number;
         };
         /**  */
         ModifierSchema: {
@@ -63313,14 +63556,17 @@ export interface components {
              * @description Organization IDs.
              *     Can be obtained by `/api/1/organizations` operation.
              */
-            organizationIds: Record<string, never>;
+            organizationIds: string[];
             /**
              * @description Price category id.
              *     Can be obtained by `api/2/menu` operation.
              */
             priceCategoryId?: string | null;
-            /** @description Version of the result data model. */
-            version?: Record<string, never> | null;
+            /**
+             * Format: int32
+             * @description Version of the result data model.
+             */
+            version?: number | null;
             /** @description Language of the external menu. */
             language?: string | null;
             /**
@@ -63329,8 +63575,11 @@ export interface components {
              * @default false
              */
             asyncMode: boolean;
-            /** @description Start revision. */
-            startRevision?: Record<string, never> | null;
+            /**
+             * Format: int64
+             * @description Start revision.
+             */
+            startRevision?: number | null;
         };
         /**  */
         ReturnedInvoiceCreateItem: {
@@ -65110,6 +65359,20 @@ export interface components {
             /** @description Write-off storage identifier (GUID) */
             storageFrom: string;
         };
+        "iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequestUnion": components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByPhoneRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByCardTrackRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByCardNumberRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByEmailRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByIdRequest"];
+        "iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponseUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.InProgressCommandStatus"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.SuccessCommandStatus"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.ErrorCommandStatus"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.LoyaltyCardPaymentAdditionalData"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.CardPaymentAdditionalData"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.ExternalPaymentAdditionalData"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.CreditPaymentAdditionalData"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressLegacy"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressCity"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.RegularCustomer"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AnonymousCustomer"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.DiscountUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.RmsDiscount"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.IikoCardDiscount"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ProductOrderItem"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CompoundOrderItem"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CashPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CardPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.LoyaltyCardPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ExternalPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CreditPayment"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CashTipsPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CardTipsPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ExternalTipsPayment"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequestUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeDeliveryByCourier"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeDeliveryByClient"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.RegularCustomer"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.AnonymousCustomer"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.ProductOrderItem"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CompoundOrderItem"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.ServiceOrderItem"];
+        "iikoTransport.PublicApi.Contracts.Notifications.SendNotificationRequestUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Notifications.OrderAttentionNotificationRequest"];
+        "iikoTransport.PublicApi.Contracts.Organizations.OrganizationInfoUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.SimpleOrganizationInfo"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.ExtendedOrganizationInfo"];
     };
     responses: never;
     parameters: never;
