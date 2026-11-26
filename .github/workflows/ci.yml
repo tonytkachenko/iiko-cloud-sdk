@@ -47,4 +47,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm spec:build
       - name: Fail if the committed generation is stale
-        run: git diff --exit-code src/generated src/transport/generated
+        run: git diff --exit-code src/generated src/transport/generated src/office/generated

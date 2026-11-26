@@ -20,7 +20,8 @@
     "src/generated/**",
     "dist/**",
     "coverage/**",
-    "src/transport/generated/**"
+    "src/transport/generated/**",
+    "src/office/generated/**"
   ],
   "rules": {
     "no-await-in-loop": "off"

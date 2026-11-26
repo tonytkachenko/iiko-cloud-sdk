@@ -1,4 +1,5 @@
 {
+  "service": "transport",
   "prefixes": [
     {
       "prefix": "/api/1/organizations",
@@ -95,11 +96,6 @@
     {
       "prefix": "/api/1/delivery_restrictions",
       "domain": "dictionaries"
-    }
-  ],
-  "types": [
-    {
-      "prefix": "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder"
     }
   ],
   "operations": {
