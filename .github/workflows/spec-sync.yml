@@ -1,0 +1,43 @@
+name: Spec upstream
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm spec:download
+      - run: pnpm spec:build
+
+      - name: Report a changed upstream spec
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- spec/raw.json src/generated src/transport/generated src/office/generated; then
+            echo "upstream spec is unchanged"
+            exit 0
+          fi
+          existing=$(gh issue list --state open --search 'in:title "iikoCloud spec changed upstream"' --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "Still different as of $(date -u +%F). Run \`pnpm spec:sync\` and review the generation diff."
+          else
+            gh issue create \
+              --title "iikoCloud spec changed upstream" \
+              --label needs-triage \
+              --body "The nightly check found a different OpenAPI document. Run \`pnpm spec:sync\`, review the generated diff and the naming report, then open a PR."
+          fi

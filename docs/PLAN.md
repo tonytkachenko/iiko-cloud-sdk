@@ -1,7 +1,7 @@
 # План: объединённый SDK `iiko-cloud-sdk`
 
-Статус: принят. Фаза 0 выполняется.
-Заменяет `docs/TRANSPORT-PLAN.md` (Transport-only на `openapi-fetch`). Тот документ остаётся историческим.
+Статус: фазы 0–5 выполнены, фаза 6 в работе.
+Заменяет `docs/history/TRANSPORT-PLAN.md` (Transport-only на `openapi-fetch`). Тот документ остаётся историческим.
 Основание: сравнение с проектом `/Users/tony/Projects/iiko-sdk 3` (360 операций, нормализация спеки, union-типы, ретрай 429, тесты на каждую операцию).
 
 ## 1. Целевая форма
@@ -146,7 +146,7 @@ src/index.ts                   публичный экспорт
 1. `tsup`: ESM + CJS + `.d.ts`/`.d.cts`; `exports` с `import` и `require`.
 2. `package.json`: имя, repository, bugs, homepage, author, keywords, `files`, `engines >=22.12`, `publishConfig`.
 3. README: установка, оба сервиса, типы, ошибки, ретраи, таймаут, `onAttempt`, даты, `call`, обновление спеки, дисклеймер.
-4. `docs/ARCHITECTURE.md` + ADR: 0001 слияние, 0002 политика ретраев, 0003 throw vs result. `SPECS.md`, `IMPLEMENTATION.md`, `TRANSPORT-PLAN.md` → `docs/history/`.
+4. `docs/ARCHITECTURE.md` + ADR: 0001 слияние, 0002 политика ретраев, 0003 throw vs result. `SPECS.md`, `IMPLEMENTATION.md`, `TRANSPORT-PLAN.md` уже в `docs/history/`.
 5. CI: PR — детерминированная генерация из закоммиченной спеки; ночью — upstream + issue; тесты; сборка; audit; smoke ESM/CJS.
 6. Publish workflow по тегу: первый релиз с `NPM_TOKEN`, затем trusted publishing.
 

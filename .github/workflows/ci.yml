@@ -30,7 +30,7 @@ jobs:
         run: node --input-type=module -e "import('./dist/index.js').then((m) => console.log(typeof m.createIikoClient))"
 
       - name: CommonJS require
-        run: node -e "console.log(typeof require('./dist/index.js').createIikoClient)"
+        run: node -e "console.log(typeof require('./dist/index.cjs').createIikoClient)"
 
       - run: pnpm audit --audit-level=high
 

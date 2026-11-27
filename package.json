@@ -1,6 +1,6 @@
 {
   "name": "iiko-cloud-sdk",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Unofficial TypeScript SDK for the iikoCloud API: typed requests, JWT auth, retries and typed errors.",
   "type": "module",
   "license": "MIT",
@@ -9,27 +9,32 @@
   },
   "packageManager": "pnpm@12.21.0",
   "sideEffects": false,
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "iiko",
     "iikocloud",
+    "iiko-cloud",
+    "restaurant",
+    "pos",
     "sdk",
     "typescript"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsup && node -e \"require('node:fs').rmSync('dist/index.d.cts',{force:true})\"",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint src tests examples scripts",
     "format": "oxfmt src tests examples scripts",
@@ -44,9 +49,6 @@
     "changeset": "changeset",
     "live:check": "node scripts/live-check.mjs"
   },
-  "dependencies": {
-    "openapi-fetch": "^0.17.0"
-  },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
     "@types/node": "^26",
@@ -54,7 +56,21 @@
     "openapi-typescript": "^7.13.0",
     "oxfmt": "^0.79.0",
     "oxlint": "^1.94.0",
+    "tsup": "^9.0.0",
     "typescript": "6.0.3",
     "vitest": "^5.1.1"
+  },
+  "author": "Tony Tkachenko",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonytkachenko/iiko-cloud-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tonytkachenko/iiko-cloud-sdk/issues"
+  },
+  "homepage": "https://github.com/tonytkachenko/iiko-cloud-sdk#readme",
+  "module": "./dist/index.js",
+  "publishConfig": {
+    "access": "public"
   }
 }
