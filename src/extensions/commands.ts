@@ -25,6 +25,8 @@ export function commandsExtension(
      * @throws RangeError when `timeoutMs` or `intervalMs` is invalid.
      * @throws IikoCommandError when iiko reports state `Error`.
      * @throws IikoTimeoutError when the command is still running at the deadline.
+     * @throws IikoApiError when the status call fails; an unknown
+     * `correlationId` is a 410 `PASSED_COMMAND_NOT_FOUND`.
      */
     async wait(
       body: CommandsStatusParams,

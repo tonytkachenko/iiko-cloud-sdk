@@ -24,7 +24,9 @@ export function withHelpers(transport: GeneratedTransport) {
        * Finds one organization by ID.
        *
        * iiko has no by-id operation: this asks the list endpoint for one ID and
-       * returns the single match. Throws the same typed errors as any call.
+       * returns the single match. Throws the same typed errors as any call: an ID
+       * outside the key's organizations is a 403 `IikoAuthError`, so `undefined`
+       * only means the API answered 200 without a match.
        *
        * @param id Organization UUID.
        * @param signal Cancels the request.

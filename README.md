@@ -90,6 +90,9 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 A token request that fails with 429, 5xx, a network error or a timeout keeps that class; only
 401/403 from the token endpoint are `IikoAuthError`.
 
+`organizations.settings` answers 500 when `parameters` is empty, even though the spec marks it
+optional; pass at least one parameter, such as `["Name"]`.
+
 ## Retries and timeouts
 
 - Only HTTP 429 is retried, for reads and writes alike: the limiter refuses the request before it runs.
@@ -112,9 +115,11 @@ await iiko.transport.commands.wait(
 );
 ```
 
-It throws `IikoCommandError` on state `Error` and `IikoTimeoutError` at the deadline. The default
-deadline is 30 s and the polling interval is 500 ms; `intervalMs` must be positive and `timeoutMs`
-non-negative. The caller's signal cancels the wait, including the sleep between polls.
+It throws `IikoCommandError` on state `Error` and `IikoTimeoutError` at the deadline. A failed
+`status` call passes through as its typed error: an unknown `correlationId` is a 410
+`PASSED_COMMAND_NOT_FOUND` (`IikoApiError`). The default deadline is 30 s and the polling interval
+is 500 ms; `intervalMs` must be positive and `timeoutMs` non-negative. The caller's signal cancels
+the wait, including the sleep between polls.
 
 ## Types
 
