@@ -56069,6 +56069,7 @@ export interface components {
             customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /**
              * @description Guest phone.
+             *     > Required if "customer" is specified.
              *
              *      > Allowed from version `7.5.2`.
              */

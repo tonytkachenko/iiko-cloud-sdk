@@ -66325,7 +66325,7 @@
           },
           "phone": {
             "type": "string",
-            "description": "Guest phone.\n\n > Allowed from version `7.5.2`.",
+            "description": "Guest phone.\r\n> Required if \"customer\" is specified.\n\n > Allowed from version `7.5.2`.",
             "nullable": true
           },
           "guestCount": {
