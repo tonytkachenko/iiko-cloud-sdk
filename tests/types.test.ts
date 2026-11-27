@@ -19,6 +19,14 @@ describe("response types", () => {
     expectTypeOf<ResponseOf<"/api/1/organizations">>().toHaveProperty("organizations");
   });
 
+  it("keeps the payload of a documented JSON 201", () => {
+    expectTypeOf<ResponseOf<"/api/nomenclature/v2/product/create">>().toHaveProperty("productId");
+    expectTypeOf<ResponseOf<"/api/inventory/v1/incoming_invoice/create">>().toHaveProperty(
+      "documentId",
+    );
+    expectTypeOf<ResponseOf<"/api/finance/v1/account/create">>().toHaveProperty("id");
+  });
+
   it("is void for the one operation documented with an empty 200", () => {
     expectTypeOf<ResponseOf<"/api/1/deliveries/update_tracking_link">>().toEqualTypeOf<void>();
   });

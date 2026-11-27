@@ -16,13 +16,27 @@ export type RequestOf<P extends Path> =
       : Json<NonNullable<R>>
     : undefined;
 
-/** The documented 200 payload; `void` when the spec describes an empty one. */
+/** Response keys are numeric in the generated schema, so `${K}` normalises both forms. */
+type SuccessKey<K> = K extends number | string
+  ? `${K}` extends `2${string}`
+    ? true
+    : false
+  : false;
+
+/** Every documented 2xx response of an operation. */
+type Success<R> = {
+  [K in keyof R]: SuccessKey<K> extends true ? R[K] : never;
+}[keyof R];
+
+type ResponseBody<R> = [Success<R>] extends [never]
+  ? unknown
+  : [Json<Success<R>>] extends [never]
+    ? void
+    : Json<Success<R>>;
+
+/** The documented 2xx payload; `void` when the spec describes an empty one. */
 export type ResponseOf<P extends Path> =
-  PostOp<P> extends { responses: { 200: infer R } }
-    ? [Json<R>] extends [never]
-      ? void
-      : Json<R>
-    : unknown;
+  PostOp<P> extends { responses: infer R } ? ResponseBody<R> : unknown;
 
 export interface CallOptions {
   signal?: AbortSignal;
