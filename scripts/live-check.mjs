@@ -45,9 +45,6 @@ let organizationId;
 const organizationsOk = await check("transport.organizations.list", async () => {
   const { organizations } = await iiko.transport.organizations.list();
   organizationId = organizations[0]?.id;
-  for (const organization of organizations.slice(0, 3)) {
-    console.log(`     - ${organization.id} ${organization.name ?? ""}`);
-  }
   return `${organizations.length} visible`;
 });
 
@@ -99,8 +96,8 @@ if (organizationsOk && organizationId) {
 }
 
 await check("office.nomenclature.product.listV2", async () => {
-  const { products, totalCount } = await iiko.office.nomenclature.product.listV2({ limit: 1 });
-  return `${products?.length ?? 0} product(s) in one page, total=${totalCount ?? "-"}`;
+  const { items, totalCount } = await iiko.office.nomenclature.product.listV2({ limit: 1 });
+  return `${items?.length ?? 0} product(s) in one page, total=${totalCount ?? "-"}`;
 });
 
 await check("office.inventory.storages.listV2", async () => {
