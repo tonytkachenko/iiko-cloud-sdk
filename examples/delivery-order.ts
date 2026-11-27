@@ -37,7 +37,7 @@ try {
   const productId = menu.products?.[0]?.id;
   if (!productId) throw new Error("iiko: the menu is empty");
 
-  const { correlationId } = await iiko.transport.deliveries.create({
+  const { correlationId, orderInfo } = await iiko.transport.deliveries.create({
     organizationId,
     terminalGroupId,
     order: {
@@ -53,11 +53,11 @@ try {
 
   const { orders } = await iiko.transport.deliveries.byId({
     organizationId,
-    orderIds: [correlationId],
+    orderIds: [orderInfo.id],
   });
   console.log("orders:", orders.length);
 
-  await iiko.transport.deliveries.cancel({ organizationId, orderId: correlationId });
+  await iiko.transport.deliveries.cancel({ organizationId, orderId: orderInfo.id });
   console.log("cancelled");
 } catch (error) {
   if (error instanceof IikoError) {
