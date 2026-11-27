@@ -6,9 +6,9 @@ import type { CommandsStatusParams, CommandsStatusResponse } from "../transport/
 export type CommandStatus = CommandsStatusResponse;
 
 export interface WaitOptions {
-  /** Give up after this long. Defaults to 30 s; must be non-negative. */
+  /** Give up after this long. Defaults to 120 s; must be non-negative. */
   timeoutMs?: number;
-  /** Delay between status calls. Defaults to 500 ms; must be positive. */
+  /** Delay between status calls. Defaults to 2 s; must be positive. */
   intervalMs?: number;
   /** Cancels the wait, including the sleep between polls. */
   signal?: AbortSignal;
@@ -30,7 +30,7 @@ export function commandsExtension(
      */
     async wait(
       body: CommandsStatusParams,
-      { timeoutMs = 30_000, intervalMs = 500, signal }: WaitOptions = {},
+      { timeoutMs = 120_000, intervalMs = 2_000, signal }: WaitOptions = {},
     ) {
       if (!Number.isFinite(timeoutMs) || timeoutMs < 0) {
         throw new RangeError("iiko: commands.wait timeoutMs must be a non-negative number");

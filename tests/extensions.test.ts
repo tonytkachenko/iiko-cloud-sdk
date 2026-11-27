@@ -82,6 +82,28 @@ describe("commands.wait", () => {
     expect(iiko.api()).toHaveLength(3);
   });
 
+  it("uses a 2 s interval and a 120 s deadline by default", async () => {
+    vi.useFakeTimers();
+    const iiko = fakeIiko(() => ({ state: "InProgress" }));
+    const client = makeClient(iiko.fetch);
+
+    const result = client.transport.commands
+      .wait({ organizationId: ORG, correlationId: "cmd-1" })
+      .catch((error: unknown) => error);
+
+    await vi.advanceTimersByTimeAsync(0);
+    expect(iiko.api()).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(1_999);
+    expect(iiko.api()).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(1);
+    expect(iiko.api()).toHaveLength(2);
+
+    await vi.advanceTimersByTimeAsync(118_000);
+    await expect(result).resolves.toBeInstanceOf(IikoTimeoutError);
+  });
+
   it("throws IikoCommandError with the reason on state Error", async () => {
     const iiko = fakeIiko(() => ({ state: "Error", errorReason: "Table is busy" }));
     const client = makeClient(iiko.fetch);

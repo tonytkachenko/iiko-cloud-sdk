@@ -113,14 +113,14 @@ Many mutations return a `correlationId` before the front has processed them. `co
 ```ts
 await iiko.transport.commands.wait(
   { organizationId, correlationId },
-  { timeoutMs: 60_000, intervalMs: 500, signal },
+  { timeoutMs: 60_000, intervalMs: 2_000, signal },
 );
 ```
 
 It throws `IikoCommandError` on state `Error` and `IikoTimeoutError` at the deadline. A failed
 `status` call passes through as its typed error: an unknown `correlationId` is a 410
-`PASSED_COMMAND_NOT_FOUND` (`IikoApiError`). The default deadline is 30 s and the polling interval
-is 500 ms; `intervalMs` must be positive and `timeoutMs` non-negative. The caller's signal cancels
+`PASSED_COMMAND_NOT_FOUND` (`IikoApiError`). The default deadline is 120 s and the polling interval
+is 2 s; `intervalMs` must be positive and `timeoutMs` non-negative. The caller's signal cancels
 the wait, including the sleep between polls.
 
 ## Types
@@ -173,7 +173,7 @@ The generator fails on an unnamed active operation, a stale naming entry, a non-
 ```bash
 pnpm install
 pnpm spec:build
-pnpm check         # tsc + 457 tests, coverage thresholds
+pnpm check         # tsc + 458 tests, coverage thresholds
 pnpm build         # tsup: ESM + CJS + one shared .d.ts
 ```
 
