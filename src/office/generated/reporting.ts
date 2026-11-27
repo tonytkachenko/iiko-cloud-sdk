@@ -38,7 +38,7 @@ export function createReportingResource(t: Transport) {
         t.call("/api/reporting/v1/olap/presets/get", body, init),
       /** Get saved OLAP presets
        */
-      presetsList: (body: ReportingOlapPresetsListParams, init?: CallOptions): Promise<ReportingOlapPresetsListResponse> =>
+      presetsList: (body: ReportingOlapPresetsListParams = {}, init?: CallOptions): Promise<ReportingOlapPresetsListResponse> =>
         t.call("/api/reporting/v1/olap/presets/list", body, init),
     },
   };

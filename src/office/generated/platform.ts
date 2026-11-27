@@ -14,11 +14,11 @@ export function createPlatformResource(t: Transport) {
     events: {
       /** List of events
        */
-      list: (body: PlatformEventsListParams, init?: CallOptions): Promise<PlatformEventsListResponse> =>
+      list: (body: PlatformEventsListParams = {}, init?: CallOptions): Promise<PlatformEventsListResponse> =>
         t.call("/api/platform/v1/events/list", body, init),
       /** Event groups and types
        */
-      metadataList: (body: PlatformEventsMetadataListParams, init?: CallOptions): Promise<PlatformEventsMetadataListResponse> =>
+      metadataList: (body: PlatformEventsMetadataListParams = {}, init?: CallOptions): Promise<PlatformEventsMetadataListResponse> =>
         t.call("/api/platform/v1/events/metadata/list", body, init),
     },
   };

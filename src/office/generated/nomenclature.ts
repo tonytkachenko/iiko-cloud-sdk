@@ -114,25 +114,25 @@ export function createNomenclatureResource(t: Transport) {
     alcoholClass: {
       /** Get a list of alcohol classes
        */
-      listV1: (body: NomenclatureAlcoholClassListV1Params, init?: CallOptions): Promise<NomenclatureAlcoholClassListV1Response> =>
+      listV1: (body: NomenclatureAlcoholClassListV1Params = {}, init?: CallOptions): Promise<NomenclatureAlcoholClassListV1Response> =>
         t.call("/api/nomenclature/v1/alcohol-class/list", body, init),
     },
     allergenGroup: {
       /** Get a list of allergen groups
        */
-      listV1: (body: NomenclatureAllergenGroupListV1Params, init?: CallOptions): Promise<NomenclatureAllergenGroupListV1Response> =>
+      listV1: (body: NomenclatureAllergenGroupListV1Params = {}, init?: CallOptions): Promise<NomenclatureAllergenGroupListV1Response> =>
         t.call("/api/nomenclature/v1/allergen-group/list", body, init),
     },
     amountUnit: {
       /** Get a list of amount units
        */
-      listV1: (body: NomenclatureAmountUnitListV1Params, init?: CallOptions): Promise<NomenclatureAmountUnitListV1Response> =>
+      listV1: (body: NomenclatureAmountUnitListV1Params = {}, init?: CallOptions): Promise<NomenclatureAmountUnitListV1Response> =>
         t.call("/api/nomenclature/v1/amount-unit/list", body, init),
     },
     assemblyChart: {
       /** Get an assembled chart
        */
-      assembledV2: (body: NomenclatureAssemblyChartAssembledV2Params, init?: CallOptions): Promise<NomenclatureAssemblyChartAssembledV2Response> =>
+      assembledV2: (body: NomenclatureAssemblyChartAssembledV2Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartAssembledV2Response> =>
         t.call("/api/nomenclature/v2/assembly-chart/assembled", body, init),
       /** Create an assembly chart (v2)
        */
@@ -144,39 +144,39 @@ export function createNomenclatureResource(t: Transport) {
         t.call("/api/nomenclature/v3/assembly-chart/create", body, init),
       /** Delete an assembly chart (v2)
        */
-      deleteV2: (body: NomenclatureAssemblyChartDeleteV2Params, init?: CallOptions): Promise<NomenclatureAssemblyChartDeleteV2Response> =>
+      deleteV2: (body: NomenclatureAssemblyChartDeleteV2Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartDeleteV2Response> =>
         t.call("/api/nomenclature/v2/assembly-chart/delete", body, init),
       /** Delete an assembly chart (v3)
        */
-      deleteV3: (body: NomenclatureAssemblyChartDeleteV3Params, init?: CallOptions): Promise<NomenclatureAssemblyChartDeleteV3Response> =>
+      deleteV3: (body: NomenclatureAssemblyChartDeleteV3Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartDeleteV3Response> =>
         t.call("/api/nomenclature/v3/assembly-chart/delete", body, init),
       /** Get an assembly chart by ID (v2)
        */
-      getV2: (body: NomenclatureAssemblyChartGetV2Params, init?: CallOptions): Promise<NomenclatureAssemblyChartGetV2Response> =>
+      getV2: (body: NomenclatureAssemblyChartGetV2Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartGetV2Response> =>
         t.call("/api/nomenclature/v2/assembly-chart/get", body, init),
       /** Get an assembly chart by ID (v3)
        */
-      getV3: (body: NomenclatureAssemblyChartGetV3Params, init?: CallOptions): Promise<NomenclatureAssemblyChartGetV3Response> =>
+      getV3: (body: NomenclatureAssemblyChartGetV3Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartGetV3Response> =>
         t.call("/api/nomenclature/v3/assembly-chart/get", body, init),
       /** Get a list of assembly charts by product (v2)
        */
-      listV2: (body: NomenclatureAssemblyChartListV2Params, init?: CallOptions): Promise<NomenclatureAssemblyChartListV2Response> =>
+      listV2: (body: NomenclatureAssemblyChartListV2Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartListV2Response> =>
         t.call("/api/nomenclature/v2/assembly-chart/list", body, init),
       /** Get a list of assembly charts (v3)
        */
-      listV3: (body: NomenclatureAssemblyChartListV3Params, init?: CallOptions): Promise<NomenclatureAssemblyChartListV3Response> =>
+      listV3: (body: NomenclatureAssemblyChartListV3Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartListV3Response> =>
         t.call("/api/nomenclature/v3/assembly-chart/list", body, init),
       /** Get a prepared chart (breakdown to store items)
        */
-      preparedV2: (body: NomenclatureAssemblyChartPreparedV2Params, init?: CallOptions): Promise<NomenclatureAssemblyChartPreparedV2Response> =>
+      preparedV2: (body: NomenclatureAssemblyChartPreparedV2Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartPreparedV2Response> =>
         t.call("/api/nomenclature/v2/assembly-chart/prepared", body, init),
       /** Resolve an assembly chart representation
        */
-      resolveV3: (body: NomenclatureAssemblyChartResolveV3Params, init?: CallOptions): Promise<NomenclatureAssemblyChartResolveV3Response> =>
+      resolveV3: (body: NomenclatureAssemblyChartResolveV3Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartResolveV3Response> =>
         t.call("/api/nomenclature/v3/assembly-chart/resolve", body, init),
       /** Get an assembly chart tree
        */
-      treeV2: (body: NomenclatureAssemblyChartTreeV2Params, init?: CallOptions): Promise<NomenclatureAssemblyChartTreeV2Response> =>
+      treeV2: (body: NomenclatureAssemblyChartTreeV2Params = {}, init?: CallOptions): Promise<NomenclatureAssemblyChartTreeV2Response> =>
         t.call("/api/nomenclature/v2/assembly-chart/tree", body, init),
       /** Update an assembly chart (v2)
        */
@@ -190,51 +190,51 @@ export function createNomenclatureResource(t: Transport) {
     category: {
       /** Create a product category
        */
-      createV1: (body: NomenclatureCategoryCreateV1Params, init?: CallOptions): Promise<NomenclatureCategoryCreateV1Response> =>
+      createV1: (body: NomenclatureCategoryCreateV1Params = {}, init?: CallOptions): Promise<NomenclatureCategoryCreateV1Response> =>
         t.call("/api/nomenclature/v1/category/create", body, init),
       /** Delete a product category
        */
-      deleteV1: (body: NomenclatureCategoryDeleteV1Params, init?: CallOptions): Promise<NomenclatureCategoryDeleteV1Response> =>
+      deleteV1: (body: NomenclatureCategoryDeleteV1Params = {}, init?: CallOptions): Promise<NomenclatureCategoryDeleteV1Response> =>
         t.call("/api/nomenclature/v1/category/delete", body, init),
       /** Get a list of product categories
        */
-      listV1: (body: NomenclatureCategoryListV1Params, init?: CallOptions): Promise<NomenclatureCategoryListV1Response> =>
+      listV1: (body: NomenclatureCategoryListV1Params = {}, init?: CallOptions): Promise<NomenclatureCategoryListV1Response> =>
         t.call("/api/nomenclature/v1/category/list", body, init),
       /** Restore a product category
        */
-      restoreV1: (body: NomenclatureCategoryRestoreV1Params, init?: CallOptions): Promise<NomenclatureCategoryRestoreV1Response> =>
+      restoreV1: (body: NomenclatureCategoryRestoreV1Params = {}, init?: CallOptions): Promise<NomenclatureCategoryRestoreV1Response> =>
         t.call("/api/nomenclature/v1/category/restore", body, init),
       /** Update a product category
        */
-      updateV1: (body: NomenclatureCategoryUpdateV1Params, init?: CallOptions): Promise<NomenclatureCategoryUpdateV1Response> =>
+      updateV1: (body: NomenclatureCategoryUpdateV1Params = {}, init?: CallOptions): Promise<NomenclatureCategoryUpdateV1Response> =>
         t.call("/api/nomenclature/v1/category/update", body, init),
     },
     container: {
       /** Get a list of containers
        */
-      listV1: (body: NomenclatureContainerListV1Params, init?: CallOptions): Promise<NomenclatureContainerListV1Response> =>
+      listV1: (body: NomenclatureContainerListV1Params = {}, init?: CallOptions): Promise<NomenclatureContainerListV1Response> =>
         t.call("/api/nomenclature/v1/container/list", body, init),
     },
     customCategory: {
       /** Get a list of custom categories
        */
-      listV1: (body: NomenclatureCustomCategoryListV1Params, init?: CallOptions): Promise<NomenclatureCustomCategoryListV1Response> =>
+      listV1: (body: NomenclatureCustomCategoryListV1Params = {}, init?: CallOptions): Promise<NomenclatureCustomCategoryListV1Response> =>
         t.call("/api/nomenclature/v1/custom-category/list", body, init),
     },
     discountType: {
       /** Get a list of discount types
        */
-      listV1: (body: NomenclatureDiscountTypeListV1Params, init?: CallOptions): Promise<NomenclatureDiscountTypeListV1Response> =>
+      listV1: (body: NomenclatureDiscountTypeListV1Params = {}, init?: CallOptions): Promise<NomenclatureDiscountTypeListV1Response> =>
         t.call("/api/nomenclature/v1/discount-type/list", body, init),
     },
     economicActivityCodes: {
       /** Get a foreign economic activity commodity code by ID
        */
-      getV1: (body: NomenclatureEconomicActivityCodesGetV1Params, init?: CallOptions): Promise<NomenclatureEconomicActivityCodesGetV1Response> =>
+      getV1: (body: NomenclatureEconomicActivityCodesGetV1Params = {}, init?: CallOptions): Promise<NomenclatureEconomicActivityCodesGetV1Response> =>
         t.call("/api/nomenclature/v1/outer_economic_activity_nomenclature_codes/get", body, init),
       /** Get the foreign economic activity commodity code directory
        */
-      listV1: (body: NomenclatureEconomicActivityCodesListV1Params, init?: CallOptions): Promise<NomenclatureEconomicActivityCodesListV1Response> =>
+      listV1: (body: NomenclatureEconomicActivityCodesListV1Params = {}, init?: CallOptions): Promise<NomenclatureEconomicActivityCodesListV1Response> =>
         t.call("/api/nomenclature/v1/outer_economic_activity_nomenclature_codes/list", body, init),
     },
     group: {
@@ -262,37 +262,37 @@ export function createNomenclatureResource(t: Transport) {
     menu: {
       /** Get a list of menu sections
        */
-      listV1: (body: NomenclatureMenuListV1Params, init?: CallOptions): Promise<NomenclatureMenuListV1Response> =>
+      listV1: (body: NomenclatureMenuListV1Params = {}, init?: CallOptions): Promise<NomenclatureMenuListV1Response> =>
         t.call("/api/nomenclature/v1/menu/list", body, init),
     },
     modifierSchema: {
       /** Get a list of modifier schemas
        */
-      listV1: (body: NomenclatureModifierSchemaListV1Params, init?: CallOptions): Promise<NomenclatureModifierSchemaListV1Response> =>
+      listV1: (body: NomenclatureModifierSchemaListV1Params = {}, init?: CallOptions): Promise<NomenclatureModifierSchemaListV1Response> =>
         t.call("/api/nomenclature/v1/modifier-schema/list", body, init),
     },
     nutritionComponent: {
       /** Get a list of nutritional value components
        */
-      listV1: (body: NomenclatureNutritionComponentListV1Params, init?: CallOptions): Promise<NomenclatureNutritionComponentListV1Response> =>
+      listV1: (body: NomenclatureNutritionComponentListV1Params = {}, init?: CallOptions): Promise<NomenclatureNutritionComponentListV1Response> =>
         t.call("/api/nomenclature/v1/nutrition-component/list", body, init),
     },
     payInOutType: {
       /** Get a list of pay in/out types
        */
-      listV1: (body: NomenclaturePayInOutTypeListV1Params, init?: CallOptions): Promise<NomenclaturePayInOutTypeListV1Response> =>
+      listV1: (body: NomenclaturePayInOutTypeListV1Params = {}, init?: CallOptions): Promise<NomenclaturePayInOutTypeListV1Response> =>
         t.call("/api/nomenclature/v1/pay-in-out-type/list", body, init),
     },
     placeType: {
       /** Get a list of preparation place types
        */
-      listV1: (body: NomenclaturePlaceTypeListV1Params, init?: CallOptions): Promise<NomenclaturePlaceTypeListV1Response> =>
+      listV1: (body: NomenclaturePlaceTypeListV1Params = {}, init?: CallOptions): Promise<NomenclaturePlaceTypeListV1Response> =>
         t.call("/api/nomenclature/v1/place-type/list", body, init),
     },
     producer: {
       /** Get a list of producers
        */
-      listV1: (body: NomenclatureProducerListV1Params, init?: CallOptions): Promise<NomenclatureProducerListV1Response> =>
+      listV1: (body: NomenclatureProducerListV1Params = {}, init?: CallOptions): Promise<NomenclatureProducerListV1Response> =>
         t.call("/api/nomenclature/v1/producer/list", body, init),
     },
     product: {
@@ -306,7 +306,7 @@ export function createNomenclatureResource(t: Transport) {
         t.call("/api/nomenclature/v2/product/delete", body, init),
       /** Get a list of products (v2)
        */
-      listV2: (body: NomenclatureProductListV2Params, init?: CallOptions): Promise<NomenclatureProductListV2Response> =>
+      listV2: (body: NomenclatureProductListV2Params = {}, init?: CallOptions): Promise<NomenclatureProductListV2Response> =>
         t.call("/api/nomenclature/v2/product/list", body, init),
       /** Restore products (v2)
        */
@@ -324,41 +324,41 @@ export function createNomenclatureResource(t: Transport) {
     productScale: {
       /** Create a product size scale
        */
-      createV1: (body: NomenclatureProductScaleCreateV1Params, init?: CallOptions): Promise<NomenclatureProductScaleCreateV1Response> =>
+      createV1: (body: NomenclatureProductScaleCreateV1Params = {}, init?: CallOptions): Promise<NomenclatureProductScaleCreateV1Response> =>
         t.call("/api/nomenclature/v1/product-scale/create", body, init),
       /** Delete a product size scale
        */
-      deleteV1: (body: NomenclatureProductScaleDeleteV1Params, init?: CallOptions): Promise<NomenclatureProductScaleDeleteV1Response> =>
+      deleteV1: (body: NomenclatureProductScaleDeleteV1Params = {}, init?: CallOptions): Promise<NomenclatureProductScaleDeleteV1Response> =>
         t.call("/api/nomenclature/v1/product-scale/delete", body, init),
       /** Get a product size scale by ID
        */
-      getV1: (body: NomenclatureProductScaleGetV1Params, init?: CallOptions): Promise<NomenclatureProductScaleGetV1Response> =>
+      getV1: (body: NomenclatureProductScaleGetV1Params = {}, init?: CallOptions): Promise<NomenclatureProductScaleGetV1Response> =>
         t.call("/api/nomenclature/v1/product-scale/get", body, init),
       /** Get a list of product size scales
        */
-      listV1: (body: NomenclatureProductScaleListV1Params, init?: CallOptions): Promise<NomenclatureProductScaleListV1Response> =>
+      listV1: (body: NomenclatureProductScaleListV1Params = {}, init?: CallOptions): Promise<NomenclatureProductScaleListV1Response> =>
         t.call("/api/nomenclature/v1/product-scale/list", body, init),
       /** Update a product size scale
        */
-      updateV1: (body: NomenclatureProductScaleUpdateV1Params, init?: CallOptions): Promise<NomenclatureProductScaleUpdateV1Response> =>
+      updateV1: (body: NomenclatureProductScaleUpdateV1Params = {}, init?: CallOptions): Promise<NomenclatureProductScaleUpdateV1Response> =>
         t.call("/api/nomenclature/v1/product-scale/update", body, init),
     },
     productSize: {
       /** Get a list of product sizes
        */
-      listV1: (body: NomenclatureProductSizeListV1Params, init?: CallOptions): Promise<NomenclatureProductSizeListV1Response> =>
+      listV1: (body: NomenclatureProductSizeListV1Params = {}, init?: CallOptions): Promise<NomenclatureProductSizeListV1Response> =>
         t.call("/api/nomenclature/v1/product-size/list", body, init),
     },
     productTag: {
       /** Get a list of product tags
        */
-      listV1: (body: NomenclatureProductTagListV1Params, init?: CallOptions): Promise<NomenclatureProductTagListV1Response> =>
+      listV1: (body: NomenclatureProductTagListV1Params = {}, init?: CallOptions): Promise<NomenclatureProductTagListV1Response> =>
         t.call("/api/nomenclature/v1/product-tag/list", body, init),
     },
     scheduleType: {
       /** Get a list of schedule types
        */
-      listV1: (body: NomenclatureScheduleTypeListV1Params, init?: CallOptions): Promise<NomenclatureScheduleTypeListV1Response> =>
+      listV1: (body: NomenclatureScheduleTypeListV1Params = {}, init?: CallOptions): Promise<NomenclatureScheduleTypeListV1Response> =>
         t.call("/api/nomenclature/v1/schedule-type/list", body, init),
     },
   };

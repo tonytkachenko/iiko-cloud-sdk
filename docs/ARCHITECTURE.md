@@ -54,7 +54,7 @@ Generated files are never edited by hand. They are excluded from lint, format an
 
 ## Known limits
 
-- The spec marks some request bodies optional, but iiko rejects a POST with no body (`INVALID_BODY_JSON_FORMAT`, confirmed against production). Generated methods send `{}` for an optional body; operations with no documented body send nothing.
+- iiko rejects a POST with no body (`INVALID_BODY_JSON_FORMAT`, confirmed against production). A method whose body schema has no required top-level fields lets the caller omit the argument and sends `{}` instead; operations with no documented body send nothing.
 
 - Unions are closed over today's variants: a new iiko variant is invisible to TypeScript until the spec is regenerated.
 - Types describe structure, not business rules: numeric ranges, dependent fields and terminal-local dates are not validated at runtime.

@@ -99,6 +99,8 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 
 Each operation has named types: `<Domain><Method>Params` and `<Domain><Method>Response` (`DeliveriesCreateParams`, `InventoryIncomingInvoiceCreateV1Params`, …). Path-based aliases are also available: `RequestOf<'/api/1/deliveries/create'>`, `ResponseOf<'/api/1/organizations'>`.
 
+A body whose fields are all optional can be omitted; the client sends `{}`, because iiko rejects a POST with no body.
+
 Discriminated schemas are real unions, so a wrong payment kind or a missing order item field is a compile error:
 
 ```ts

@@ -12,7 +12,7 @@ export function createPricingResource(t: Transport) {
     priceList: {
       /** Price list delta by revision
        */
-      list: (body: PricingPriceListListParams, init?: CallOptions): Promise<PricingPriceListListResponse> =>
+      list: (body: PricingPriceListListParams = {}, init?: CallOptions): Promise<PricingPriceListListResponse> =>
         t.call("/api/pricing/v1/price-list/list", body, init),
     },
   };

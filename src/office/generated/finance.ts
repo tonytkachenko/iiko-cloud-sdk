@@ -104,7 +104,7 @@ export function createFinanceResource(t: Transport) {
     accountPosting: {
       /** Account postings
        */
-      list: (body: FinanceAccountPostingListParams, init?: CallOptions): Promise<FinanceAccountPostingListResponse> =>
+      list: (body: FinanceAccountPostingListParams = {}, init?: CallOptions): Promise<FinanceAccountPostingListResponse> =>
         t.call("/api/finance/v1/account-posting/list", body, init),
     },
     accountTransactions: {
@@ -116,13 +116,13 @@ export function createFinanceResource(t: Transport) {
     accountType: {
       /** List of account types
        */
-      list: (body: FinanceAccountTypeListParams, init?: CallOptions): Promise<FinanceAccountTypeListResponse> =>
+      list: (body: FinanceAccountTypeListParams = {}, init?: CallOptions): Promise<FinanceAccountTypeListResponse> =>
         t.call("/api/finance/v1/account-type/list", body, init),
     },
     balanceSheet: {
       /** Balance sheet
        */
-      list: (body: FinanceBalanceSheetListParams, init?: CallOptions): Promise<FinanceBalanceSheetListResponse> =>
+      list: (body: FinanceBalanceSheetListParams = {}, init?: CallOptions): Promise<FinanceBalanceSheetListResponse> =>
         t.call("/api/finance/v1/balance-sheet/list", body, init),
     },
     cashFlowCategory: {
@@ -154,7 +154,7 @@ export function createFinanceResource(t: Transport) {
     chartOfAccounts: {
       /** Chart of accounts
        */
-      list: (body: FinanceChartOfAccountsListParams, init?: CallOptions): Promise<FinanceChartOfAccountsListResponse> =>
+      list: (body: FinanceChartOfAccountsListParams = {}, init?: CallOptions): Promise<FinanceChartOfAccountsListResponse> =>
         t.call("/api/finance/v1/chart-of-accounts/list", body, init),
     },
     documentTransactions: {
@@ -196,7 +196,7 @@ export function createFinanceResource(t: Transport) {
     itemCategory: {
       /** Get a list of fiscal categories
        */
-      list: (body: FinanceItemCategoryListParams, init?: CallOptions): Promise<FinanceItemCategoryListResponse> =>
+      list: (body: FinanceItemCategoryListParams = {}, init?: CallOptions): Promise<FinanceItemCategoryListResponse> =>
         t.call("/api/finance/v1/item-category/list", body, init),
     },
     outgoingService: {
@@ -232,7 +232,7 @@ export function createFinanceResource(t: Transport) {
     taxCategory: {
       /** Get a list of tax categories
        */
-      list: (body: FinanceTaxCategoryListParams, init?: CallOptions): Promise<FinanceTaxCategoryListResponse> =>
+      list: (body: FinanceTaxCategoryListParams = {}, init?: CallOptions): Promise<FinanceTaxCategoryListResponse> =>
         t.call("/api/finance/v1/tax-category/list", body, init),
     },
   };

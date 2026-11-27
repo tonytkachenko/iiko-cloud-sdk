@@ -2,10 +2,12 @@ import { describe, expectTypeOf, it } from "vitest";
 import type {
   CommandStatus,
   DeliveriesCreateParams,
+  FinanceBalanceSheetListParams,
   NomenclatureProductListV2Params,
   RequestOf,
   ResponseOf,
 } from "../src/index.js";
+import { fakeIiko, makeClient } from "./helpers.js";
 
 type CreateOrderBody = RequestOf<"/api/1/deliveries/create">;
 type CreateOrderItem = NonNullable<CreateOrderBody["order"]["items"]>[number];
@@ -29,6 +31,16 @@ describe("request types", () => {
 
   it("exports a named type per operation that matches the path type", () => {
     expectTypeOf<DeliveriesCreateParams>().toEqualTypeOf<CreateOrderBody>();
+  });
+
+  it("lets a caller omit a body only when its schema has no required fields", () => {
+    const client = makeClient(fakeIiko().fetch);
+
+    expectTypeOf(client.office.finance.balanceSheet.list)
+      .parameter(0)
+      .toEqualTypeOf<FinanceBalanceSheetListParams | undefined>();
+    // @ts-expect-error deliveries.create still requires its body
+    void (() => client.transport.deliveries.create());
   });
 });
 

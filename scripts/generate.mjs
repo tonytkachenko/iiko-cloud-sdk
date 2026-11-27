@@ -88,20 +88,15 @@ const resolveSchema = (node) => {
   return node.$ref ? spec.components.schemas[node.$ref.split("/").pop()] : node;
 };
 
-const hasRequired = (node, depth = 0) => {
-  if (!node || depth > 10) return false;
-  const schema = resolveSchema(node);
-  if (!schema) return false;
-  if (schema.required?.length) return true;
-  return ["allOf", "oneOf", "anyOf"].some((key) =>
-    (schema[key] ?? []).some((part) => hasRequired(part, depth + 1)),
-  );
-};
-
+// A body whose schema has no required top-level property can be omitted; the wrapper then
+// defaults to {} because iiko rejects a POST with no body. Non-object and composed bodies stay required.
 const bodyKind = (op) => {
   if (!op.requestBody) return "none";
   const schema = op.requestBody.content?.["application/json"]?.schema;
-  return op.requestBody.required === true || hasRequired(schema) ? "required" : "optional";
+  const resolved = resolveSchema(schema);
+  return resolved?.type === "object" && !resolved.allOf && !resolved.required?.length
+    ? "optional"
+    : "required";
 };
 
 const restrictionGroup = (description = "") =>

@@ -32,49 +32,49 @@ export function createPurchasingResource(t: Transport) {
     orders: {
       /** Create order
        */
-      create: (body: PurchasingOrdersCreateParams, init?: CallOptions): Promise<PurchasingOrdersCreateResponse> =>
+      create: (body: PurchasingOrdersCreateParams = {}, init?: CallOptions): Promise<PurchasingOrdersCreateResponse> =>
         t.call("/api/purchasing/v1/orders/create", body, init),
       /** Get order
        */
-      get: (body: PurchasingOrdersGetParams, init?: CallOptions): Promise<PurchasingOrdersGetResponse> =>
+      get: (body: PurchasingOrdersGetParams = {}, init?: CallOptions): Promise<PurchasingOrdersGetResponse> =>
         t.call("/api/purchasing/v1/orders/get", body, init),
       /** Orders list
        */
-      list: (body: PurchasingOrdersListParams, init?: CallOptions): Promise<PurchasingOrdersListResponse> =>
+      list: (body: PurchasingOrdersListParams = {}, init?: CallOptions): Promise<PurchasingOrdersListResponse> =>
         t.call("/api/purchasing/v1/orders/list", body, init),
       /** Add products
        */
-      productsAdd: (body: PurchasingOrdersProductsAddParams, init?: CallOptions): Promise<PurchasingOrdersProductsAddResponse> =>
+      productsAdd: (body: PurchasingOrdersProductsAddParams = {}, init?: CallOptions): Promise<PurchasingOrdersProductsAddResponse> =>
         t.call("/api/purchasing/v1/orders/products/add", body, init),
       /** Select supplier
        */
-      supplierSelect: (body: PurchasingOrdersSupplierSelectParams, init?: CallOptions): Promise<PurchasingOrdersSupplierSelectResponse> =>
+      supplierSelect: (body: PurchasingOrdersSupplierSelectParams = {}, init?: CallOptions): Promise<PurchasingOrdersSupplierSelectResponse> =>
         t.call("/api/purchasing/v1/orders/supplier/select", body, init),
       /** Task status
        */
-      taskStatus: (body: PurchasingOrdersTaskStatusParams, init?: CallOptions): Promise<PurchasingOrdersTaskStatusResponse> =>
+      taskStatus: (body: PurchasingOrdersTaskStatusParams = {}, init?: CallOptions): Promise<PurchasingOrdersTaskStatusResponse> =>
         t.call("/api/purchasing/v1/orders/task_status", body, init),
       /** Select units
        */
-      unitsSelect: (body: PurchasingOrdersUnitsSelectParams, init?: CallOptions): Promise<PurchasingOrdersUnitsSelectResponse> =>
+      unitsSelect: (body: PurchasingOrdersUnitsSelectParams = {}, init?: CallOptions): Promise<PurchasingOrdersUnitsSelectResponse> =>
         t.call("/api/purchasing/v1/orders/units/select", body, init),
     },
     workflows: {
       /** Workflow activation
        */
-      activate: (body: PurchasingWorkflowsActivateParams, init?: CallOptions): Promise<PurchasingWorkflowsActivateResponse> =>
+      activate: (body: PurchasingWorkflowsActivateParams = {}, init?: CallOptions): Promise<PurchasingWorkflowsActivateResponse> =>
         t.call("/api/purchasing/v1/workflows/activate", body, init),
       /** Workflow deactivation
        */
-      deactivate: (body: PurchasingWorkflowsDeactivateParams, init?: CallOptions): Promise<PurchasingWorkflowsDeactivateResponse> =>
+      deactivate: (body: PurchasingWorkflowsDeactivateParams = {}, init?: CallOptions): Promise<PurchasingWorkflowsDeactivateResponse> =>
         t.call("/api/purchasing/v1/workflows/deactivate", body, init),
       /** Get workflow
        */
-      get: (body: PurchasingWorkflowsGetParams, init?: CallOptions): Promise<PurchasingWorkflowsGetResponse> =>
+      get: (body: PurchasingWorkflowsGetParams = {}, init?: CallOptions): Promise<PurchasingWorkflowsGetResponse> =>
         t.call("/api/purchasing/v1/workflows/get", body, init),
       /** Workflow list
        */
-      list: (body: PurchasingWorkflowsListParams, init?: CallOptions): Promise<PurchasingWorkflowsListResponse> =>
+      list: (body: PurchasingWorkflowsListParams = {}, init?: CallOptions): Promise<PurchasingWorkflowsListResponse> =>
         t.call("/api/purchasing/v1/workflows/list", body, init),
     },
   };

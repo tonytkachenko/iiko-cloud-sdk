@@ -53,7 +53,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "EmployeesAttendanceTypeList",
     path: "/api/employees/v1/attendance-type/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -116,7 +116,7 @@ export const OPERATIONS = [
     method: "get",
     typeName: "EmployeesPositionsGet",
     path: "/api/employees/v1/positions/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -125,7 +125,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "EmployeesPositionsList",
     path: "/api/employees/v1/positions/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -161,7 +161,7 @@ export const OPERATIONS = [
     method: "typesList",
     typeName: "EmployeesScheduleTypesList",
     path: "/api/employees/v1/schedule/schedule_types/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -233,7 +233,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "FinanceAccountPostingList",
     path: "/api/finance/v1/account-posting/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -251,7 +251,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "FinanceAccountTypeList",
     path: "/api/finance/v1/account-type/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -260,7 +260,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "FinanceBalanceSheetList",
     path: "/api/finance/v1/balance-sheet/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -323,7 +323,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "FinanceChartOfAccountsList",
     path: "/api/finance/v1/chart-of-accounts/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -404,7 +404,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "FinanceItemCategoryList",
     path: "/api/finance/v1/item-category/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -476,7 +476,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "FinanceTaxCategoryList",
     path: "/api/finance/v1/tax-category/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -485,7 +485,7 @@ export const OPERATIONS = [
     method: "getV1",
     typeName: "InventoryAccountingCategoriesGetV1",
     path: "/api/inventory/v1/accounting_categories/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -494,7 +494,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "InventoryAccountingCategoriesListV1",
     path: "/api/inventory/v1/accounting_categories/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -503,7 +503,7 @@ export const OPERATIONS = [
     method: "getV1",
     typeName: "InventoryConceptionsGetV1",
     path: "/api/inventory/v1/conceptions/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -512,7 +512,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "InventoryConceptionsListV1",
     path: "/api/inventory/v1/conceptions/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -548,7 +548,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "InventoryCounteragentsListV1",
     path: "/api/inventory/v1/counteragents/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -557,7 +557,7 @@ export const OPERATIONS = [
     method: "pricelistCreateV1",
     typeName: "InventoryCounteragentsPricelistCreateV1",
     path: "/api/inventory/v1/counteragents/pricelist/create",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -566,7 +566,7 @@ export const OPERATIONS = [
     method: "pricelistDeleteV1",
     typeName: "InventoryCounteragentsPricelistDeleteV1",
     path: "/api/inventory/v1/counteragents/pricelist/delete",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -584,7 +584,7 @@ export const OPERATIONS = [
     method: "pricelistUpdateV1",
     typeName: "InventoryCounteragentsPricelistUpdateV1",
     path: "/api/inventory/v1/counteragents/pricelist/update",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -872,7 +872,7 @@ export const OPERATIONS = [
     method: "createV1",
     typeName: "InventoryIndependentPriceListCreateV1",
     path: "/api/inventory/v1/independent-price-list/create",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -881,7 +881,7 @@ export const OPERATIONS = [
     method: "deleteV1",
     typeName: "InventoryIndependentPriceListDeleteV1",
     path: "/api/inventory/v1/independent-price-list/delete",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -890,7 +890,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "InventoryIndependentPriceListListV1",
     path: "/api/inventory/v1/independent-price-list/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -899,7 +899,7 @@ export const OPERATIONS = [
     method: "updateV1",
     typeName: "InventoryIndependentPriceListUpdateV1",
     path: "/api/inventory/v1/independent-price-list/update",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -971,7 +971,7 @@ export const OPERATIONS = [
     method: "getV1",
     typeName: "InventoryMeasureUnitsGetV1",
     path: "/api/inventory/v1/measure_units/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -980,7 +980,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "InventoryMeasureUnitsListV1",
     path: "/api/inventory/v1/measure_units/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -989,7 +989,7 @@ export const OPERATIONS = [
     method: "settingsListV1",
     typeName: "InventoryOrganizationsSettingsListV1",
     path: "/api/inventory/v1/organizations/settings/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -998,7 +998,7 @@ export const OPERATIONS = [
     method: "treeV2",
     typeName: "InventoryOrganizationsTreeV2",
     path: "/api/inventory/v2/organizations/tree",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1088,7 +1088,7 @@ export const OPERATIONS = [
     method: "getV1",
     typeName: "InventoryPaymentTypesGetV1",
     path: "/api/inventory/v1/payment_types/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1097,7 +1097,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "InventoryPaymentTypesListV1",
     path: "/api/inventory/v1/payment_types/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1313,7 +1313,7 @@ export const OPERATIONS = [
     method: "listV2",
     typeName: "InventoryStoragesListV2",
     path: "/api/inventory/v2/storages/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1457,7 +1457,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureAlcoholClassListV1",
     path: "/api/nomenclature/v1/alcohol-class/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1466,7 +1466,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureAllergenGroupListV1",
     path: "/api/nomenclature/v1/allergen-group/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1475,7 +1475,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureAmountUnitListV1",
     path: "/api/nomenclature/v1/amount-unit/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1484,7 +1484,7 @@ export const OPERATIONS = [
     method: "assembledV2",
     typeName: "NomenclatureAssemblyChartAssembledV2",
     path: "/api/nomenclature/v2/assembly-chart/assembled",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1511,7 +1511,7 @@ export const OPERATIONS = [
     method: "deleteV2",
     typeName: "NomenclatureAssemblyChartDeleteV2",
     path: "/api/nomenclature/v2/assembly-chart/delete",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1520,7 +1520,7 @@ export const OPERATIONS = [
     method: "deleteV3",
     typeName: "NomenclatureAssemblyChartDeleteV3",
     path: "/api/nomenclature/v3/assembly-chart/delete",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1529,7 +1529,7 @@ export const OPERATIONS = [
     method: "getV2",
     typeName: "NomenclatureAssemblyChartGetV2",
     path: "/api/nomenclature/v2/assembly-chart/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1538,7 +1538,7 @@ export const OPERATIONS = [
     method: "getV3",
     typeName: "NomenclatureAssemblyChartGetV3",
     path: "/api/nomenclature/v3/assembly-chart/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1547,7 +1547,7 @@ export const OPERATIONS = [
     method: "listV2",
     typeName: "NomenclatureAssemblyChartListV2",
     path: "/api/nomenclature/v2/assembly-chart/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1556,7 +1556,7 @@ export const OPERATIONS = [
     method: "listV3",
     typeName: "NomenclatureAssemblyChartListV3",
     path: "/api/nomenclature/v3/assembly-chart/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1565,7 +1565,7 @@ export const OPERATIONS = [
     method: "preparedV2",
     typeName: "NomenclatureAssemblyChartPreparedV2",
     path: "/api/nomenclature/v2/assembly-chart/prepared",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1574,7 +1574,7 @@ export const OPERATIONS = [
     method: "resolveV3",
     typeName: "NomenclatureAssemblyChartResolveV3",
     path: "/api/nomenclature/v3/assembly-chart/resolve",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1583,7 +1583,7 @@ export const OPERATIONS = [
     method: "treeV2",
     typeName: "NomenclatureAssemblyChartTreeV2",
     path: "/api/nomenclature/v2/assembly-chart/tree",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1610,7 +1610,7 @@ export const OPERATIONS = [
     method: "createV1",
     typeName: "NomenclatureCategoryCreateV1",
     path: "/api/nomenclature/v1/category/create",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1619,7 +1619,7 @@ export const OPERATIONS = [
     method: "deleteV1",
     typeName: "NomenclatureCategoryDeleteV1",
     path: "/api/nomenclature/v1/category/delete",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1628,7 +1628,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureCategoryListV1",
     path: "/api/nomenclature/v1/category/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1637,7 +1637,7 @@ export const OPERATIONS = [
     method: "restoreV1",
     typeName: "NomenclatureCategoryRestoreV1",
     path: "/api/nomenclature/v1/category/restore",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1646,7 +1646,7 @@ export const OPERATIONS = [
     method: "updateV1",
     typeName: "NomenclatureCategoryUpdateV1",
     path: "/api/nomenclature/v1/category/update",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1655,7 +1655,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureContainerListV1",
     path: "/api/nomenclature/v1/container/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1664,7 +1664,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureCustomCategoryListV1",
     path: "/api/nomenclature/v1/custom-category/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1673,7 +1673,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureDiscountTypeListV1",
     path: "/api/nomenclature/v1/discount-type/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1682,7 +1682,7 @@ export const OPERATIONS = [
     method: "getV1",
     typeName: "NomenclatureEconomicActivityCodesGetV1",
     path: "/api/nomenclature/v1/outer_economic_activity_nomenclature_codes/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1691,7 +1691,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureEconomicActivityCodesListV1",
     path: "/api/nomenclature/v1/outer_economic_activity_nomenclature_codes/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1745,7 +1745,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureMenuListV1",
     path: "/api/nomenclature/v1/menu/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1754,7 +1754,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureModifierSchemaListV1",
     path: "/api/nomenclature/v1/modifier-schema/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1763,7 +1763,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureNutritionComponentListV1",
     path: "/api/nomenclature/v1/nutrition-component/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1772,7 +1772,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclaturePayInOutTypeListV1",
     path: "/api/nomenclature/v1/pay-in-out-type/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1781,7 +1781,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclaturePlaceTypeListV1",
     path: "/api/nomenclature/v1/place-type/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1790,7 +1790,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureProducerListV1",
     path: "/api/nomenclature/v1/producer/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1817,7 +1817,7 @@ export const OPERATIONS = [
     method: "listV2",
     typeName: "NomenclatureProductListV2",
     path: "/api/nomenclature/v2/product/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1853,7 +1853,7 @@ export const OPERATIONS = [
     method: "createV1",
     typeName: "NomenclatureProductScaleCreateV1",
     path: "/api/nomenclature/v1/product-scale/create",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1862,7 +1862,7 @@ export const OPERATIONS = [
     method: "deleteV1",
     typeName: "NomenclatureProductScaleDeleteV1",
     path: "/api/nomenclature/v1/product-scale/delete",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1871,7 +1871,7 @@ export const OPERATIONS = [
     method: "getV1",
     typeName: "NomenclatureProductScaleGetV1",
     path: "/api/nomenclature/v1/product-scale/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1880,7 +1880,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureProductScaleListV1",
     path: "/api/nomenclature/v1/product-scale/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1889,7 +1889,7 @@ export const OPERATIONS = [
     method: "updateV1",
     typeName: "NomenclatureProductScaleUpdateV1",
     path: "/api/nomenclature/v1/product-scale/update",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1898,7 +1898,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureProductSizeListV1",
     path: "/api/nomenclature/v1/product-size/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1907,7 +1907,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureProductTagListV1",
     path: "/api/nomenclature/v1/product-tag/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1916,7 +1916,7 @@ export const OPERATIONS = [
     method: "listV1",
     typeName: "NomenclatureScheduleTypeListV1",
     path: "/api/nomenclature/v1/schedule-type/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1925,7 +1925,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "PlatformEventsList",
     path: "/api/platform/v1/events/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1934,7 +1934,7 @@ export const OPERATIONS = [
     method: "metadataList",
     typeName: "PlatformEventsMetadataList",
     path: "/api/platform/v1/events/metadata/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1943,7 +1943,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "PricingPriceListList",
     path: "/api/pricing/v1/price-list/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1952,7 +1952,7 @@ export const OPERATIONS = [
     method: "create",
     typeName: "PurchasingOrdersCreate",
     path: "/api/purchasing/v1/orders/create",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1961,7 +1961,7 @@ export const OPERATIONS = [
     method: "get",
     typeName: "PurchasingOrdersGet",
     path: "/api/purchasing/v1/orders/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1970,7 +1970,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "PurchasingOrdersList",
     path: "/api/purchasing/v1/orders/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1979,7 +1979,7 @@ export const OPERATIONS = [
     method: "productsAdd",
     typeName: "PurchasingOrdersProductsAdd",
     path: "/api/purchasing/v1/orders/products/add",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1988,7 +1988,7 @@ export const OPERATIONS = [
     method: "supplierSelect",
     typeName: "PurchasingOrdersSupplierSelect",
     path: "/api/purchasing/v1/orders/supplier/select",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -1997,7 +1997,7 @@ export const OPERATIONS = [
     method: "taskStatus",
     typeName: "PurchasingOrdersTaskStatus",
     path: "/api/purchasing/v1/orders/task_status",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -2006,7 +2006,7 @@ export const OPERATIONS = [
     method: "unitsSelect",
     typeName: "PurchasingOrdersUnitsSelect",
     path: "/api/purchasing/v1/orders/units/select",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -2015,7 +2015,7 @@ export const OPERATIONS = [
     method: "activate",
     typeName: "PurchasingWorkflowsActivate",
     path: "/api/purchasing/v1/workflows/activate",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -2024,7 +2024,7 @@ export const OPERATIONS = [
     method: "deactivate",
     typeName: "PurchasingWorkflowsDeactivate",
     path: "/api/purchasing/v1/workflows/deactivate",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -2033,7 +2033,7 @@ export const OPERATIONS = [
     method: "get",
     typeName: "PurchasingWorkflowsGet",
     path: "/api/purchasing/v1/workflows/get",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -2042,7 +2042,7 @@ export const OPERATIONS = [
     method: "list",
     typeName: "PurchasingWorkflowsList",
     path: "/api/purchasing/v1/workflows/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",
@@ -2087,7 +2087,7 @@ export const OPERATIONS = [
     method: "presetsList",
     typeName: "ReportingOlapPresetsList",
     path: "/api/reporting/v1/olap/presets/list",
-    body: "required",
+    body: "optional",
   },
   {
     service: "office",

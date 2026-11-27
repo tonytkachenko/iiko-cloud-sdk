@@ -70,7 +70,7 @@ export function createEmployeesResource(t: Transport) {
     attendanceType: {
       /** List attendance types
        */
-      list: (body: EmployeesAttendanceTypeListParams, init?: CallOptions): Promise<EmployeesAttendanceTypeListResponse> =>
+      list: (body: EmployeesAttendanceTypeListParams = {}, init?: CallOptions): Promise<EmployeesAttendanceTypeListResponse> =>
         t.call("/api/employees/v1/attendance-type/list", body, init),
     },
     employee: {
@@ -102,11 +102,11 @@ export function createEmployeesResource(t: Transport) {
     positions: {
       /** Get employee position by identifier
        */
-      get: (body: EmployeesPositionsGetParams, init?: CallOptions): Promise<EmployeesPositionsGetResponse> =>
+      get: (body: EmployeesPositionsGetParams = {}, init?: CallOptions): Promise<EmployeesPositionsGetResponse> =>
         t.call("/api/employees/v1/positions/get", body, init),
       /** List employee positions
        */
-      list: (body: EmployeesPositionsListParams, init?: CallOptions): Promise<EmployeesPositionsListResponse> =>
+      list: (body: EmployeesPositionsListParams = {}, init?: CallOptions): Promise<EmployeesPositionsListResponse> =>
         t.call("/api/employees/v1/positions/list", body, init),
     },
     schedule: {
@@ -124,7 +124,7 @@ export function createEmployeesResource(t: Transport) {
         t.call("/api/employees/v1/schedule/list", body, init),
       /** List schedule types
        */
-      typesList: (body: EmployeesScheduleTypesListParams, init?: CallOptions): Promise<EmployeesScheduleTypesListResponse> =>
+      typesList: (body: EmployeesScheduleTypesListParams = {}, init?: CallOptions): Promise<EmployeesScheduleTypesListResponse> =>
         t.call("/api/employees/v1/schedule/schedule_types/list", body, init),
       /** Update schedule
        */

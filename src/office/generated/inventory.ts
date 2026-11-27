@@ -224,21 +224,21 @@ export function createInventoryResource(t: Transport) {
     accountingCategories: {
       /** Get accounting category by ID
        */
-      getV1: (body: InventoryAccountingCategoriesGetV1Params, init?: CallOptions): Promise<InventoryAccountingCategoriesGetV1Response> =>
+      getV1: (body: InventoryAccountingCategoriesGetV1Params = {}, init?: CallOptions): Promise<InventoryAccountingCategoriesGetV1Response> =>
         t.call("/api/inventory/v1/accounting_categories/get", body, init),
       /** Get accounting categories list
        */
-      listV1: (body: InventoryAccountingCategoriesListV1Params, init?: CallOptions): Promise<InventoryAccountingCategoriesListV1Response> =>
+      listV1: (body: InventoryAccountingCategoriesListV1Params = {}, init?: CallOptions): Promise<InventoryAccountingCategoriesListV1Response> =>
         t.call("/api/inventory/v1/accounting_categories/list", body, init),
     },
     conceptions: {
       /** Get conception by ID
        */
-      getV1: (body: InventoryConceptionsGetV1Params, init?: CallOptions): Promise<InventoryConceptionsGetV1Response> =>
+      getV1: (body: InventoryConceptionsGetV1Params = {}, init?: CallOptions): Promise<InventoryConceptionsGetV1Response> =>
         t.call("/api/inventory/v1/conceptions/get", body, init),
       /** Get conceptions list
        */
-      listV1: (body: InventoryConceptionsListV1Params, init?: CallOptions): Promise<InventoryConceptionsListV1Response> =>
+      listV1: (body: InventoryConceptionsListV1Params = {}, init?: CallOptions): Promise<InventoryConceptionsListV1Response> =>
         t.call("/api/inventory/v1/conceptions/list", body, init),
     },
     costings: {
@@ -258,15 +258,15 @@ export function createInventoryResource(t: Transport) {
         t.call("/api/inventory/v1/counteragents/get", body, init),
       /** Get counteragents list
        */
-      listV1: (body: InventoryCounteragentsListV1Params, init?: CallOptions): Promise<InventoryCounteragentsListV1Response> =>
+      listV1: (body: InventoryCounteragentsListV1Params = {}, init?: CallOptions): Promise<InventoryCounteragentsListV1Response> =>
         t.call("/api/inventory/v1/counteragents/list", body, init),
       /** Create a supplier price list
        */
-      pricelistCreateV1: (body: InventoryCounteragentsPricelistCreateV1Params, init?: CallOptions): Promise<InventoryCounteragentsPricelistCreateV1Response> =>
+      pricelistCreateV1: (body: InventoryCounteragentsPricelistCreateV1Params = {}, init?: CallOptions): Promise<InventoryCounteragentsPricelistCreateV1Response> =>
         t.call("/api/inventory/v1/counteragents/pricelist/create", body, init),
       /** Delete a supplier price list
        */
-      pricelistDeleteV1: (body: InventoryCounteragentsPricelistDeleteV1Params, init?: CallOptions): Promise<InventoryCounteragentsPricelistDeleteV1Response> =>
+      pricelistDeleteV1: (body: InventoryCounteragentsPricelistDeleteV1Params = {}, init?: CallOptions): Promise<InventoryCounteragentsPricelistDeleteV1Response> =>
         t.call("/api/inventory/v1/counteragents/pricelist/delete", body, init),
       /** Get supplier price list
        */
@@ -274,7 +274,7 @@ export function createInventoryResource(t: Transport) {
         t.call("/api/inventory/v1/counteragents/pricelist/list", body, init),
       /** Update a supplier price list
        */
-      pricelistUpdateV1: (body: InventoryCounteragentsPricelistUpdateV1Params, init?: CallOptions): Promise<InventoryCounteragentsPricelistUpdateV1Response> =>
+      pricelistUpdateV1: (body: InventoryCounteragentsPricelistUpdateV1Params = {}, init?: CallOptions): Promise<InventoryCounteragentsPricelistUpdateV1Response> =>
         t.call("/api/inventory/v1/counteragents/pricelist/update", body, init),
       /** Update counteragent
        */
@@ -412,19 +412,19 @@ export function createInventoryResource(t: Transport) {
     independentPriceList: {
       /** Create an internal price list
        */
-      createV1: (body: InventoryIndependentPriceListCreateV1Params, init?: CallOptions): Promise<InventoryIndependentPriceListCreateV1Response> =>
+      createV1: (body: InventoryIndependentPriceListCreateV1Params = {}, init?: CallOptions): Promise<InventoryIndependentPriceListCreateV1Response> =>
         t.call("/api/inventory/v1/independent-price-list/create", body, init),
       /** Delete an internal price list
        */
-      deleteV1: (body: InventoryIndependentPriceListDeleteV1Params, init?: CallOptions): Promise<InventoryIndependentPriceListDeleteV1Response> =>
+      deleteV1: (body: InventoryIndependentPriceListDeleteV1Params = {}, init?: CallOptions): Promise<InventoryIndependentPriceListDeleteV1Response> =>
         t.call("/api/inventory/v1/independent-price-list/delete", body, init),
       /** Internal price list for a date
        */
-      listV1: (body: InventoryIndependentPriceListListV1Params, init?: CallOptions): Promise<InventoryIndependentPriceListListV1Response> =>
+      listV1: (body: InventoryIndependentPriceListListV1Params = {}, init?: CallOptions): Promise<InventoryIndependentPriceListListV1Response> =>
         t.call("/api/inventory/v1/independent-price-list/list", body, init),
       /** Update an internal price list
        */
-      updateV1: (body: InventoryIndependentPriceListUpdateV1Params, init?: CallOptions): Promise<InventoryIndependentPriceListUpdateV1Response> =>
+      updateV1: (body: InventoryIndependentPriceListUpdateV1Params = {}, init?: CallOptions): Promise<InventoryIndependentPriceListUpdateV1Response> =>
         t.call("/api/inventory/v1/independent-price-list/update", body, init),
     },
     internalTransfer: {
@@ -460,21 +460,21 @@ export function createInventoryResource(t: Transport) {
     measureUnits: {
       /** Get measure unit by ID
        */
-      getV1: (body: InventoryMeasureUnitsGetV1Params, init?: CallOptions): Promise<InventoryMeasureUnitsGetV1Response> =>
+      getV1: (body: InventoryMeasureUnitsGetV1Params = {}, init?: CallOptions): Promise<InventoryMeasureUnitsGetV1Response> =>
         t.call("/api/inventory/v1/measure_units/get", body, init),
       /** Get measure units list
        */
-      listV1: (body: InventoryMeasureUnitsListV1Params, init?: CallOptions): Promise<InventoryMeasureUnitsListV1Response> =>
+      listV1: (body: InventoryMeasureUnitsListV1Params = {}, init?: CallOptions): Promise<InventoryMeasureUnitsListV1Response> =>
         t.call("/api/inventory/v1/measure_units/list", body, init),
     },
     organizations: {
       /** Get corporation settings
        */
-      settingsListV1: (body: InventoryOrganizationsSettingsListV1Params, init?: CallOptions): Promise<InventoryOrganizationsSettingsListV1Response> =>
+      settingsListV1: (body: InventoryOrganizationsSettingsListV1Params = {}, init?: CallOptions): Promise<InventoryOrganizationsSettingsListV1Response> =>
         t.call("/api/inventory/v1/organizations/settings/list", body, init),
       /** Get terminal groups list
        */
-      treeV2: (body: InventoryOrganizationsTreeV2Params, init?: CallOptions): Promise<InventoryOrganizationsTreeV2Response> =>
+      treeV2: (body: InventoryOrganizationsTreeV2Params = {}, init?: CallOptions): Promise<InventoryOrganizationsTreeV2Response> =>
         t.call("/api/inventory/v2/organizations/tree", body, init),
     },
     outgoingInvoice: {
@@ -518,11 +518,11 @@ export function createInventoryResource(t: Transport) {
     paymentTypes: {
       /** Get payment type by ID
        */
-      getV1: (body: InventoryPaymentTypesGetV1Params, init?: CallOptions): Promise<InventoryPaymentTypesGetV1Response> =>
+      getV1: (body: InventoryPaymentTypesGetV1Params = {}, init?: CallOptions): Promise<InventoryPaymentTypesGetV1Response> =>
         t.call("/api/inventory/v1/payment_types/get", body, init),
       /** Get payment types list
        */
-      listV1: (body: InventoryPaymentTypesListV1Params, init?: CallOptions): Promise<InventoryPaymentTypesListV1Response> =>
+      listV1: (body: InventoryPaymentTypesListV1Params = {}, init?: CallOptions): Promise<InventoryPaymentTypesListV1Response> =>
         t.call("/api/inventory/v1/payment_types/list", body, init),
     },
     productionDocument: {
@@ -630,7 +630,7 @@ export function createInventoryResource(t: Transport) {
     storages: {
       /** Get storages list
        */
-      listV2: (body: InventoryStoragesListV2Params, init?: CallOptions): Promise<InventoryStoragesListV2Response> =>
+      listV2: (body: InventoryStoragesListV2Params = {}, init?: CallOptions): Promise<InventoryStoragesListV2Response> =>
         t.call("/api/inventory/v2/storages/list", body, init),
     },
     substitutionRecord: {
