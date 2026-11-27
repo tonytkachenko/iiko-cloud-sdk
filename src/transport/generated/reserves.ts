@@ -51,7 +51,7 @@ export function createReservesResource(t: Transport) {
      *
      * Restriction group: `Orders: preparing`.
      */
-    availableOrganizations: (body?: ReservesAvailableOrganizationsParams, init?: CallOptions): Promise<ReservesAvailableOrganizationsResponse> =>
+    availableOrganizations: (body: ReservesAvailableOrganizationsParams = {}, init?: CallOptions): Promise<ReservesAvailableOrganizationsResponse> =>
       t.call("/api/1/reserve/available_organizations", body, init),
     /** Returns all restaurant sections of specified terminal groups, for which banquet/reserve booking are available.
      *

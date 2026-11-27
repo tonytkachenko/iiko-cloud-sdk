@@ -22,7 +22,7 @@ describe("transport", () => {
     const call = iiko.api()[0];
     expect(call?.method).toBe("POST");
     expect(call?.path).toBe("/api/1/organizations");
-    expect(call?.body).toBeUndefined();
+    expect(call?.body).toEqual({});
   });
 
   it("fetches a single organization by id", async () => {

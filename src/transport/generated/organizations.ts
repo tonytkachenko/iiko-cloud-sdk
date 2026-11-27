@@ -15,13 +15,13 @@ export function createOrganizationsResource(t: Transport) {
      *
      * Restriction group: `Data: dictionaries`.
      */
-    list: (body?: OrganizationsListParams, init?: CallOptions): Promise<OrganizationsListResponse> =>
+    list: (body: OrganizationsListParams = {}, init?: CallOptions): Promise<OrganizationsListResponse> =>
       t.call("/api/1/organizations", body, init),
     /** Returns available to api-login user organizations specified settings.
      *
      * Restriction group: `Organizations: settings`.
      */
-    settings: (body?: OrganizationsSettingsParams, init?: CallOptions): Promise<OrganizationsSettingsResponse> =>
+    settings: (body: OrganizationsSettingsParams = {}, init?: CallOptions): Promise<OrganizationsSettingsResponse> =>
       t.call("/api/1/organizations/settings", body, init),
   };
 }

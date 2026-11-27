@@ -13,7 +13,7 @@ export function createLicensesResource(t: Transport) {
      *
      * Restriction group: `Data: licenses`.
      */
-    list: (body?: LicensesListParams, init?: CallOptions): Promise<LicensesListResponse> =>
+    list: (body: LicensesListParams = {}, init?: CallOptions): Promise<LicensesListResponse> =>
       t.call("/api/licenses/v2/list", body, init),
   };
 }

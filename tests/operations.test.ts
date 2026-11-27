@@ -35,7 +35,9 @@ describe("generated operations", () => {
     const [call] = iiko.api();
     expect(call?.method).toBe("POST");
     expect(call?.path).toBe(op.path);
-    expect(call?.body).toEqual(op.body === "required" ? { marker: 1 } : undefined);
+    expect(call?.body).toEqual(
+      op.body === "required" ? { marker: 1 } : op.body === "optional" ? {} : undefined,
+    );
   });
 
   it("covers every non-deprecated POST of the committed spec, and nothing else", () => {

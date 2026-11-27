@@ -189,7 +189,7 @@ export function createLoyaltyResource(t: Transport) {
      *
      * Restriction group: `Loyalty: dictionaries`.
      */
-    manualConditions: (body?: LoyaltyManualConditionsParams, init?: CallOptions): Promise<LoyaltyManualConditionsResponse> =>
+    manualConditions: (body: LoyaltyManualConditionsParams = {}, init?: CallOptions): Promise<LoyaltyManualConditionsResponse> =>
       t.call("/api/1/loyalty/iiko/manual_condition", body, init),
     /** Get programs.
      *

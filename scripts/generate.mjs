@@ -73,12 +73,13 @@ const ruleFor = (urlPath) =>
 
 const indentOf = (depth) => "  ".repeat(depth);
 
+// iiko rejects a POST with no body (INVALID_BODY_JSON_FORMAT), so an optional body defaults to {}.
 const signature = (op, indent) => {
   if (op.body === "none") {
     return `${op.name}: (init?: CallOptions): Promise<${op.typeName}Response> =>\n${indent}  t.call(${JSON.stringify(op.path)}, undefined, init),`;
   }
   const params =
-    op.body === "optional" ? `body?: ${op.typeName}Params` : `body: ${op.typeName}Params`;
+    op.body === "optional" ? `body: ${op.typeName}Params = {}` : `body: ${op.typeName}Params`;
   return `${op.name}: (${params}, init?: CallOptions): Promise<${op.typeName}Response> =>\n${indent}  t.call(${JSON.stringify(op.path)}, body, init),`;
 };
 
