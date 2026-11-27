@@ -93,21 +93,21 @@ describe("error mapping", () => {
       error: (message: string, meta?: unknown) =>
         records.push(`${message} ${JSON.stringify(meta)}`),
     };
-    const iiko = fakeIiko(() =>
-      json(
-        {
-          errorDescription: "rejected",
-          appId: "test-app",
-          clientSecret: "test-secret",
-          apiKey: "test-key",
-        },
-        500,
-      ),
-    );
+    const request = {
+      appId: "test-app",
+      clientSecret: "test-secret",
+      apiKey: "test-key",
+      authToken: "test-hook-token",
+      credential: "test-card-credential",
+      apiLogin: "test-login",
+      certificateNumber: "keep-certificate",
+      seoKeywords: "keep-keywords",
+    };
+    const iiko = fakeIiko(() => json({ errorDescription: "rejected", ...request }, 500));
     const client = makeClient(iiko.fetch, { logger, debug: true });
 
     const error = (await client.transport.organizations
-      .list({ apiKey: "test-key", clientSecret: "test-secret", appId: "test-app" } as never)
+      .list(request as never)
       .catch((caught: unknown) => caught)) as IikoError;
 
     const serialized = [
@@ -122,6 +122,11 @@ describe("error mapping", () => {
     expect(serialized).not.toContain("test-secret");
     expect(serialized).not.toContain("test-key");
     expect(serialized).not.toContain("test-app");
+    expect(serialized).not.toContain("test-hook-token");
+    expect(serialized).not.toContain("test-card-credential");
+    expect(serialized).not.toContain("test-login");
+    expect(serialized).toContain("keep-certificate");
+    expect(serialized).toContain("keep-keywords");
     expect(serialized).toContain("[redacted]");
   });
 });

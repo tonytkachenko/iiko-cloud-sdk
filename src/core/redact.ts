@@ -1,4 +1,4 @@
-const SECRET_KEY = /^(appId|clientSecret|apiKey|authorization|token)$/i;
+const SECRET_KEY = /(token|secret|password|credentials?|authorization|apiKey|apiLogin|appId)$/i;
 const BEARER = /(Bearer\s+)[\w.~+/-]+=*/gi;
 const REDACTED = "[redacted]";
 

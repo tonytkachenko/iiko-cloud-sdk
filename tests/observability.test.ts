@@ -56,7 +56,10 @@ describe("observability", () => {
   });
 
   it("logs redacted bodies only when debug is on", async () => {
-    const body = { correlationId: "c", organizations: [{ id: "org-1", apiKey: "leak-me" }] };
+    const body = {
+      correlationId: "c",
+      organizations: [{ id: "org-1", apiKey: "leak-me", authToken: "leak-hook" }],
+    };
 
     const off = recorder();
     await makeClient(fakeIiko(() => body).fetch, {
@@ -72,6 +75,7 @@ describe("observability", () => {
     expect(logged).toContain("org-1");
     expect(logged).toContain("[redacted]");
     expect(logged).not.toContain("leak-me");
+    expect(logged).not.toContain("leak-hook");
     expect(logged).not.toContain("Bearer ");
   });
 });

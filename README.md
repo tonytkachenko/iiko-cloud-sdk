@@ -70,7 +70,7 @@ try {
 | `userAgent` | `iiko-cloud-sdk/<version>` | Override the User-Agent |
 | `onAttempt` | — | Called after every HTTP attempt: path, attempt, status, duration, correlationId, error |
 
-Credentials are kept in memory and never logged. Debug output and error bodies pass through `redact()`, which removes `appId`, `clientSecret`, `apiKey`, `Authorization` and `token`. It does not remove customer data: names, phones and addresses remain in debug bodies, so do not enable `debug` in production without a data policy. Use `onAttempt` for metadata without bodies.
+Credentials are kept in memory and never logged. Debug output and error bodies pass through `redact()`, which removes keys ending in `token`, `secret`, `password`, `credential`, `authorization`, `apiKey`, `apiLogin` or `appId`, and any `Bearer` value. It does not remove customer data: names, phones and addresses remain in debug bodies, so do not enable `debug` in production without a data policy. Use `onAttempt` for metadata without bodies.
 
 ## Errors
 
