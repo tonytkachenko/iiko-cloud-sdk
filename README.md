@@ -1,5 +1,7 @@
 # iiko-cloud-sdk
 
+[![npm version](https://img.shields.io/npm/v/iiko-cloud-sdk.svg)](https://www.npmjs.com/package/iiko-cloud-sdk)
+
 Unofficial TypeScript SDK for the iikoCloud API (`https://api-ru.iiko.services`).
 **Not affiliated with iiko.** It wraps the public iikoCloud Transport and Office APIs, generated from the official OpenAPI document.
 
