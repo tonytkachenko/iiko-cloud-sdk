@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0
+
+### Minor Changes
+
+- 631b1e9: Allow omitting a request body whose schema has no required top-level fields. The client sends `{}` instead, so iiko still receives a JSON body.
+- 4099ab7: Expose `Retry-After` as `retryAfterMs` on every error response, not only 429. Automatic retries remain limited to 429.
+
+### Patch Changes
+
+- f9ae9ad: Type JSON 201 responses instead of resolving them to `unknown`; 25 Office create operations now return their documented payload.
+- 0b99800: Report the package version in `User-Agent` from `package.json` instead of a hardcoded string.
+
 ## 0.2.0
 
 First released version. Not published yet at the time of this entry.
