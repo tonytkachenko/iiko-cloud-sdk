@@ -14,5 +14,6 @@ Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agen
 
 ### Agent roles
 
-Role prompts live in `.claude/agents/`: spec-engineer, core-engineer, qa-reviewer,
+Canonical prompts live in `.agents/`; OpenCode definitions are in `opencode.jsonc`, Claude Code
+uses the wrappers in `.claude/agents/`. Roles: spec-engineer, core-engineer, qa-reviewer,
 release-engineer and webhook-engineer (phase 2). See `docs/agents/roles.md`.

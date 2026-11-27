@@ -1,0 +1,40 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Canonical role prompts live in .agents/. Claude Code uses .claude/agents/ wrappers.
+  "agents": {
+    "spec-engineer": {
+      "description": "Owns spec/, scripts/ and generated output. Use when the iiko spec changes, a generated name or type is wrong, or the generator fails.",
+      "mode": "all",
+      "system": "{file:./.agents/spec-engineer.md}"
+    },
+    "core-engineer": {
+      "description": "Owns the hand-written runtime: auth, transport, errors, config, logging, extensions and the client factory.",
+      "mode": "all",
+      "system": "{file:./.agents/core-engineer.md}"
+    },
+    "qa-reviewer": {
+      "description": "Read-only reviewer. Use before merging any change. Checks generated output, the retry policy, the public surface and the suite.",
+      "mode": "subagent",
+      "system": "{file:./.agents/qa-reviewer.md}",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "*", "effect": "allow" }
+      ]
+    },
+    "release-engineer": {
+      "description": "Owns CI, changesets, package metadata and publishing. Use when a release is prepared or the workflows change.",
+      "mode": "subagent",
+      "system": "{file:./.agents/release-engineer.md}",
+      "permissions": [
+        { "action": "shell", "resource": "*", "effect": "allow" },
+        { "action": "shell", "resource": "git push *", "effect": "ask" },
+        { "action": "shell", "resource": "npm publish *", "effect": "ask" }
+      ]
+    },
+    "webhook-engineer": {
+      "description": "Builds src/webhooks: typed events from the spec's x-webhooks and parseWebhook(). Use only when phase 2 starts.",
+      "mode": "all",
+      "system": "{file:./.agents/webhook-engineer.md}"
+    }
+  }
+}

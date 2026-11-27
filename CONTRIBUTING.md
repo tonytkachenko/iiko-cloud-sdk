@@ -24,6 +24,11 @@ pnpm build
 - Office: `<domain>.<subresource>.<method>` (`inventory.incomingInvoice.create`); a version suffix is added only when a domain has several versions.
 - A renamed or removed published name is a breaking change; `tests/api.snapshot.txt` freezes the surface.
 
+## Agents
+
+Canonical role prompts live in `.agents/`. OpenCode definitions are in `opencode.jsonc`; Claude
+Code uses the wrappers in `.claude/agents/`, which point back to `.agents/`.
+
 ## Updating the spec
 
 1. `pnpm spec:sync` downloads `spec/raw.json`, normalizes it and regenerates types, wrappers and the manifest.
