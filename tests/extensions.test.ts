@@ -38,6 +38,27 @@ describe("call escape hatch", () => {
     expect(iiko.api()[0]?.path).toBe("/api/2/menu/by_id");
   });
 
+  it("sends an empty JSON body when an optional body is omitted", async () => {
+    const iiko = fakeIiko(() => ({}));
+    const client = makeClient(iiko.fetch);
+
+    await client.call("/api/nomenclature/v1/product/list");
+
+    expect(iiko.api()[0]?.body).toEqual({});
+  });
+
+  it("sends no body when the operation documents none", async () => {
+    for (const path of ["/api/1/tips_types", "/api/2/menu"] as const) {
+      const iiko = fakeIiko(() => ({}));
+      const client = makeClient(iiko.fetch);
+
+      await client.call(path);
+
+      expect(iiko.api()[0]?.path).toBe(path);
+      expect(iiko.api()[0]?.body).toBeUndefined();
+    }
+  });
+
   it("is typed by the spec paths", () => {
     const client = makeClient(fakeIiko().fetch);
     expect(typeof client.call).toBe("function");

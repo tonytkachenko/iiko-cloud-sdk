@@ -1,3 +1,4 @@
+import { NO_BODY_PATHS } from "../generated/no-body.js";
 import type { ILogger } from "../logger.js";
 import { AuthService } from "./auth.js";
 import type { ResolvedConfig } from "./config.js";
@@ -67,7 +68,10 @@ export class Transport {
   }
 
   async call<P extends Path>(path: P, ...args: CallArgs<P>): Promise<ResponseOf<P>> {
-    const [body, options] = args as [unknown, CallOptions?];
+    const [rawBody, options] = args as [unknown, CallOptions?];
+    // iiko rejects a POST with a documented JSON body when the body is missing. Generated
+    // wrappers already default to {}, so the escape hatch must do the same.
+    const body = rawBody === undefined && !NO_BODY_PATHS.has(path) ? {} : rawBody;
     for (let attempt = 0; ; attempt++) {
       try {
         return (await this.#authed(path, body, options ?? {}, attempt)) as ResponseOf<P>;

@@ -139,7 +139,9 @@ for (const [urlPath, item] of Object.entries(spec.paths)) {
     }
     if (op.deprecated) {
       // The escape hatch is POST-only; a deprecated GET is not reachable by path.
-      if (method === "post") deprecated.push({ service: rule.service, method, path: urlPath });
+      if (method === "post") {
+        deprecated.push({ service: rule.service, method, path: urlPath, body: bodyKind(op) });
+      }
       continue;
     }
     if (method !== "post")
@@ -331,6 +333,20 @@ for (const { service } of services) {
 function typeNames(ops) {
   return ops.reduce((sum, op) => sum + (op.body === "none" ? 1 : 2), 0);
 }
+
+// --- paths without a documented body; `call` must not send `{}` there
+const noBodyPaths = [...active, ...deprecated]
+  .filter((op) => op.body === "none")
+  .map((op) => op.path)
+  .toSorted();
+const noBody = [
+  HEADER,
+  "export const NO_BODY_PATHS: ReadonlySet<string> = new Set([",
+  ...noBodyPaths.map((urlPath) => `  ${JSON.stringify(urlPath)},`),
+  "]);",
+  "",
+];
+fs.writeFileSync(path.join(root, "src/generated/no-body.ts"), noBody.join("\n"));
 
 // --- manifest for tests and the path-typed escape hatch
 const manifest = [

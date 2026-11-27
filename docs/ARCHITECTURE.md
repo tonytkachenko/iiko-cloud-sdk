@@ -16,6 +16,7 @@ scripts/generate.mjs     spec + names -> wrappers, named types, manifest
         ├─ src/transport/generated/*.ts   transport.<domain>.<method>
         ├─ src/office/generated/*.ts      office.<domain>.<subresource>.<method>
         ├─ src/transport|office/generated/types.ts
+        ├─ src/generated/no-body.ts       paths without a documented body
         └─ src/generated/operations.ts    active manifest for tests
 ```
 
