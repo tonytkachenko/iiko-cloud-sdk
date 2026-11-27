@@ -56,6 +56,9 @@ export function resolveConfig(options: IikoClientOptions): ResolvedConfig {
   } catch {
     throw new TypeError('iiko: option "baseUrl" must be a valid absolute URL');
   }
+  if (parsed.search) {
+    throw new TypeError('iiko: option "baseUrl" must not contain a query string');
+  }
 
   const timeoutSec = options.timeoutSec ?? DEFAULT_TIMEOUT_SEC;
   if (!Number.isFinite(timeoutSec) || timeoutSec <= 0) {

@@ -27,7 +27,7 @@ export function withHelpers(transport: GeneratedTransport) {
           { organizationIds: [id] },
           { signal },
         );
-        return organizations?.[0];
+        return organizations?.find((organization) => organization.id === id);
       },
     },
     commands: {

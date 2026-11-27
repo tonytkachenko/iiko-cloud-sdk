@@ -50,6 +50,25 @@ describe("request types", () => {
     // @ts-expect-error deliveries.create still requires its body
     void (() => client.transport.deliveries.create());
   });
+
+  it("requires a body in call() when the operation requires one", () => {
+    const client = makeClient(fakeIiko().fetch);
+    const body: CreateOrderBody = {
+      organizationId: "org",
+      terminalGroupId: "group",
+      order: {
+        phone: "+10000000000",
+        orderServiceType: "DeliveryByCourier",
+        items: [{ type: "Product", productId: "p", price: 0, amount: 1 }],
+      },
+    };
+
+    // @ts-expect-error deliveries/create requires its body
+    void (() => client.call("/api/1/deliveries/create"));
+    void (() => client.call("/api/1/organizations"));
+    void (() => client.call("/api/1/deliveries/create", body));
+    expectTypeOf(body).toHaveProperty("organizationId");
+  });
 });
 
 describe("order items", () => {

@@ -36,7 +36,7 @@ describe("transport", () => {
 
     const organization = await client.transport.organizations.getById("org-2");
 
-    expect(organization?.id).toBe("org-1");
+    expect(organization?.id).toBe("org-2");
     const call = iiko.api()[0];
     expect(call?.method).toBe("POST");
     expect(call?.path).toBe("/api/1/organizations");
@@ -45,6 +45,13 @@ describe("transport", () => {
 
   it("returns undefined when the organization does not exist", async () => {
     const iiko = fakeIiko(() => json({ correlationId: "c", organizations: [] }));
+    const client = makeClient(iiko.fetch);
+
+    await expect(client.transport.organizations.getById("missing")).resolves.toBeUndefined();
+  });
+
+  it("returns undefined when the response contains other organizations", async () => {
+    const iiko = fakeIiko(() => organizations);
     const client = makeClient(iiko.fetch);
 
     await expect(client.transport.organizations.getById("missing")).resolves.toBeUndefined();
@@ -121,6 +128,12 @@ describe("config", () => {
     expect(() => createIikoClient({ ...valid, retries: -1 })).toThrow(TypeError);
     expect(() => createIikoClient({ ...valid, retries: 1.5 })).toThrow(TypeError);
     expect(() => createIikoClient({ ...valid, retryBaseMs: 0 })).toThrow(TypeError);
+  });
+
+  it("rejects a baseUrl with a query string", () => {
+    expect(() => createIikoClient({ ...valid, baseUrl: "https://proxy.test/?key=x" })).toThrow(
+      /query/,
+    );
   });
 
   it("defaults to the iikoCloud base URL and trims a trailing slash", async () => {

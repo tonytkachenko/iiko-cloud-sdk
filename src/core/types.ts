@@ -44,8 +44,14 @@ export interface CallOptions {
   timeoutSec?: number;
 }
 
+type BodyArgs<P extends Path> = [RequestOf<P>] extends [undefined]
+  ? [body?: undefined, options?: CallOptions]
+  : {} extends RequestOf<P>
+    ? [body?: RequestOf<P>, options?: CallOptions]
+    : [body: RequestOf<P>, options?: CallOptions];
+
 /**
- * Arguments of a path-typed call. The body stays optional here so a caller can omit
- * an all-optional body and send no payload; generated methods enforce required bodies.
+ * Arguments of a path-typed call. A body is required when its schema has a required
+ * field, and optional otherwise; generated methods enforce the same rule.
  */
-export type CallArgs<P extends Path> = [body?: RequestOf<P>, options?: CallOptions];
+export type CallArgs<P extends Path> = BodyArgs<P>;
