@@ -142,7 +142,7 @@ The generator fails on an unnamed active operation, a stale naming entry, a non-
 ```bash
 pnpm install
 pnpm spec:build
-pnpm test          # 431 tests, coverage thresholds
+pnpm test          # 434 tests, coverage thresholds
 pnpm typecheck
 pnpm build         # tsup: ESM + CJS + one shared .d.ts
 ```
