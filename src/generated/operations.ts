@@ -3246,7 +3246,6 @@ export const OPERATIONS = [
 export const DEPRECATED_OPERATIONS = [
   "/api/1/deliveries/update_order_courier",
   "/api/1/deliveries/update_order_payments",
-  "/api/1/organizations",
   "/api/2/menu/by_id",
   "/api/inventory/v1/costings/calculate",
   "/api/inventory/v1/disassemble_document/cancel",

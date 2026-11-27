@@ -142,7 +142,8 @@ for (const [urlPath, item] of Object.entries(spec.paths)) {
       continue;
     }
     if (op.deprecated) {
-      deprecated.push({ service: rule.service, method, path: urlPath });
+      // The escape hatch is POST-only; a deprecated GET is not reachable by path.
+      if (method === "post") deprecated.push({ service: rule.service, method, path: urlPath });
       continue;
     }
     if (method !== "post")
