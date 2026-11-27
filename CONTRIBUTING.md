@@ -48,8 +48,10 @@ Code uses the wrappers in `.claude/agents/`, which point back to `.agents/`.
 ## Release
 
 1. `pnpm changeset version` bumps `package.json` and the changelog.
-2. `pnpm test && pnpm build && npm pack --dry-run`.
-3. Commit, tag `v<version>` and push the tag.
-4. The publish workflow checks that the tag matches `package.json` and publishes.
+2. `pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && npm pack --dry-run`.
+3. Commit, tag `v<version>` and publish with `npm publish --access public` (or `pnpm publish`).
+   `prepublishOnly` rebuilds `dist`; push the tag afterwards.
 
-The first release authenticates with the `NPM_TOKEN` secret. Once the package exists, configure npm trusted publishing for this repository and workflow; later releases can drop the token and use OIDC.
+GitHub Actions is not used at the moment. The publish workflow and the nightly spec-sync job are
+removed; run `pnpm spec:sync` manually when the upstream document changes. When Actions is
+restored, bring back the workflows and configure npm trusted publishing.

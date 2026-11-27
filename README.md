@@ -156,7 +156,7 @@ argument.
 
 ```bash
 pnpm spec:sync    # download the live document, normalize, regenerate
-pnpm spec:build   # regenerate from the committed document (what CI runs)
+pnpm spec:build   # regenerate from the committed document
 ```
 
 The generator fails on an unnamed active operation, a stale naming entry, a non-POST operation or a duplicate name/type. Update names in `scripts/names/transport.json` or `scripts/names/office.json` and rerun.
@@ -166,9 +166,11 @@ The generator fails on an unnamed active operation, a stale naming entry, a non-
 ```bash
 pnpm install
 pnpm spec:build
-pnpm check         # tsc + 435 tests, coverage thresholds
+pnpm check         # tsc + 452 tests, coverage thresholds
 pnpm build         # tsup: ESM + CJS + one shared .d.ts
 ```
+
+GitHub Actions is not used at the moment; run the checks locally.
 
 The public API is frozen in `tests/api.snapshot.txt`. Update it only with `pnpm exec vitest run tests/api.test.ts -u` and review the diff: a removed or renamed name is a major version.
 

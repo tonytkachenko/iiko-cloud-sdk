@@ -143,12 +143,15 @@ src/index.ts                   публичный экспорт
 
 ### Фаза 6. Упаковка, CI, релиз
 
+CI и publish workflow отключены до решения billing: проверки, spec-sync и публикация выполняются
+вручную.
+
 1. `tsup`: ESM + CJS + `.d.ts`/`.d.cts`; `exports` с `import` и `require`.
 2. `package.json`: имя, repository, bugs, homepage, author, keywords, `files`, `engines >=22.12`, `publishConfig`.
 3. README: установка, оба сервиса, типы, ошибки, ретраи, таймаут, `onAttempt`, даты, `call`, обновление спеки, дисклеймер.
 4. `docs/ARCHITECTURE.md` + ADR: 0001 слияние, 0002 политика ретраев, 0003 throw vs result. `SPECS.md`, `IMPLEMENTATION.md`, `TRANSPORT-PLAN.md` уже в `docs/history/`.
-5. CI: PR — детерминированная генерация из закоммиченной спеки; ночью — upstream + issue; тесты; сборка; audit; smoke ESM/CJS.
-6. Publish workflow по тегу: первый релиз с `NPM_TOKEN`, затем trusted publishing.
+5. CI: отложен до billing; локально — генерация из закоммиченной спеки, тесты, сборка, audit и smoke ESM/CJS.
+6. Publish: вручную по тегу с `npm publish`; workflow вернётся вместе с billing и trusted publishing.
 
 Готово, когда: `npm pack --dry-run` содержит только нужное, установка в чистый проект работает в обоих форматах.
 
@@ -191,7 +194,7 @@ src/index.ts                   публичный экспорт
 5. 429 ретраится, 500/сеть/таймаут — нет; `Retry-After` в секундах и дате.
 6. Заголовки `Timeout` и `User-Agent` уходят; `onAttempt` отдаёт метрики без тел.
 7. Секреты не попадают в ошибки и логи (тест).
-8. Снимок API закоммичен и проверяется в CI.
+8. Снимок API закоммичен и проверяется тестом `tests/api.test.ts`.
 9. `pnpm check` и `pnpm build` зелёные; ESM и CJS импортируются.
 10. Ноль рантайм-зависимостей; `npm audit` чистый.
 11. 25 активных create с ответом 201 возвращают документированный тип, а не `unknown`.
