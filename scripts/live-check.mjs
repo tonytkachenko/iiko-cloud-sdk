@@ -106,4 +106,4 @@ await check("office.inventory.storages.listV2", async () => {
 });
 
 console.log(`\nread-only check finished: ${ok} ok, ${failed} failed`);
-if (!organizationsOk) process.exitCode = 1;
+if (failed > 0) process.exitCode = 1;
