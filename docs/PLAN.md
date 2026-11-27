@@ -143,15 +143,14 @@ src/index.ts                   публичный экспорт
 
 ### Фаза 6. Упаковка, CI, релиз
 
-CI и publish workflow отключены до решения billing: проверки, spec-sync и публикация выполняются
-вручную.
+CI и publish workflow отключены: проверки, spec-sync и публикация выполняются вручную.
 
 1. `tsup`: ESM + CJS + `.d.ts`/`.d.cts`; `exports` с `import` и `require`.
 2. `package.json`: имя, repository, bugs, homepage, author, keywords, `files`, `engines >=22.12`, `publishConfig`.
 3. README: установка, оба сервиса, типы, ошибки, ретраи, таймаут, `onAttempt`, даты, `call`, обновление спеки, дисклеймер.
 4. `docs/ARCHITECTURE.md` + ADR: 0001 слияние, 0002 политика ретраев, 0003 throw vs result. `SPECS.md`, `IMPLEMENTATION.md`, `TRANSPORT-PLAN.md` уже в `docs/history/`.
-5. CI: отложен до billing; локально — генерация из закоммиченной спеки, тесты, сборка, audit и smoke ESM/CJS.
-6. Publish: вручную по тегу с `npm publish`; workflow вернётся вместе с billing и trusted publishing.
+5. CI: отключён; локально — генерация из закоммиченной спеки, тесты, сборка, audit и smoke ESM/CJS.
+6. Publish: вручную по тегу с `npm publish`; workflow можно вернуть вместе с trusted publishing.
 
 Готово, когда: `npm pack --dry-run` содержит только нужное, установка в чистый проект работает в обоих форматах.
 
