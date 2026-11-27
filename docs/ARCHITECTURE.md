@@ -58,4 +58,7 @@ Generated files are never edited by hand. They are excluded from lint, format an
 
 - Unions are closed over today's variants: a new iiko variant is invisible to TypeScript until the spec is regenerated.
 - Types describe structure, not business rules: numeric ranges, dependent fields and terminal-local dates are not validated at runtime.
-- `src/generated/schema.ts` is about 2.6 MB; the shipped `dist/index.d.ts` is 2.58 MB. Each consumer loads it once per project; the package ships one declaration file shared by ESM and CJS.
+- `src/generated/schema.ts` is about 2.4 MB; the shipped `dist/index.d.ts` is 2.58 MB and 67k
+  lines. Each consumer loads it once per project; the package ships one declaration file shared by
+  ESM and CJS. Measured cold `tsc` delta: ~0.12 s and ~50 MB with `skipLibCheck: true`. See
+  [ADR-0004](adr/0004-declaration-size.md) for why service subpaths are deferred.
