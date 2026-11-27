@@ -46,7 +46,7 @@ describe("package", () => {
 });
 
 describe("transport", () => {
-  it("lists organizations with the documented POST and no body", async () => {
+  it("lists organizations with the documented POST and an empty JSON body", async () => {
     const iiko = fakeIiko(() => organizations);
     const client = makeClient(iiko.fetch);
 

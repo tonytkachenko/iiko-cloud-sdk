@@ -18,7 +18,7 @@ Timeouts use iiko's own `Timeout` header (15 seconds by default) plus a five-sec
 ## Alternatives rejected
 
 - **Retry 5xx and network errors.** Cheaper to implement, but unsafe for order and command creation.
-- **Retry only idempotent methods.** iikoCloud has no idempotent methods: all active operations are POST.
+- **Retry only idempotent methods.** Most iikoCloud operations have no idempotency key: all active operations are POST, and only `deliveries/create` accepts a caller-supplied `order.id`. A blanket 5xx retry would still risk a second order or command.
 - **No retries at all.** Safe but wasteful: rate limiting is the one failure that is guaranteed not to have executed anything.
 
 ## Consequences
