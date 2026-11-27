@@ -3,8 +3,18 @@
 import type { Transport } from "../../core/transport.js";
 import type { CallOptions } from "../../core/types.js";
 import type {
+  LoyaltyAddCustomerCardParams,
+  LoyaltyAddCustomerCardResponse,
+  LoyaltyAddCustomerCategoryParams,
+  LoyaltyAddCustomerCategoryResponse,
+  LoyaltyAddCustomerToProgramParams,
+  LoyaltyAddCustomerToProgramResponse,
   LoyaltyCalculateParams,
   LoyaltyCalculateResponse,
+  LoyaltyCancelCustomerWalletHoldParams,
+  LoyaltyCancelCustomerWalletHoldResponse,
+  LoyaltyChargeoffCustomerWalletParams,
+  LoyaltyChargeoffCustomerWalletResponse,
   LoyaltyCheckSmsSendingPossibilityParams,
   LoyaltyCheckSmsSendingPossibilityResponse,
   LoyaltyCheckSmsStatusParams,
@@ -17,56 +27,76 @@ import type {
   LoyaltyCouponsBySeriesResponse,
   LoyaltyCouponsInfoParams,
   LoyaltyCouponsInfoResponse,
-  LoyaltyCustomerCardAddParams,
-  LoyaltyCustomerCardAddResponse,
-  LoyaltyCustomerCardRemoveParams,
-  LoyaltyCustomerCardRemoveResponse,
+  LoyaltyCreateOrUpdateCustomerParams,
+  LoyaltyCreateOrUpdateCustomerResponse,
   LoyaltyCustomerCategoriesParams,
   LoyaltyCustomerCategoriesResponse,
-  LoyaltyCustomerCategoryAddParams,
-  LoyaltyCustomerCategoryAddResponse,
-  LoyaltyCustomerCategoryRemoveParams,
-  LoyaltyCustomerCategoryRemoveResponse,
-  LoyaltyCustomerCreateOrUpdateParams,
-  LoyaltyCustomerCreateOrUpdateResponse,
   LoyaltyCustomerInfoParams,
   LoyaltyCustomerInfoResponse,
-  LoyaltyCustomerProgramAddParams,
-  LoyaltyCustomerProgramAddResponse,
   LoyaltyCustomerTransactionsByDateParams,
   LoyaltyCustomerTransactionsByDateResponse,
   LoyaltyCustomerTransactionsByRevisionParams,
   LoyaltyCustomerTransactionsByRevisionResponse,
-  LoyaltyCustomerWalletCancelHoldParams,
-  LoyaltyCustomerWalletCancelHoldResponse,
-  LoyaltyCustomerWalletChargeoffParams,
-  LoyaltyCustomerWalletChargeoffResponse,
-  LoyaltyCustomerWalletHoldParams,
-  LoyaltyCustomerWalletHoldResponse,
-  LoyaltyCustomerWalletTopupParams,
-  LoyaltyCustomerWalletTopupResponse,
   LoyaltyDeleteCustomersParams,
   LoyaltyDeleteCustomersResponse,
+  LoyaltyHoldCustomerWalletParams,
+  LoyaltyHoldCustomerWalletResponse,
   LoyaltyManualConditionsParams,
   LoyaltyManualConditionsResponse,
   LoyaltyProgramsParams,
   LoyaltyProgramsResponse,
+  LoyaltyRemoveCustomerCardParams,
+  LoyaltyRemoveCustomerCardResponse,
+  LoyaltyRemoveCustomerCategoryParams,
+  LoyaltyRemoveCustomerCategoryResponse,
   LoyaltyRestoreCustomersParams,
   LoyaltyRestoreCustomersResponse,
   LoyaltySendEmailParams,
   LoyaltySendEmailResponse,
   LoyaltySendSmsParams,
   LoyaltySendSmsResponse,
+  LoyaltyTopupCustomerWalletParams,
+  LoyaltyTopupCustomerWalletResponse,
 } from "./types.js";
 
 export function createLoyaltyResource(t: Transport) {
   return {
+    /** Add card.
+     *
+     * Restriction group: `Guests: changing`.
+     */
+    addCustomerCard: (body: LoyaltyAddCustomerCardParams, init?: CallOptions): Promise<LoyaltyAddCustomerCardResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/card/add", body, init),
+    /** Add category for customer.
+     *
+     * Restriction group: `Guests: changing`.
+     */
+    addCustomerCategory: (body: LoyaltyAddCustomerCategoryParams, init?: CallOptions): Promise<LoyaltyAddCustomerCategoryResponse> =>
+      t.call("/api/1/loyalty/iiko/customer_category/add", body, init),
+    /** Add customer to program.
+     *
+     * Restriction group: `Guests: changing`.
+     */
+    addCustomerToProgram: (body: LoyaltyAddCustomerToProgramParams, init?: CallOptions): Promise<LoyaltyAddCustomerToProgramResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/program/add", body, init),
     /** Calculate checkin.
      *
      * Restriction group: `Loyalty: order calculate`.
      */
     calculate: (body: LoyaltyCalculateParams, init?: CallOptions): Promise<LoyaltyCalculateResponse> =>
       t.call("/api/1/loyalty/iiko/calculate", body, init),
+    /** Cancel hold money.
+     *
+     * Restriction group: `Loyalty: wallets`.
+     */
+    cancelCustomerWalletHold: (body: LoyaltyCancelCustomerWalletHoldParams, init?: CallOptions): Promise<LoyaltyCancelCustomerWalletHoldResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/wallet/cancel_hold", body, init),
+    /** Withdraw balance.
+     *
+     * Restriction group: `Loyalty: wallets`.
+     */
+    chargeoffCustomerWallet: (body: LoyaltyChargeoffCustomerWalletParams, init?: CallOptions): Promise<LoyaltyChargeoffCustomerWalletResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/wallet/chargeoff", body, init),
     /** Check sms sending possibility.
      */
     checkSmsSendingPossibility: (body: LoyaltyCheckSmsSendingPossibilityParams, init?: CallOptions): Promise<LoyaltyCheckSmsSendingPossibilityResponse> =>
@@ -97,54 +127,24 @@ export function createLoyaltyResource(t: Transport) {
      */
     couponsInfo: (body: LoyaltyCouponsInfoParams, init?: CallOptions): Promise<LoyaltyCouponsInfoResponse> =>
       t.call("/api/1/loyalty/iiko/coupons/info", body, init),
-    /** Add card.
+    /** Create or update customer.
      *
-     * Restriction group: `Guests: changing`.
+     * Restriction group: `Guests: creating`.
      */
-    customerCardAdd: (body: LoyaltyCustomerCardAddParams, init?: CallOptions): Promise<LoyaltyCustomerCardAddResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/card/add", body, init),
-    /** Delete card.
-     *
-     * Restriction group: `Guests: changing`.
-     */
-    customerCardRemove: (body: LoyaltyCustomerCardRemoveParams, init?: CallOptions): Promise<LoyaltyCustomerCardRemoveResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/card/remove", body, init),
+    createOrUpdateCustomer: (body: LoyaltyCreateOrUpdateCustomerParams, init?: CallOptions): Promise<LoyaltyCreateOrUpdateCustomerResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/create_or_update", body, init),
     /** Get customer categories.
      *
      * Restriction group: `Loyalty: dictionaries`.
      */
     customerCategories: (body: LoyaltyCustomerCategoriesParams, init?: CallOptions): Promise<LoyaltyCustomerCategoriesResponse> =>
       t.call("/api/1/loyalty/iiko/customer_category", body, init),
-    /** Add category for customer.
-     *
-     * Restriction group: `Guests: changing`.
-     */
-    customerCategoryAdd: (body: LoyaltyCustomerCategoryAddParams, init?: CallOptions): Promise<LoyaltyCustomerCategoryAddResponse> =>
-      t.call("/api/1/loyalty/iiko/customer_category/add", body, init),
-    /** Remove category for customer.
-     *
-     * Restriction group: `Guests: changing`.
-     */
-    customerCategoryRemove: (body: LoyaltyCustomerCategoryRemoveParams, init?: CallOptions): Promise<LoyaltyCustomerCategoryRemoveResponse> =>
-      t.call("/api/1/loyalty/iiko/customer_category/remove", body, init),
-    /** Create or update customer.
-     *
-     * Restriction group: `Guests: creating`.
-     */
-    customerCreateOrUpdate: (body: LoyaltyCustomerCreateOrUpdateParams, init?: CallOptions): Promise<LoyaltyCustomerCreateOrUpdateResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/create_or_update", body, init),
     /** Get customer info.
      *
      * Restriction group: `Guests: info`.
      */
     customerInfo: (body: LoyaltyCustomerInfoParams, init?: CallOptions): Promise<LoyaltyCustomerInfoResponse> =>
       t.call("/api/1/loyalty/iiko/customer/info", body, init),
-    /** Add customer to program.
-     *
-     * Restriction group: `Guests: changing`.
-     */
-    customerProgramAdd: (body: LoyaltyCustomerProgramAddParams, init?: CallOptions): Promise<LoyaltyCustomerProgramAddResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/program/add", body, init),
     /** Get transaction report by period.
      *
      * Restriction group: `Guests: info`.
@@ -157,34 +157,16 @@ export function createLoyaltyResource(t: Transport) {
      */
     customerTransactionsByRevision: (body: LoyaltyCustomerTransactionsByRevisionParams, init?: CallOptions): Promise<LoyaltyCustomerTransactionsByRevisionResponse> =>
       t.call("/api/1/loyalty/iiko/customer/transactions/by_revision", body, init),
-    /** Cancel hold money.
-     *
-     * Restriction group: `Loyalty: wallets`.
-     */
-    customerWalletCancelHold: (body: LoyaltyCustomerWalletCancelHoldParams, init?: CallOptions): Promise<LoyaltyCustomerWalletCancelHoldResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/wallet/cancel_hold", body, init),
-    /** Withdraw balance.
-     *
-     * Restriction group: `Loyalty: wallets`.
-     */
-    customerWalletChargeoff: (body: LoyaltyCustomerWalletChargeoffParams, init?: CallOptions): Promise<LoyaltyCustomerWalletChargeoffResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/wallet/chargeoff", body, init),
-    /** Hold money.
-     *
-     * Restriction group: `Loyalty: wallets`.
-     */
-    customerWalletHold: (body: LoyaltyCustomerWalletHoldParams, init?: CallOptions): Promise<LoyaltyCustomerWalletHoldResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/wallet/hold", body, init),
-    /** Refill balance.
-     *
-     * Restriction group: `Loyalty: wallets`.
-     */
-    customerWalletTopup: (body: LoyaltyCustomerWalletTopupParams, init?: CallOptions): Promise<LoyaltyCustomerWalletTopupResponse> =>
-      t.call("/api/1/loyalty/iiko/customer/wallet/topup", body, init),
     /** Logical deletion of customers.
      */
     deleteCustomers: (body: LoyaltyDeleteCustomersParams, init?: CallOptions): Promise<LoyaltyDeleteCustomersResponse> =>
       t.call("/api/1/loyalty/iiko/delete_customers", body, init),
+    /** Hold money.
+     *
+     * Restriction group: `Loyalty: wallets`.
+     */
+    holdCustomerWallet: (body: LoyaltyHoldCustomerWalletParams, init?: CallOptions): Promise<LoyaltyHoldCustomerWalletResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/wallet/hold", body, init),
     /** Get manual conditions.
      *
      * Restriction group: `Loyalty: dictionaries`.
@@ -197,6 +179,18 @@ export function createLoyaltyResource(t: Transport) {
      */
     programs: (body: LoyaltyProgramsParams, init?: CallOptions): Promise<LoyaltyProgramsResponse> =>
       t.call("/api/1/loyalty/iiko/program", body, init),
+    /** Delete card.
+     *
+     * Restriction group: `Guests: changing`.
+     */
+    removeCustomerCard: (body: LoyaltyRemoveCustomerCardParams, init?: CallOptions): Promise<LoyaltyRemoveCustomerCardResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/card/remove", body, init),
+    /** Remove category for customer.
+     *
+     * Restriction group: `Guests: changing`.
+     */
+    removeCustomerCategory: (body: LoyaltyRemoveCustomerCategoryParams, init?: CallOptions): Promise<LoyaltyRemoveCustomerCategoryResponse> =>
+      t.call("/api/1/loyalty/iiko/customer_category/remove", body, init),
     /** Logical recovery of customers.
      */
     restoreCustomers: (body: LoyaltyRestoreCustomersParams, init?: CallOptions): Promise<LoyaltyRestoreCustomersResponse> =>
@@ -213,5 +207,11 @@ export function createLoyaltyResource(t: Transport) {
      */
     sendSms: (body: LoyaltySendSmsParams, init?: CallOptions): Promise<LoyaltySendSmsResponse> =>
       t.call("/api/1/loyalty/iiko/message/send_sms", body, init),
+    /** Refill balance.
+     *
+     * Restriction group: `Loyalty: wallets`.
+     */
+    topupCustomerWallet: (body: LoyaltyTopupCustomerWalletParams, init?: CallOptions): Promise<LoyaltyTopupCustomerWalletResponse> =>
+      t.call("/api/1/loyalty/iiko/customer/wallet/topup", body, init),
   };
 }

@@ -337,23 +337,23 @@
     },
     "/api/1/loyalty/iiko/customer_category/add": {
       "domain": "loyalty",
-      "name": "customerCategoryAdd"
+      "name": "addCustomerCategory"
     },
     "/api/1/loyalty/iiko/customer_category/remove": {
       "domain": "loyalty",
-      "name": "customerCategoryRemove"
+      "name": "removeCustomerCategory"
     },
     "/api/1/loyalty/iiko/customer/card/add": {
       "domain": "loyalty",
-      "name": "customerCardAdd"
+      "name": "addCustomerCard"
     },
     "/api/1/loyalty/iiko/customer/card/remove": {
       "domain": "loyalty",
-      "name": "customerCardRemove"
+      "name": "removeCustomerCard"
     },
     "/api/1/loyalty/iiko/customer/create_or_update": {
       "domain": "loyalty",
-      "name": "customerCreateOrUpdate"
+      "name": "createOrUpdateCustomer"
     },
     "/api/1/loyalty/iiko/customer/info": {
       "domain": "loyalty",
@@ -361,7 +361,7 @@
     },
     "/api/1/loyalty/iiko/customer/program/add": {
       "domain": "loyalty",
-      "name": "customerProgramAdd"
+      "name": "addCustomerToProgram"
     },
     "/api/1/loyalty/iiko/customer/transactions/by_date": {
       "domain": "loyalty",
@@ -373,19 +373,19 @@
     },
     "/api/1/loyalty/iiko/customer/wallet/cancel_hold": {
       "domain": "loyalty",
-      "name": "customerWalletCancelHold"
+      "name": "cancelCustomerWalletHold"
     },
     "/api/1/loyalty/iiko/customer/wallet/chargeoff": {
       "domain": "loyalty",
-      "name": "customerWalletChargeoff"
+      "name": "chargeoffCustomerWallet"
     },
     "/api/1/loyalty/iiko/customer/wallet/hold": {
       "domain": "loyalty",
-      "name": "customerWalletHold"
+      "name": "holdCustomerWallet"
     },
     "/api/1/loyalty/iiko/customer/wallet/topup": {
       "domain": "loyalty",
-      "name": "customerWalletTopup"
+      "name": "topupCustomerWallet"
     },
     "/api/1/loyalty/iiko/delete_customers": {
       "domain": "loyalty",

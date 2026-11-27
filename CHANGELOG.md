@@ -6,6 +6,7 @@
 
 - 631b1e9: Allow omitting a request body whose schema has no required top-level fields. The client sends `{}` instead, so iiko still receives a JSON body.
 - 4099ab7: Expose `Retry-After` as `retryAfterMs` on every error response, not only 429. Automatic retries remain limited to 429.
+- **Naming:** loyalty mutations are verb-first and their types follow the method (`addCustomerCategory` / `LoyaltyAddCustomerCategoryParams`, `holdCustomerWallet`, ...); queries remain noun-first (`customerInfo`, `customerCategories`). The package is not published yet, so no consumer migration is needed.
 
 ### Patch Changes
 
