@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- 9ab2ef8: Abort now cancels a pending 429 backoff immediately instead of waiting for the delay to elapse.
+
+  Token endpoint failures keep their typed error: a 429 is retried like any other request, 5xx,
+  network and timeout failures are no longer reported as `IikoAuthError`, and a 401 from the token
+  endpoint no longer triggers an API 401 replay. A token response without a token is still an
+  `IikoAuthError`.
+
+  `call()` now requires a body for operations whose schema has a required field.
+  `transport.organizations.getById` returns only the organization whose id matches, and `baseUrl`
+  rejects a query string.
+
+### Patch Changes
+
+- 2280fb1: The token request now uses the call's `timeoutSec`. A short-lived token gets a proportional
+  refresh margin, and a token whose `exp` is already past is cached for 30 s so clock skew does not
+  cause a token request on every call.
+
+  `commands.wait` cancels the sleep between polls with the caller's signal and rejects a non-positive
+  `intervalMs` or a negative `timeoutMs`.
+
+  A generated operation that collides with a hand-written helper now fails fast instead of being
+  silently shadowed. `prepublishOnly` builds the package before a manual publish, and the README
+  documents that debug bodies are redacted for credentials, not customer data.
+
+- 7855d6e: Debug logs and `IikoError` bodies now redact credential-shaped keys such as `authToken` and
+  `credential`; the rule matches key suffixes instead of a fixed list of names.
+
 ## 0.3.0
 
 ### Minor Changes
