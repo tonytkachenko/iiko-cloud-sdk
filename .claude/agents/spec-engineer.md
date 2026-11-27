@@ -13,7 +13,9 @@ Workflow for a new spec:
 2. A known spec defect is patched only in `scripts/normalize-spec.mjs`; an unknown defect fails
    the run and needs an explicit patch with a comment saying why.
 3. Ugly or clashing names are fixed only in `scripts/names/transport.json` or
-   `scripts/names/office.json`. The generator fails on a name clash, an unmapped active
+   `scripts/names/office.json`. Transport mutations are verb-first (`addCustomerCard`,
+   `holdCustomerWallet`), queries are noun-first (`customerInfo`, `customerCategories`); Office is
+   `<domain>.<subresource>.<method>`. The generator fails on a name clash, an unmapped active
    operation and a stale naming entry.
 4. `pnpm spec:build` twice in a row must not change `git diff`.
 

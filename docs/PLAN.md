@@ -160,7 +160,16 @@ src/index.ts                   публичный экспорт
 
 Готово, когда: пакет опубликован, README на npm корректен, пример устанавливается.
 
-## 5. Имена Office
+## 5. Имена
+
+### Transport
+
+- Курируются в `scripts/names/transport.json`.
+- Мутации — verb-first: `addCustomerCategory`, `holdCustomerWallet`, `sendSms`.
+- Запросы — noun-first: `customerInfo`, `customerCategories`, `customerTransactionsByDate`.
+- `/api/1` — версия транспорта, в имя не входит; `vN` внутри пути становится суффиксом (`menu.byIdV3`).
+
+### Office
 
 - Домен из префикса: `inventory`, `nomenclature`, `finance`, `employees`, `purchasing`, `reporting`, `terminals`, `platform`, `pricing`, `licenses`.
 - Подресурс — первый сегмент после версии:

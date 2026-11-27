@@ -18,6 +18,12 @@ pnpm build
 - Add a Changeset (`pnpm changeset`) for anything that changes published behaviour.
 - Use Conventional Commits: `fix:` patch, `feat:` minor, `BREAKING CHANGE:` major.
 
+## Naming
+
+- Transport: mutations are verb-first (`addCustomerCard`, `holdCustomerWallet`, `sendSms`); queries are noun-first (`customerInfo`, `customerCategories`, `customerTransactionsByDate`). Curate them in `scripts/names/transport.json`.
+- Office: `<domain>.<subresource>.<method>` (`inventory.incomingInvoice.create`); a version suffix is added only when a domain has several versions.
+- A renamed or removed published name is a breaking change; `tests/api.snapshot.txt` freezes the surface.
+
 ## Updating the spec
 
 1. `pnpm spec:sync` downloads `spec/raw.json`, normalizes it and regenerates types, wrappers and the manifest.
