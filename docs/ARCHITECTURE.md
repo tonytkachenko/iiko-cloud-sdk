@@ -33,7 +33,7 @@ scripts/generate.mjs     spec + names -> wrappers, named types, manifest
 - `transport.ts` — `fetch`, JSON, 401 replay, 429 retry, server-side `Timeout` header with a client grace, `User-Agent`, `onAttempt`, debug logging.
 - `auth.ts` — JWT `exp` with a five-minute margin, one-hour fallback, single-flight token requests.
 - `errors.ts` — eight classes, redacted bodies, `correlationId`, `code`, `retryAfterMs`.
-- `types.ts` — `Path`, `RequestOf`, `ResponseOf` (`void` for an empty 200), `CallOptions`.
+- `types.ts` — `Path`, `RequestOf`, `ResponseOf` (`void` for an empty 2xx; JSON 200 and 201 are typed), `CallOptions`.
 - `dates.ts` — iiko's UTC date format.
 
 The public client is a factory, not a class: `createIikoClient` returns `{ transport, office, call }`. `call(path, ...)` is the typed escape hatch for deprecated operations that have no wrapper.
@@ -44,7 +44,7 @@ Generated files are never edited by hand. They are excluded from lint, format an
 
 - `tests/operations.test.ts` — every active operation calls its documented path and body.
 - `tests/api.test.ts` — the public export list is frozen in `tests/api.snapshot.txt`.
-- `tests/types.test.ts` — unions, required fields, `void` responses and per-operation type names.
+- `tests/types.test.ts` — unions, required fields, JSON 200/201 and `void` responses, per-operation type names.
 
 ## Design decisions
 
@@ -58,4 +58,4 @@ Generated files are never edited by hand. They are excluded from lint, format an
 
 - Unions are closed over today's variants: a new iiko variant is invisible to TypeScript until the spec is regenerated.
 - Types describe structure, not business rules: numeric ranges, dependent fields and terminal-local dates are not validated at runtime.
-- `schema.d.ts` is about 2.6 MB. Each consumer loads it once per project; the package ships one declaration file shared by ESM and CJS.
+- `src/generated/schema.ts` is about 2.6 MB; the shipped `dist/index.d.ts` is 2.58 MB. Each consumer loads it once per project; the package ships one declaration file shared by ESM and CJS.

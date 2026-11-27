@@ -31,7 +31,7 @@ pnpm build
 - `tests/operations.test.ts` calls every active operation and checks method, path and body.
 - `tests/api.test.ts` freezes the export list; `tests/api.snapshot.txt` is the contract.
 - `tests/retry.test.ts` pins the 429-only policy; widening it is an ADR-level decision.
-- `tests/types.test.ts` checks unions and required fields.
+- `tests/types.test.ts` checks unions, required fields and JSON 200/201 responses.
 - `pnpm live:check` (manual, needs real keys) runs read-only calls against production.
 
 ## Release
