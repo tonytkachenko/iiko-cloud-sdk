@@ -73,7 +73,7 @@ export function retryAfterMs(response: Response): number | undefined {
 }
 
 function errorClass(status: number): typeof IikoError {
-  if (status === 401 || status === 403) return IikoAuthError;
+  if (status === 401 || status === 402 || status === 403 || status === 423) return IikoAuthError;
   if (status === 408) return IikoTimeoutError;
   if (status === 429) return IikoRateLimitError;
   if (status >= 500) return IikoServerError;

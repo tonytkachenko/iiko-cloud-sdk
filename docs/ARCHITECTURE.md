@@ -31,7 +31,7 @@ scripts/generate.mjs     spec + names -> wrappers, named types, manifest
 
 `src/core/` is hand-written:
 
-- `transport.ts` — `fetch`, JSON, 401 replay, 429 retry, server-side `Timeout` header with a client grace, `User-Agent`, `onAttempt`, debug logging.
+- `transport.ts` — `fetch`, JSON, 401/402/423 replay, 429 retry, server-side `Timeout` header with a client grace, `User-Agent`, `onAttempt`, debug logging.
 - `auth.ts` — JWT `exp` with a five-minute margin, one-hour fallback, single-flight token requests.
 - `errors.ts` — eight classes, redacted bodies, `correlationId`, `code`, `retryAfterMs`.
 - `types.ts` — `Path`, `RequestOf`, `ResponseOf` (`void` for an empty 2xx; JSON 200 and 201 are typed), `CallOptions`.
@@ -52,6 +52,7 @@ Generated files are never edited by hand. They are excluded from lint, format an
 - [ADR-0001](adr/0001-merged-sdk.md): one package for Transport and Office.
 - [ADR-0002](adr/0002-retry-policy.md): only HTTP 429 is retried.
 - [ADR-0003](adr/0003-errors-and-results.md): typed errors are thrown, not returned.
+- [ADR-0005](adr/0005-auth-replay-402-423.md): 402/423 refresh the token and replay once, like 401.
 
 ## Known limits
 

@@ -50,6 +50,44 @@ describe("auth", () => {
     expect(protectedCalls).toBe(2);
   });
 
+  it("refreshes and replays on 402 and 423", async () => {
+    for (const status of [402, 423]) {
+      let protectedCalls = 0;
+      const iiko = fakeIiko(() =>
+        ++protectedCalls === 1
+          ? json({ errorDescription: "retry with a new token" }, status)
+          : organizations,
+      );
+      const client = makeClient(iiko.fetch);
+
+      const result = await client.transport.organizations.list();
+
+      expect(result.organizations).toEqual([]);
+      expect(iiko.tokenRequests()).toBe(2);
+      expect(protectedCalls).toBe(2);
+    }
+  });
+
+  it("gives up after one replay on 402 and 423", async () => {
+    for (const status of [402, 423]) {
+      const iiko = fakeIiko(() => json({ errorDescription: "still blocked" }, status));
+      const client = makeClient(iiko.fetch);
+
+      await expect(client.transport.organizations.list()).rejects.toMatchObject({ status });
+      expect(iiko.tokenRequests()).toBe(2);
+      expect(iiko.api()).toHaveLength(2);
+    }
+  });
+
+  it("does not replay a 403", async () => {
+    const iiko = fakeIiko(() => json({ errorDescription: "forbidden" }, 403));
+    const client = makeClient(iiko.fetch);
+
+    await expect(client.transport.organizations.list()).rejects.toMatchObject({ status: 403 });
+    expect(iiko.tokenRequests()).toBe(1);
+    expect(iiko.api()).toHaveLength(1);
+  });
+
   it("gives up when the replay is rejected too", async () => {
     const iiko = fakeIiko(() => json({ errorDescription: "Unauthorized" }, 401));
     const client = makeClient(iiko.fetch);
@@ -58,15 +96,15 @@ describe("auth", () => {
     expect(iiko.tokenRequests()).toBe(2);
   });
 
-  it("does not replay a 401 from the token endpoint", async () => {
+  it.each([401, 402, 423])("does not replay %i from the token endpoint", async (status) => {
     const iiko = fakeIiko(() => organizations, {
-      token: json({ errorDescription: "bad credentials" }, 401),
+      token: json({ errorDescription: "bad credentials" }, status),
     });
     const client = makeClient(iiko.fetch);
 
     await expect(client.transport.organizations.list()).rejects.toMatchObject({
       name: "IikoAuthError",
-      status: 401,
+      status,
     });
     expect(iiko.tokenRequests()).toBe(1);
     expect(iiko.api()).toHaveLength(0);

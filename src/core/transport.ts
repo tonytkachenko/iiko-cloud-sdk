@@ -132,11 +132,12 @@ export class Transport {
         await this.#tokens.getToken(timeoutSec),
       );
     } catch (error) {
-      // A 401 means the request was not processed, so replaying it is safe.
-      // A rejected token request is not an API 401 and must not be replayed.
+      // iiko documents 401, 402 and 423 as "get a new token once and replay":
+      // the request was rejected before it ran. A 403 is an access error and is not replayed.
+      // A rejected token request is not an API auth error and must not be replayed.
       if (
         !(error instanceof IikoAuthError) ||
-        error.status !== 401 ||
+        (error.status !== 401 && error.status !== 402 && error.status !== 423) ||
         error.endpoint === "/api/v2/access_token" ||
         path === "/api/v2/access_token"
       ) {

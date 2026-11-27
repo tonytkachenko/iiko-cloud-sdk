@@ -7,7 +7,7 @@ Unofficial TypeScript SDK for the iikoCloud API (`https://api-ru.iiko.services`)
 
 - 360 active operations: 126 Transport, 234 Office.
 - Typed requests and responses, including discriminated unions for payments, customers and order items.
-- JWT auth with a single-flight token cache, 401 replay, 429 retries and typed errors.
+- JWT auth with a single-flight token cache, 401/402/423 replay, 429 retries and typed errors.
 - Zero runtime dependencies. ESM and CommonJS. Node.js 22.12+.
 
 ## Install
@@ -80,7 +80,7 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 
 | Class | When |
 |---|---|
-| `IikoAuthError` | 401 or 403 from the API or the token endpoint |
+| `IikoAuthError` | 401, 402, 403 or 423 from the API or the token endpoint |
 | `IikoValidationError` | 400, 404, 409, 422 |
 | `IikoRateLimitError` | 429, with `retryAfterMs` |
 | `IikoServerError` | 5xx |
@@ -90,7 +90,7 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 | `IikoApiError`, `IikoError` | generic bases |
 
 A token request that fails with 429, 5xx, a network error or a timeout keeps that class; only
-401/403 from the token endpoint are `IikoAuthError`.
+401, 402, 403 or 423 from the token endpoint are `IikoAuthError`.
 
 `organizations.settings` answers 500 when `parameters` is empty, even though the spec marks it
 optional; pass at least one parameter, such as `["Name"]`.
@@ -101,7 +101,8 @@ optional; pass at least one parameter, such as `["Name"]`.
 - Token requests follow the same policy: a 429 is retried; 5xx, network errors and timeouts are not.
 - `Retry-After` is honoured as seconds or an HTTP date for 429 retries; the parsed value is exposed as `retryAfterMs` on any error response.
 - 5xx, network errors and timeouts are never retried: the operation may have run.
-- 401 invalidates the token and replays once. A 401 from the token endpoint is not replayed.
+- 401, 402 and 423 invalidate the token and replay once; 403 does not replay. An auth error from
+  the token endpoint is not replayed.
 - Aborting the caller's signal cancels a pending 429 backoff immediately.
 - Timeouts use iiko's `Timeout` header; the client gives up five seconds later.
 
@@ -173,7 +174,7 @@ The generator fails on an unnamed active operation, a stale naming entry, a non-
 ```bash
 pnpm install
 pnpm spec:build
-pnpm check         # tsc + 462 tests, coverage thresholds
+pnpm check         # tsc + 469 tests, coverage thresholds
 pnpm build         # tsup: ESM + CJS + one shared .d.ts
 ```
 

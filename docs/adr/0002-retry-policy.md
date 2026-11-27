@@ -8,10 +8,10 @@ HTTP 429 is different: the rate limiter refuses the request before the operation
 
 ## Decision
 
-Retry only HTTP 429. Use `Retry-After` when present (delta seconds or an HTTP date), otherwise exponential backoff from `retryBaseMs` with jitter. Three retries by default. Never retry 5xx, network errors or timeouts. A 401 is not a retry: the token is invalidated and the request is replayed once, because a 401 means the request was not processed.
+Retry only HTTP 429. Use `Retry-After` when present (delta seconds or an HTTP date), otherwise exponential backoff from `retryBaseMs` with jitter. Three retries by default. Never retry 5xx, network errors or timeouts. A 401 is not a retry: the token is invalidated and the request is replayed once, because a 401 means the request was not processed. ADR-0005 extends the same one-shot replay to 402 and 423.
 
-The access-token request follows the same rule: a 429 from `/api/v2/access_token` is retried, and a
-401 from it is not replayed as an API 401.
+The access-token request follows the same rule: a 429 from `/api/v2/access_token` is retried, and
+an auth error from it is not replayed as an API auth error.
 
 Timeouts use iiko's own `Timeout` header (15 seconds by default) plus a five-second client grace, so the server stops the operation instead of leaving it running after the client gives up.
 

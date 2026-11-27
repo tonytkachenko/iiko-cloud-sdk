@@ -8,7 +8,7 @@ The first prototype returned `{ data, error }` on every call. That makes the err
 
 Every generated method returns its documented payload and throws an `IikoError` subclass on failure:
 
-- `IikoAuthError` (401, 403)
+- `IikoAuthError` (401, 402, 403, 423; ADR-0005 adds 402/423)
 - `IikoValidationError` (400, 404, 409, 422)
 - `IikoRateLimitError` (429, with `retryAfterMs`)
 - `IikoServerError` (5xx)
@@ -20,8 +20,8 @@ Every generated method returns its documented payload and throws an `IikoError` 
 Errors carry `status`, `code`, `correlationId`, `endpoint`, `method` and redacted request/response bodies. `catch` values stay `unknown`; `instanceof` narrows them.
 
 A failing access-token request keeps its specific class: 429 is `IikoRateLimitError`, 5xx is
-`IikoServerError`, and network and timeout errors keep theirs. Only a 401/403 from the token
-endpoint is `IikoAuthError`, and it does not trigger the API 401 replay.
+`IikoServerError`, and network and timeout errors keep theirs. Only a 401, 402, 403 or 423 from
+the token endpoint is `IikoAuthError`, and it does not trigger an API replay (ADR-0005).
 
 ## Consequences
 
