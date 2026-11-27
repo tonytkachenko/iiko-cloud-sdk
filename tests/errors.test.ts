@@ -49,6 +49,18 @@ describe("error mapping", () => {
     expect(error.code).toBe("BAD_INPUT");
   });
 
+  it("falls back to errorCode when the flat code fields are absent", async () => {
+    const iiko = fakeIiko(() =>
+      json({ errorCode: "Validation_IncorrectPhone", message: "Incorrect phone" }, 400),
+    );
+    const error = (await makeClient(iiko.fetch)
+      .transport.organizations.list()
+      .catch((caught: unknown) => caught)) as IikoError;
+
+    expect(error.code).toBe("Validation_IncorrectPhone");
+    expect(error.message).toBe("Incorrect phone");
+  });
+
   it("falls back to `message` when there is no errorDescription", async () => {
     const iiko = fakeIiko(() => json({ message: "Not found", details: null }, 404));
     const error = await makeClient(iiko.fetch)

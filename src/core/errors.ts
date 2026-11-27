@@ -99,7 +99,7 @@ export function responseError(response: Response, body: unknown, context: ErrorC
   const ErrorClass = errorClass(status);
   return new ErrorClass(description ?? `${status} ${response.statusText || "request failed"}`, {
     status,
-    code: field(body, "error") ?? field(body, "code"),
+    code: field(body, "error") ?? field(body, "code") ?? field(body, "errorCode"),
     correlationId: field(body, "correlationId"),
     endpoint: context.endpoint,
     method: context.method,
