@@ -72,6 +72,10 @@ export class Transport {
     // iiko rejects a POST with a documented JSON body when the body is missing. Generated
     // wrappers already default to {}, so the escape hatch must do the same.
     const body = rawBody === undefined && !NO_BODY_PATHS.has(path) ? {} : rawBody;
+    const timeoutSec = options?.timeoutSec;
+    if (timeoutSec !== undefined && (!Number.isFinite(timeoutSec) || timeoutSec <= 0)) {
+      throw new TypeError('iiko: option "timeoutSec" must be a positive number');
+    }
     for (let attempt = 0; ; attempt++) {
       try {
         return (await this.#authed(path, body, options ?? {}, attempt)) as ResponseOf<P>;

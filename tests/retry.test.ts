@@ -112,6 +112,18 @@ describe("timeouts and cancellation", () => {
     expect(iiko.api()[1]?.headers.get("timeout")).toBe("10");
   });
 
+  it("rejects an invalid per-call timeout before sending", async () => {
+    for (const timeoutSec of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      const iiko = fakeIiko(() => organizations);
+      const client = makeClient(iiko.fetch);
+
+      await expect(client.transport.organizations.list({}, { timeoutSec })).rejects.toThrow(
+        'iiko: option "timeoutSec" must be a positive number',
+      );
+      expect(iiko.calls).toHaveLength(0);
+    }
+  });
+
   it("gives up 5 s after the server timeout", async () => {
     vi.useFakeTimers();
     const iiko = fakeIiko((_call, signal) => hang(signal));
