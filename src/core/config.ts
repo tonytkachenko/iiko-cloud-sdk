@@ -1,3 +1,4 @@
+import pkg from "../../package.json" with { type: "json" };
 import { noopLogger, type ILogger } from "../logger.js";
 import type { AttemptEvent } from "./transport.js";
 
@@ -36,7 +37,7 @@ export const DEFAULT_BASE_URL = "https://api-ru.iiko.services";
 export const DEFAULT_TIMEOUT_SEC = 15;
 export const DEFAULT_RETRIES = 3;
 export const DEFAULT_RETRY_BASE_MS = 1000;
-export const DEFAULT_USER_AGENT = "iiko-cloud-sdk/0.2.0";
+export const DEFAULT_USER_AGENT = `iiko-cloud-sdk/${pkg.version}`;
 
 function required(options: IikoClientOptions, key: "appId" | "clientSecret" | "apiKey"): string {
   const value = options[key];

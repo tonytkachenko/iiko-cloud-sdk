@@ -1,7 +1,12 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { createIikoClient, IikoError, IikoValidationError } from "../src/index.js";
 import { resolveConfig } from "../src/core/config.js";
 import { fakeIiko, json, makeClient } from "./helpers.js";
+
+const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as {
+  version: string;
+};
 
 const organizations = {
   correlationId: "c-1",
@@ -140,6 +145,6 @@ describe("config", () => {
     expect(config.retries).toBe(3);
     expect(config.retryBaseMs).toBe(1000);
     expect(config.debug).toBe(false);
-    expect(config.userAgent).toMatch(/^iiko-cloud-sdk\//);
+    expect(config.userAgent).toBe(`iiko-cloud-sdk/${pkg.version}`);
   });
 });
