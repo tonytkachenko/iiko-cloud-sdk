@@ -105,6 +105,6 @@ export function responseError(response: Response, body: unknown, context: ErrorC
     method: context.method,
     requestBody: context.requestBody,
     responseBody: body,
-    retryAfterMs: status === 429 ? retryAfterMs(response) : undefined,
+    retryAfterMs: retryAfterMs(response),
   });
 }

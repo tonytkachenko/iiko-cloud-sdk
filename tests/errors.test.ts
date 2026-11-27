@@ -70,6 +70,7 @@ describe("error mapping", () => {
     expect(error).toBeInstanceOf(IikoServerError);
     expect(error.responseBody).toBeUndefined();
     expect(error.message).toContain("502");
+    expect(error.retryAfterMs).toBe(2000);
   });
 
   it("exposes retryAfterMs on a 429", async () => {

@@ -21,4 +21,5 @@ Timeouts use iiko's own `Timeout` header (15 seconds by default) plus a five-sec
 ## Consequences
 
 - A transient 5xx on a read is not retried by the SDK; the caller decides.
+- `Retry-After` is surfaced as `retryAfterMs` on any error response, so the caller can apply its own policy. Only 429 uses it as a retry trigger.
 - The policy lives in `retryDelay` in `src/core/transport.ts`, and `tests/retry.test.ts` fails if it widens.

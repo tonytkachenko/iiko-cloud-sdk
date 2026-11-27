@@ -77,6 +77,16 @@ describe("retries", () => {
     expect(iiko.api()).toHaveLength(1);
   });
 
+  it("exposes Retry-After on a 5xx without retrying it", async () => {
+    const iiko = fakeIiko(() => json({ message: "boom" }, 503, { "retry-after": "5" }));
+    const client = makeClient(iiko.fetch, { retries: 3, retryBaseMs: 1 });
+
+    const error = await client.transport.organizations.list().catch((caught: unknown) => caught);
+
+    expect(error).toMatchObject({ status: 503, retryAfterMs: 5000 });
+    expect(iiko.api()).toHaveLength(1);
+  });
+
   it("wraps network failures without retrying", async () => {
     let attempts = 0;
     const iiko = fakeIiko(() => {

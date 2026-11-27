@@ -90,7 +90,7 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 ## Retries and timeouts
 
 - Only HTTP 429 is retried, for reads and writes alike: the limiter refuses the request before it runs.
-- `Retry-After` is honoured as seconds or an HTTP date; otherwise exponential backoff with jitter.
+- `Retry-After` is honoured as seconds or an HTTP date for 429 retries; the parsed value is exposed as `retryAfterMs` on any error response.
 - 5xx, network errors and timeouts are never retried: the operation may have run.
 - 401 invalidates the token and replays once.
 - Timeouts use iiko's `Timeout` header; the client gives up five seconds later.
