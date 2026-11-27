@@ -40,6 +40,7 @@
     "format": "oxfmt src tests examples scripts",
     "format:check": "oxfmt --check src tests examples scripts",
     "test": "vitest run --coverage",
+    "check": "pnpm typecheck && pnpm test",
     "spec:download": "curl -sS -L https://api-ru.iiko.services/api-docs/docs -o spec/raw.json",
     "spec:normalize": "node scripts/normalize-spec.mjs",
     "spec:types": "openapi-typescript spec/normalized.json -o src/generated/schema.ts",
