@@ -7,4 +7,4 @@
   - [0002](adr/0002-retry-policy.md) — only HTTP 429 is retried;
   - [0003](adr/0003-errors-and-results.md) — typed errors are thrown.
 - [history/](history/) — superseded plans: the original specification, the Transport-only implementation plan and the Transport-only delivery plan.
-- [agents/](agents/) — issue tracker, triage labels and domain-doc rules.
+- [agents/](agents/) — issue tracker, triage labels, domain-doc rules and [agent roles](agents/roles.md).

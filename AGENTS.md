@@ -11,3 +11,8 @@ Default five labels: needs-triage, needs-info, ready-for-agent, ready-for-human,
 ### Domain docs
 
 Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Agent roles
+
+Role prompts live in `.claude/agents/`: spec-engineer, core-engineer, qa-reviewer,
+release-engineer and webhook-engineer (phase 2). See `docs/agents/roles.md`.
