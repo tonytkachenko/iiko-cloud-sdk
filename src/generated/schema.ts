@@ -43425,8 +43425,11 @@ export interface components {
         EmployeePositionFilterItem: {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank") */
-            op?: string;
+            /**
+             * @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank")
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Value for filtering by the field */
             value?: unknown;
             /** @description Values for multi-value filtering ("in", "nin") */
@@ -44276,8 +44279,11 @@ export interface components {
         FilterCondition: {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank") */
-            op?: string;
+            /**
+             * @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank")
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Value for filtering by the field */
             value?: unknown;
         };
@@ -44285,8 +44291,11 @@ export interface components {
         FilterConditionV1: {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank") */
-            op?: string;
+            /**
+             * @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank")
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Value for filtering by the field */
             value?: unknown;
         };
@@ -58364,8 +58373,11 @@ export interface components {
         "internal_document_assembly_chart_v3.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58431,8 +58443,11 @@ export interface components {
         "internal_document_nomenclature_group_v1.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58442,8 +58457,11 @@ export interface components {
         "internal_document_nomenclature_group_v2.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58453,8 +58471,11 @@ export interface components {
         "internal_document_nomenclature_product_v1.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58464,8 +58485,11 @@ export interface components {
         "internal_document_nomenclature_product_v2.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58475,8 +58499,11 @@ export interface components {
         "internal_document_product_scale.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: string;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58649,8 +58676,11 @@ export interface components {
         "internal_entities_alcohol_class.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58660,8 +58690,11 @@ export interface components {
         "internal_entities_allergen_group.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58671,8 +58704,11 @@ export interface components {
         "internal_entities_amount_unit.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58682,8 +58718,11 @@ export interface components {
         "internal_entities_container.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58693,8 +58732,11 @@ export interface components {
         "internal_entities_custom_category.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58704,8 +58746,11 @@ export interface components {
         "internal_entities_discount_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58715,8 +58760,11 @@ export interface components {
         "internal_entities_menu_section.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58726,8 +58774,11 @@ export interface components {
         "internal_entities_modifier_schema.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58737,8 +58788,11 @@ export interface components {
         "internal_entities_nutrition_component.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58748,8 +58802,11 @@ export interface components {
         "internal_entities_pay_in_out_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58759,8 +58816,11 @@ export interface components {
         "internal_entities_place_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58770,8 +58830,11 @@ export interface components {
         "internal_entities_producer.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58781,8 +58844,11 @@ export interface components {
         "internal_entities_product_size.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58792,8 +58858,11 @@ export interface components {
         "internal_entities_product_tag.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58803,8 +58872,11 @@ export interface components {
         "internal_entities_schedule_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -59042,8 +59114,11 @@ export interface components {
         "internal_finance_accounts.Filter": {
             /** @description Field name to filter by */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multiple filtering (used with "in", "nin") */
@@ -59190,8 +59265,11 @@ export interface components {
         "internal_finance_cashflowcategories.Filter": {
             /** @description Field name to filter by */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multiple filtering (used with "in", "nin") */

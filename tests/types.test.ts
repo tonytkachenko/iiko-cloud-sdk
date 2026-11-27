@@ -1,5 +1,11 @@
 import { describe, expectTypeOf, it } from "vitest";
-import type { CommandStatus, DeliveriesCreateParams, RequestOf, ResponseOf } from "../src/index.js";
+import type {
+  CommandStatus,
+  DeliveriesCreateParams,
+  NomenclatureProductListV2Params,
+  RequestOf,
+  ResponseOf,
+} from "../src/index.js";
 
 type CreateOrderBody = RequestOf<"/api/1/deliveries/create">;
 type CreateOrderItem = NonNullable<CreateOrderBody["order"]["items"]>[number];
@@ -79,5 +85,20 @@ describe("command status", () => {
     const status = {} as CommandStatus;
     if (status.state === "Error") expectTypeOf(status).toHaveProperty("errorReason");
     expectTypeOf<CommandStatus["state"]>().toEqualTypeOf<"InProgress" | "Success" | "Error">();
+  });
+});
+
+describe("filters", () => {
+  it("suggests the documented comparison operators", () => {
+    type Filter = NonNullable<NomenclatureProductListV2Params["filters"]>[number];
+
+    const filter: Filter = { field: "type", op: "in", values: ["DISH"] };
+    // @ts-expect-error an operator iiko does not document
+    const unknown: Filter = { field: "type", op: "includes", values: ["DISH"] };
+
+    expectTypeOf<NonNullable<Filter["op"]>>().toEqualTypeOf<
+      "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank"
+    >();
+    void [filter, unknown];
   });
 });

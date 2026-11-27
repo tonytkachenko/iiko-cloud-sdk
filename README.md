@@ -110,6 +110,8 @@ const payment: Payment = { paymentTypeKind: "Cash", sum: 450, paymentTypeId };
 
 Unions are closed over the variants known to the current spec. Regenerate after an iiko update to see new ones.
 
+Filter operators are literal unions too: `op: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank"`, so the editor suggests them and a typo fails to compile.
+
 ## Dates
 
 `toIikoDateUtc(date)` and `fromIikoDateUtc(string)` handle iiko's `yyyy-MM-dd HH:mm:ss.fff` format for fields documented as UTC. Fields documented as terminal-local time have no time zone; format those yourself.

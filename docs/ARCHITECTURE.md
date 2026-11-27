@@ -22,7 +22,7 @@ scripts/generate.mjs     spec + names -> wrappers, named types, manifest
 ## Spec pipeline
 
 - `spec/raw.json` is the only committed source. Updates are deliberate: `pnpm spec:sync` downloads and rebuilds; `pnpm spec:build` rebuilds from the committed document.
-- `normalize-spec.mjs` fixes known OpenAPI defects (`uuid`, `float`, `boolean`, enum-from-example) and turns every discriminated base schema into a `oneOf` union at all use sites. Unknown defects fail the run.
+- `normalize-spec.mjs` fixes known OpenAPI defects (`uuid`, `float`, `boolean`, enum-from-example), turns every discriminated base schema into a `oneOf` union at all use sites, and derives filter `op` enums from their descriptions (26 schemas, 11 operators). Unknown defects fail the run.
 - `generate.mjs` never guesses silently: an active Transport operation without a name, a stale table entry, a non-POST operation, a duplicate method or type name, or an unmapped path fails the build.
 - Transport names are curated in `scripts/names/transport.json` (126 operations). Office names are derived in `scripts/names/office.json` (domain + subresource + method, version suffixes in multi-version domains) with explicit overrides.
 

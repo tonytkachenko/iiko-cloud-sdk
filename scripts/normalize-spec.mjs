@@ -53,7 +53,39 @@ const walk = (node, where) => {
 };
 walk(spec.components.schemas, "schemas");
 
-// 2. A discriminated base type only says `state: string`; its variants are separate schemas.
+// 2. Filter objects carry `op: string` with the allowed operators listed only in prose.
+// Turn that prose into an enum so editors suggest the operators and unknown ones fail to compile.
+const filterOps = [];
+const walkFilters = (node, where) => {
+  if (!node || typeof node !== "object") return;
+  if (Array.isArray(node)) {
+    return node.forEach((value, index) => walkFilters(value, `${where}[${index}]`));
+  }
+  const op = node.properties?.op;
+  if (op && node.properties?.field) {
+    if (op.type !== "string") {
+      unknown.push(`${where}.op: expected string, got ${JSON.stringify(op.type)}`);
+    } else {
+      const operators = [
+        ...new Set(
+          [...String(op.description ?? "").matchAll(/"([a-z]+)"/g)].map((match) => match[1]),
+        ),
+      ];
+      if (operators.length === 0) {
+        unknown.push(`${where}.op: no operators listed in the description`);
+      } else {
+        op.enum = operators;
+        filterOps.push(where);
+      }
+    }
+  }
+  for (const [key, value] of Object.entries(node)) {
+    if (!SKIP.has(key)) walkFilters(value, `${where}.${key}`);
+  }
+};
+walkFilters(spec.components.schemas, "schemas");
+
+// 3. A discriminated base type only says `state: string`; its variants are separate schemas.
 // Point every use of the base at a oneOf of its variants (`<Base>Union`) so requests and responses
 // are real unions. The one place that must keep naming the base is a variant's own `allOf` parent.
 const schemas = spec.components.schemas;
@@ -104,5 +136,5 @@ if (unknown.length > 0) {
 fs.writeFileSync(read("normalized.json"), JSON.stringify(spec));
 console.log(
   `normalized: ${Object.keys(spec.paths).length} paths, ${unionOf.size} discriminated unions, ` +
-    `${patched.length} type patches`,
+    `${filterOps.length} filter operator enums, ${patched.length} type patches`,
 );
