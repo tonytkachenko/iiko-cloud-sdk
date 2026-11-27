@@ -1,7 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { tokenExpiryMs } from "../src/core/auth.js";
-import { IikoAuthError } from "../src/index.js";
+import {
+  IikoAuthError,
+  IikoNetworkError,
+  IikoRateLimitError,
+  IikoServerError,
+} from "../src/index.js";
 import { fakeIiko, json, jwt, makeClient } from "./helpers.js";
 
 const organizations = { correlationId: "c", organizations: [] };
@@ -53,6 +58,20 @@ describe("auth", () => {
     expect(iiko.tokenRequests()).toBe(2);
   });
 
+  it("does not replay a 401 from the token endpoint", async () => {
+    const iiko = fakeIiko(() => organizations, {
+      token: json({ errorDescription: "bad credentials" }, 401),
+    });
+    const client = makeClient(iiko.fetch);
+
+    await expect(client.transport.organizations.list()).rejects.toMatchObject({
+      name: "IikoAuthError",
+      status: 401,
+    });
+    expect(iiko.tokenRequests()).toBe(1);
+    expect(iiko.api()).toHaveLength(0);
+  });
+
   it("refreshes a token that is about to expire", async () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     const iiko = fakeIiko(() => organizations);
@@ -87,12 +106,52 @@ describe("auth", () => {
     await expect(client.transport.organizations.list()).rejects.toThrow(/did not contain a token/);
   });
 
-  it("reports an unreachable token endpoint", async () => {
+  it("keeps a token endpoint network failure as a network error", async () => {
     const client = makeClient(async () => {
       throw new TypeError("fetch failed");
     });
 
-    await expect(client.transport.organizations.list()).rejects.toBeInstanceOf(IikoAuthError);
+    await expect(client.transport.organizations.list()).rejects.toBeInstanceOf(IikoNetworkError);
+  });
+
+  it("retries a 429 from the token endpoint", async () => {
+    let tokenCalls = 0;
+    const iiko = fakeIiko(() => organizations, {
+      token: () =>
+        ++tokenCalls === 1
+          ? json({ message: "slow down" }, 429, { "retry-after": "0" })
+          : { token: jwt(Date.now() + 3_600_000) },
+    });
+    const client = makeClient(iiko.fetch, { retries: 2 });
+
+    await expect(client.transport.organizations.list()).resolves.toHaveProperty("organizations");
+    expect(iiko.tokenRequests()).toBe(2);
+    expect(iiko.api()).toHaveLength(1);
+  });
+
+  it("surfaces a token endpoint 429 after the retry budget", async () => {
+    const iiko = fakeIiko(() => organizations, {
+      token: () => json({ message: "slow down" }, 429, { "retry-after": "0" }),
+    });
+    const client = makeClient(iiko.fetch, { retries: 2 });
+
+    const error = await client.transport.organizations.list().catch((caught: unknown) => caught);
+
+    expect(error).toBeInstanceOf(IikoRateLimitError);
+    expect(error).toMatchObject({ status: 429, retryAfterMs: 0 });
+    expect(iiko.tokenRequests()).toBe(3);
+    expect(iiko.api()).toHaveLength(0);
+  });
+
+  it("does not retry a 5xx from the token endpoint and keeps its class", async () => {
+    const iiko = fakeIiko(() => organizations, {
+      token: json({ message: "boom" }, 503),
+    });
+    const client = makeClient(iiko.fetch, { retries: 3 });
+
+    await expect(client.transport.organizations.list()).rejects.toBeInstanceOf(IikoServerError);
+    expect(iiko.tokenRequests()).toBe(1);
+    expect(iiko.api()).toHaveLength(0);
   });
 
   it("ignores a token whose expiry cannot be read", () => {

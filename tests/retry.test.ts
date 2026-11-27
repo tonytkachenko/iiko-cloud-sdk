@@ -142,6 +142,31 @@ describe("timeouts and cancellation", () => {
     await expect(promise).rejects.toMatchObject({ name: "AbortError" });
     await expect(promise).rejects.not.toBeInstanceOf(IikoNetworkError);
   });
+
+  it("stops a 429 backoff as soon as the caller aborts", async () => {
+    vi.useFakeTimers();
+    const iiko = fakeIiko(() => json({ message: "slow down" }, 429, { "retry-after": "30" }));
+    const client = makeClient(iiko.fetch, { retries: 3 });
+    const controller = new AbortController();
+    let settled = false;
+    const result = client.transport.organizations
+      .list({}, { signal: controller.signal })
+      .catch((error: unknown) => error)
+      .then((value) => {
+        settled = true;
+        return value;
+      });
+
+    await vi.advanceTimersByTimeAsync(1);
+    expect(iiko.api()).toHaveLength(1);
+
+    controller.abort();
+    await vi.advanceTimersByTimeAsync(0);
+
+    expect(settled).toBe(true);
+    await expect(result).resolves.toMatchObject({ name: "AbortError" });
+    expect(iiko.api()).toHaveLength(1);
+  });
 });
 
 describe("observability", () => {

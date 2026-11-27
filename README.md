@@ -61,7 +61,7 @@ try {
 | Option | Default | Meaning |
 |---|---|---|
 | `appId`, `clientSecret`, `apiKey` | required | iiko app credentials and the organization API key |
-| `baseUrl` | `https://api-ru.iiko.services` | API host |
+| `baseUrl` | `https://api-ru.iiko.services` | API host; a query string is rejected |
 | `timeoutSec` | `15` | Sent as the `Timeout` header; the client waits five seconds longer |
 | `retries` | `3` | Retries for HTTP 429 only |
 | `retryBaseMs` | `1000` | First backoff delay; doubled with jitter |
@@ -78,7 +78,7 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 
 | Class | When |
 |---|---|
-| `IikoAuthError` | 401, 403, token request rejected |
+| `IikoAuthError` | 401 or 403 from the API or the token endpoint |
 | `IikoValidationError` | 400, 404, 409, 422 |
 | `IikoRateLimitError` | 429, with `retryAfterMs` |
 | `IikoServerError` | 5xx |
@@ -87,12 +87,17 @@ Errors are thrown, not returned. Every error has `status`, `code`, `correlationI
 | `IikoCommandError` | `commands.wait` saw state `Error` |
 | `IikoApiError`, `IikoError` | generic bases |
 
+A token request that fails with 429, 5xx, a network error or a timeout keeps that class; only
+401/403 from the token endpoint are `IikoAuthError`.
+
 ## Retries and timeouts
 
 - Only HTTP 429 is retried, for reads and writes alike: the limiter refuses the request before it runs.
+- Token requests follow the same policy: a 429 is retried; 5xx, network errors and timeouts are not.
 - `Retry-After` is honoured as seconds or an HTTP date for 429 retries; the parsed value is exposed as `retryAfterMs` on any error response.
 - 5xx, network errors and timeouts are never retried: the operation may have run.
-- 401 invalidates the token and replays once.
+- 401 invalidates the token and replays once. A 401 from the token endpoint is not replayed.
+- Aborting the caller's signal cancels a pending 429 backoff immediately.
 - Timeouts use iiko's `Timeout` header; the client gives up five seconds later.
 
 ## Types
@@ -125,6 +130,9 @@ Deprecated operations have no typed wrappers. They remain reachable by path:
 ```ts
 await iiko.call("/api/2/menu/by_id", { externalMenuId, organizationIds });
 ```
+
+`call` enforces the same body rule as generated methods: a body with required fields is a required
+argument.
 
 ## Updating the spec
 

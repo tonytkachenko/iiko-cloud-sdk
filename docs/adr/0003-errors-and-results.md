@@ -19,6 +19,10 @@ Every generated method returns its documented payload and throws an `IikoError` 
 
 Errors carry `status`, `code`, `correlationId`, `endpoint`, `method` and redacted request/response bodies. `catch` values stay `unknown`; `instanceof` narrows them.
 
+A failing access-token request keeps its specific class: 429 is `IikoRateLimitError`, 5xx is
+`IikoServerError`, and network and timeout errors keep theirs. Only a 401/403 from the token
+endpoint is `IikoAuthError`, and it does not trigger the API 401 replay.
+
 ## Consequences
 
 - Call sites stay linear; failure handling is explicit only where it matters.

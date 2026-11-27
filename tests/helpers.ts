@@ -25,8 +25,8 @@ export interface Call {
 type Handler = (call: Call, signal: AbortSignal) => Response | object | Promise<Response | object>;
 
 export interface FakeIikoOptions {
-  /** Overrides the token endpoint answer. */
-  token?: Response | object;
+  /** Overrides the token endpoint answer. A function is called for every token request. */
+  token?: Response | object | Handler;
 }
 
 /** Fake iiko server: answers the token endpoint, delegates everything else to `handler`. */
@@ -45,12 +45,14 @@ export function fakeIiko(handler: Handler = () => ({}), options: FakeIikoOptions
     calls.push(call);
     const out =
       call.path === "/api/v2/access_token"
-        ? options.token instanceof Response
-          ? options.token.clone()
-          : (options.token ?? {
-              correlationId: "token-correlation",
-              token: jwt(Date.now() + 3_600_000),
-            })
+        ? typeof options.token === "function"
+          ? await options.token(call, request.signal)
+          : options.token instanceof Response
+            ? options.token.clone()
+            : (options.token ?? {
+                correlationId: "token-correlation",
+                token: jwt(Date.now() + 3_600_000),
+              })
         : await handler(call, request.signal);
     return out instanceof Response ? out : json(out);
   };

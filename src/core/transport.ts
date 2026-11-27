@@ -27,7 +27,24 @@ export interface AttemptEvent {
 /** The client gives up this long after the server-side timeout. */
 const CLIENT_GRACE_SEC = 5;
 
-const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+/** Resolves after `ms`, or rejects with the caller's abort reason. */
+function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(signal.reason ?? new DOMException("The operation was aborted.", "AbortError"));
+      return;
+    }
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(signal?.reason ?? new DOMException("The operation was aborted.", "AbortError"));
+    };
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+}
 
 /** Only 429 is retried: iiko refuses it before running the operation. */
 function retryDelay(error: unknown, attempt: number, baseMs: number): number | undefined {
@@ -79,41 +96,32 @@ export class Transport {
           status: error instanceof IikoApiError ? error.status : undefined,
           delayMs: Math.round(delay),
         });
-        await sleep(delay);
+        await sleep(delay, options?.signal);
       }
     }
   }
 
   async #requestToken(): Promise<string> {
-    try {
-      const body = await this.#once(
-        "/api/v2/access_token",
-        {
-          apiKey: this.#config.apiKey,
-          appId: this.#config.appId,
-          clientSecret: this.#config.clientSecret,
-        },
-        {},
-        0,
-      );
-      const token =
-        body !== null && typeof body === "object" ? (body as { token?: unknown }).token : undefined;
-      if (typeof token !== "string" || token === "") {
-        throw new IikoAuthError("iiko: access token response did not contain a token", {
-          endpoint: "/api/v2/access_token",
-          method: "POST",
-          responseBody: body,
-        });
-      }
-      return token;
-    } catch (error) {
-      if (error instanceof IikoAuthError) throw error;
-      throw new IikoAuthError("iiko: could not obtain an access token", {
+    const body = await this.#once(
+      "/api/v2/access_token",
+      {
+        apiKey: this.#config.apiKey,
+        appId: this.#config.appId,
+        clientSecret: this.#config.clientSecret,
+      },
+      {},
+      0,
+    );
+    const token =
+      body !== null && typeof body === "object" ? (body as { token?: unknown }).token : undefined;
+    if (typeof token !== "string" || token === "") {
+      throw new IikoAuthError("iiko: access token response did not contain a token", {
         endpoint: "/api/v2/access_token",
         method: "POST",
-        cause: error,
+        responseBody: body,
       });
     }
+    return token;
   }
 
   async #authed(
@@ -126,9 +134,11 @@ export class Transport {
       return await this.#once(path, body, options, attempt, await this.#tokens.getToken());
     } catch (error) {
       // A 401 means the request was not processed, so replaying it is safe.
+      // A rejected token request is not an API 401 and must not be replayed.
       if (
         !(error instanceof IikoAuthError) ||
         error.status !== 401 ||
+        error.endpoint === "/api/v2/access_token" ||
         path === "/api/v2/access_token"
       ) {
         throw error;
