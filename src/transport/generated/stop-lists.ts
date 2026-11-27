@@ -19,6 +19,8 @@ export function createStopListsResource(t: Transport) {
   return {
     /** Add items to out-of-stock list. (You should have extra rights to use this method).
      *
+     * Requires iiko RMS `8.6.1` or newer.
+     *
      * Restriction group: `Data: changing stoplists`.
      */
     add: (body: StopListsAddParams, init?: CallOptions): Promise<StopListsAddResponse> =>
@@ -31,6 +33,8 @@ export function createStopListsResource(t: Transport) {
       t.call("/api/1/stop_lists/check", body, init),
     /** Clear out-of-stock list. (You should have extra rights to use this method).
      *
+     * Requires iiko RMS `8.6.1` or newer.
+     *
      * Restriction group: `Data: changing stoplists`.
      */
     clear: (body: StopListsClearParams, init?: CallOptions): Promise<StopListsClearResponse> =>
@@ -42,6 +46,8 @@ export function createStopListsResource(t: Transport) {
     list: (body: StopListsListParams, init?: CallOptions): Promise<StopListsListResponse> =>
       t.call("/api/1/stop_lists", body, init),
     /** Remove items from out-of-stock list. (You should have extra rights to use this method).
+     *
+     * Requires iiko RMS `8.6.1` or newer.
      *
      * Restriction group: `Data: changing stoplists`.
      */

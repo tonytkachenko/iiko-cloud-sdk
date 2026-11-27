@@ -77,6 +77,8 @@ export function createDeliveriesResource(t: Transport) {
   return {
     /** Add order items.
      *
+     * Requires iiko RMS `7.4.6` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -84,6 +86,8 @@ export function createDeliveriesResource(t: Transport) {
     addItems: (body: DeliveriesAddItemsParams, init?: CallOptions): Promise<DeliveriesAddItemsResponse> =>
       t.call("/api/1/deliveries/add_items", body, init),
     /** Add order payments.
+     *
+     * Requires iiko RMS `8.4.6` or newer.
      *
      * Restriction group: `Order payments: changing`.
      *
@@ -123,6 +127,8 @@ export function createDeliveriesResource(t: Transport) {
       t.call("/api/1/deliveries/by_revision", body, init),
     /** Cancel delivery order.
      *
+     * Requires iiko RMS `7.5.4` or newer.
+     *
      * Restriction group: `Order status: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -130,6 +136,8 @@ export function createDeliveriesResource(t: Transport) {
     cancel: (body: DeliveriesCancelParams, init?: CallOptions): Promise<DeliveriesCancelResponse> =>
       t.call("/api/1/deliveries/cancel", body, init),
     /** Cancel delivery confirmation.
+     *
+     * Requires iiko RMS `7.6.1` or newer.
      *
      * Restriction group: `Order status: changing`.
      *
@@ -139,6 +147,8 @@ export function createDeliveriesResource(t: Transport) {
       t.call("/api/1/deliveries/cancel_confirmation", body, init),
     /** Change delivery comment.
      *
+     * Requires iiko RMS `7.6.1` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -146,6 +156,8 @@ export function createDeliveriesResource(t: Transport) {
     changeComment: (body: DeliveriesChangeCommentParams, init?: CallOptions): Promise<DeliveriesChangeCommentResponse> =>
       t.call("/api/1/deliveries/change_comment", body, init),
     /** Change time when client wants the order to be delivered.
+     *
+     * Requires iiko RMS `7.5.4` or newer.
      *
      * Restriction group: `Orders: changing`.
      *
@@ -155,6 +167,8 @@ export function createDeliveriesResource(t: Transport) {
       t.call("/api/1/deliveries/change_complete_before", body, init),
     /** Change order's delivery point information.
      *
+     * Requires iiko RMS `7.5.4` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -162,6 +176,8 @@ export function createDeliveriesResource(t: Transport) {
     changeDeliveryPoint: (body: DeliveriesChangeDeliveryPointParams, init?: CallOptions): Promise<DeliveriesChangeDeliveryPointResponse> =>
       t.call("/api/1/deliveries/change_delivery_point", body, init),
     /** Change driver info.
+     *
+     * Requires iiko RMS `8.6.6` or newer.
      *
      * Restriction group: `Order driver: changing`.
      *
@@ -177,6 +193,8 @@ export function createDeliveriesResource(t: Transport) {
       t.call("/api/1/deliveries/change_external_data", body, init),
     /** Assign/change the order operator.
      *
+     * Requires iiko RMS `7.6.1` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -184,6 +202,8 @@ export function createDeliveriesResource(t: Transport) {
     changeOperator: (body: DeliveriesChangeOperatorParams, init?: CallOptions): Promise<DeliveriesChangeOperatorResponse> =>
       t.call("/api/1/deliveries/change_operator", body, init),
     /** Change order's payments.
+     *
+     * Requires iiko RMS `7.6.3` or newer.
      *
      * Restriction group: `Order payments: changing`.
      *
@@ -193,6 +213,8 @@ export function createDeliveriesResource(t: Transport) {
       t.call("/api/1/deliveries/change_payments", body, init),
     /** Change order's delivery type.
      *
+     * Requires iiko RMS `7.5.4` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -201,6 +223,8 @@ export function createDeliveriesResource(t: Transport) {
       t.call("/api/1/deliveries/change_service_type", body, init),
     /** Close order.
      *
+     * Requires iiko RMS `7.4.6` or newer.
+     *
      * Restriction group: `Order status: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -208,6 +232,8 @@ export function createDeliveriesResource(t: Transport) {
     close: (body: DeliveriesCloseParams, init?: CallOptions): Promise<DeliveriesCloseResponse> =>
       t.call("/api/1/deliveries/close", body, init),
     /** Confirm delivery.
+     *
+     * Requires iiko RMS `7.6.1` or newer.
      *
      * Restriction group: `Order status: changing`.
      *
@@ -284,6 +310,8 @@ export function createDeliveriesResource(t: Transport) {
     orderTypes: (body: DeliveriesOrderTypesParams, init?: CallOptions): Promise<DeliveriesOrderTypesResponse> =>
       t.call("/api/1/deliveries/order_types", body, init),
     /** Print delivery bill.
+     *
+     * Requires iiko RMS `7.6.1` or newer.
      *
      * Restriction group: `Orders: changing`.
      *

@@ -33,6 +33,8 @@ export function createReservesResource(t: Transport) {
   return {
     /** Add order items.
      *
+     * Requires iiko RMS `8.2.6` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -40,6 +42,8 @@ export function createReservesResource(t: Transport) {
     addItems: (body: ReservesAddItemsParams, init?: CallOptions): Promise<ReservesAddItemsResponse> =>
       t.call("/api/1/reserve/add_items", body, init),
     /** Add order payments.
+     *
+     * Requires iiko RMS `8.2.6` or newer.
      *
      * Restriction group: `Order payments: changing`.
      *
@@ -49,11 +53,15 @@ export function createReservesResource(t: Transport) {
       t.call("/api/1/reserve/add_payments", body, init),
     /** Returns all organizations of current account (determined by Authorization request header) for which banquet/reserve booking are available.
      *
+     * Requires iiko RMS `7.1.5` or newer.
+     *
      * Restriction group: `Orders: preparing`.
      */
     availableOrganizations: (body: ReservesAvailableOrganizationsParams = {}, init?: CallOptions): Promise<ReservesAvailableOrganizationsResponse> =>
       t.call("/api/1/reserve/available_organizations", body, init),
     /** Returns all restaurant sections of specified terminal groups, for which banquet/reserve booking are available.
+     *
+     * Requires iiko RMS `7.1.5` or newer.
      *
      * Restriction group: `Orders: preparing`.
      */
@@ -61,11 +69,15 @@ export function createReservesResource(t: Transport) {
       t.call("/api/1/reserve/available_restaurant_sections", body, init),
     /** Returns all terminal groups of specified organizations, for which banquet/reserve booking are available.
      *
+     * Requires iiko RMS `7.1.5` or newer.
+     *
      * Restriction group: `Orders: preparing`.
      */
     availableTerminalGroups: (body: ReservesAvailableTerminalGroupsParams, init?: CallOptions): Promise<ReservesAvailableTerminalGroupsResponse> =>
       t.call("/api/1/reserve/available_terminal_groups", body, init),
     /** Cancel reservation due to some reason.
+     *
+     * Requires iiko RMS `8.2.6` or newer.
      *
      * Restriction group: `Order status: changing`.
      *
@@ -75,6 +87,8 @@ export function createReservesResource(t: Transport) {
       t.call("/api/1/reserve/cancel", body, init),
     /** Change reserve/banquet estimated start time.
      *
+     * Requires iiko RMS `9.0.5` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -82,6 +96,8 @@ export function createReservesResource(t: Transport) {
     changeEstimatedStartTime: (body: ReservesChangeEstimatedStartTimeParams, init?: CallOptions): Promise<ReservesChangeEstimatedStartTimeResponse> =>
       t.call("/api/1/reserve/change_estimated_start_time", body, init),
     /** Change order items.
+     *
+     * Requires iiko RMS `9.0.5` or newer.
      *
      * Restriction group: `Orders: changing`.
      *
@@ -91,6 +107,8 @@ export function createReservesResource(t: Transport) {
       t.call("/api/1/reserve/change_items", body, init),
     /** Change reserve/banquet tables.
      *
+     * Requires iiko RMS `9.0.5` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -98,6 +116,8 @@ export function createReservesResource(t: Transport) {
     changeTables: (body: ReservesChangeTablesParams, init?: CallOptions): Promise<ReservesChangeTablesResponse> =>
       t.call("/api/1/reserve/change_tables", body, init),
     /** Create banquet/reserve.
+     *
+     * Requires iiko RMS `7.1.5` or newer.
      *
      * Restriction group: `Orders: creating`.
      *
@@ -107,11 +127,15 @@ export function createReservesResource(t: Transport) {
       t.call("/api/1/reserve/create", body, init),
     /** Returns all banquets/reserves for passed restaurant sections.
      *
+     * Requires iiko RMS `7.1.5` or newer.
+     *
      * Restriction group: `Data: dictionaries`.
      */
     restaurantSectionsWorkload: (body: ReservesRestaurantSectionsWorkloadParams, init?: CallOptions): Promise<ReservesRestaurantSectionsWorkloadResponse> =>
       t.call("/api/1/reserve/restaurant_sections_workload", body, init),
     /** Retrieve banquets/reserves statuses by IDs.
+     *
+     * Requires iiko RMS `7.1.5` or newer.
      *
      * Restriction group: `Orders: receiving`.
      */

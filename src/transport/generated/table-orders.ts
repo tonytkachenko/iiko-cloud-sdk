@@ -35,6 +35,8 @@ export function createTableOrdersResource(t: Transport) {
   return {
     /** Add customer to order.
      *
+     * Requires iiko RMS `7.7.1` or newer.
+     *
      * Restriction group: `Orders: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -42,6 +44,8 @@ export function createTableOrdersResource(t: Transport) {
     addCustomer: (body: TableOrdersAddCustomerParams, init?: CallOptions): Promise<TableOrdersAddCustomerResponse> =>
       t.call("/api/1/order/add_customer", body, init),
     /** Add order items.
+     *
+     * Requires iiko RMS `7.4.6` or newer.
      *
      * Restriction group: `Orders: changing`.
      *
@@ -51,6 +55,8 @@ export function createTableOrdersResource(t: Transport) {
       t.call("/api/1/order/add_items", body, init),
     /** Add order payments.
      *
+     * Requires iiko RMS `8.2.6` or newer.
+     *
      * Restriction group: `Order payments: changing`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -59,17 +65,23 @@ export function createTableOrdersResource(t: Transport) {
       t.call("/api/1/order/add_payments", body, init),
     /** Retrieve orders by IDs.
      *
+     * Requires iiko RMS `7.4.6` or newer.
+     *
      * Restriction group: `Orders: receiving`.
      */
     byId: (body: TableOrdersByIdParams, init?: CallOptions): Promise<TableOrdersByIdResponse> =>
       t.call("/api/1/order/by_id", body, init),
     /** Retrieve orders by tables.
      *
+     * Requires iiko RMS `7.4.6` or newer.
+     *
      * Restriction group: `Orders: receiving`.
      */
     byTable: (body: TableOrdersByTableParams, init?: CallOptions): Promise<TableOrdersByTableResponse> =>
       t.call("/api/1/order/by_table", body, init),
     /** Cancel the table order.
+     *
+     * Requires iiko RMS `9.0.5` or newer.
      *
      * Restriction group: `Order status: changing`.
      *
@@ -85,11 +97,15 @@ export function createTableOrdersResource(t: Transport) {
       t.call("/api/1/order/change_external_data", body, init),
     /** Change table order's payments.
      *
+     * Requires iiko RMS `7.7.4` or newer.
+     *
      * Restriction group: `Order payments: changing`.
      */
     changePayments: (body: TableOrdersChangePaymentsParams, init?: CallOptions): Promise<TableOrdersChangePaymentsResponse> =>
       t.call("/api/1/order/change_payments", body, init),
     /** Close order.
+     *
+     * Requires iiko RMS `7.4.6` or newer.
      *
      * Restriction group: `Order status: changing`.
      *
@@ -99,6 +115,8 @@ export function createTableOrdersResource(t: Transport) {
       t.call("/api/1/order/close", body, init),
     /** Create order.
      *
+     * Requires iiko RMS `7.4.6` or newer.
+     *
      * Restriction group: `Orders: creating`.
      *
      * A command: poll `commands.status` with the returned `correlationId`.
@@ -107,11 +125,15 @@ export function createTableOrdersResource(t: Transport) {
       t.call("/api/1/order/create", body, init),
     /** Init orders, created on POS, by POS orders.
      *
+     * Requires iiko RMS `7.7.1` or newer.
+     *
      * Restriction group: `Orders: loading data`.
      */
     initByPosOrder: (body: TableOrdersInitByPosOrderParams, init?: CallOptions): Promise<TableOrdersInitByPosOrderResponse> =>
       t.call("/api/1/order/init_by_posOrder", body, init),
     /** Init orders, created on POS, by tables.
+     *
+     * Requires iiko RMS `7.7.1` or newer.
      *
      * Restriction group: `Orders: loading data`.
      */

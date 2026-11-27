@@ -101,6 +101,7 @@ const bodyKind = (op) => {
 
 const restrictionGroup = (description = "") =>
   /Restriction group:\s*`([^`]+)`/.exec(description)?.[1];
+const allowedFrom = (description = "") => /Allowed from version `([^`]+)`/.exec(description)?.[1];
 const isCommand = (description = "") => /This method is a command/.test(description);
 
 /** Office names come from the path: <domain>.<subresource>.<method>. */
@@ -255,6 +256,10 @@ for (const { service } of services) {
     }
     const doc = (op, indent) => {
       const lines = [`${indent}/** ${oneLine(op.op.summary)}`];
+      const version = allowedFrom(op.op.description);
+      if (version) {
+        lines.push(`${indent} *`, `${indent} * Requires iiko RMS \`${version}\` or newer.`);
+      }
       const group = restrictionGroup(op.op.description);
       if (group) lines.push(`${indent} *`, `${indent} * Restriction group: \`${group}\`.`);
       if (isCommand(op.op.description)) {

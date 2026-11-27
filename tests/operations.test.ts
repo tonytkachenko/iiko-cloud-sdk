@@ -54,6 +54,14 @@ describe("generated operations", () => {
     expect(OPERATIONS.map((op) => op.path).toSorted()).toEqual(live);
   });
 
+  it("surfaces the minimum RMS version in the generated JSDoc", () => {
+    const source = readFileSync(
+      fileURLToPath(new URL("../src/transport/generated/dictionaries.ts", import.meta.url)),
+      "utf8",
+    );
+    expect(source).toContain("Requires iiko RMS `7.7.4` or newer.");
+  });
+
   it("lists every deprecated POST, so the escape hatch stays complete", () => {
     const spec = JSON.parse(
       readFileSync(fileURLToPath(new URL("../spec/raw.json", import.meta.url)), "utf8"),

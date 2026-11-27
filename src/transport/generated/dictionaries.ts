@@ -24,17 +24,23 @@ export function createDictionariesResource(t: Transport) {
   return {
     /** Get suitable terminal groups for delivery restrictions.
      *
+     * Requires iiko RMS `6.4.16` or newer.
+     *
      * Restriction group: `Orders: preparing`.
      */
     allowedDeliveryRestrictions: (body: DictionariesAllowedDeliveryRestrictionsParams, init?: CallOptions): Promise<DictionariesAllowedDeliveryRestrictionsResponse> =>
       t.call("/api/1/delivery_restrictions/allowed", body, init),
     /** Delivery cancel causes.
      *
+     * Requires iiko RMS `7.7.1` or newer.
+     *
      * Restriction group: `Data: dictionaries`.
      */
     cancelCauses: (body: DictionariesCancelCausesParams, init?: CallOptions): Promise<DictionariesCancelCausesResponse> =>
       t.call("/api/1/cancel_causes", body, init),
     /** Retrieve list of delivery restrictions.
+     *
+     * Requires iiko RMS `6.4.16` or newer.
      *
      * Restriction group: `Data: dictionaries`.
      */
@@ -48,6 +54,8 @@ export function createDictionariesResource(t: Transport) {
       t.call("/api/1/discounts", body, init),
     /** Marketing sources.
      *
+     * Requires iiko RMS `7.2.5` or newer.
+     *
      * Restriction group: `Data: dictionaries`.
      */
     marketingSources: (body: DictionariesMarketingSourcesParams, init?: CallOptions): Promise<DictionariesMarketingSourcesResponse> =>
@@ -60,11 +68,15 @@ export function createDictionariesResource(t: Transport) {
       t.call("/api/1/payment_types", body, init),
     /** Removal types (reasons for deletion).
      *
+     * Requires iiko RMS `7.5.3` or newer.
+     *
      * Restriction group: `Data: dictionaries`.
      */
     removalTypes: (body: DictionariesRemovalTypesParams, init?: CallOptions): Promise<DictionariesRemovalTypesResponse> =>
       t.call("/api/1/removal_types", body, init),
     /** Get tips types for api-login`s rms group.
+     *
+     * Requires iiko RMS `7.7.4` or newer.
      *
      * Restriction group: `Data: dictionaries`.
      */
