@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- 59b70a0: The package now ships `dist/index.d.cts` and points the `require` condition at it, so TypeScript
+  projects on `module: node16` can import the SDK from CommonJS instead of failing with TS1479.
+
 ## 0.4.0
 
 ### Minor Changes
