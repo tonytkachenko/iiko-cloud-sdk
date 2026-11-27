@@ -7,7 +7,7 @@ import { fakeIiko, json, makeClient } from "./helpers.js";
 
 const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as {
   version: string;
-  scripts: { prepublishOnly?: string };
+  scripts: { prepublishOnly?: string; "spec:download"?: string };
 };
 
 const organizations = {
@@ -38,6 +38,10 @@ describe("helpers", () => {
 describe("package", () => {
   it("builds before a manual publish", () => {
     expect(pkg.scripts.prepublishOnly).toContain("build");
+  });
+
+  it("fails the spec download on an HTTP error", () => {
+    expect(pkg.scripts["spec:download"]).toContain("curl -fsSL");
   });
 });
 
