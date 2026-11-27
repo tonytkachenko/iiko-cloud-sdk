@@ -54879,7 +54879,7 @@ export interface components {
             /** @description Order. Used only at a banquet. */
             order?: components["schemas"]["iikoTransport.PublicApi.Contracts.Reserves.Request.ReserveOrder"] | null;
             /** @description Customer. */
-            customer: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.RegularCustomer"], "type">;
+            customer: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"];
             /**
              * @description Telephone number.
              *     > Must begin with symbol "+" and must be at least 8 digits.
@@ -56066,7 +56066,7 @@ export interface components {
              *
              *      > Allowed from version `7.5.2`.
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.RegularCustomer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /**
              * @description Guest phone.
              *
@@ -56203,7 +56203,7 @@ export interface components {
              *
              *      > Allowed from version `7.5.2`.
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.RegularCustomer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion"] | null;
             /**
              * @description Guest phone.
              *

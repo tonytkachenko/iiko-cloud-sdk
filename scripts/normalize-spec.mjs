@@ -91,11 +91,15 @@ walkFilters(spec.components.schemas, "schemas");
 const schemas = spec.components.schemas;
 const keep = new WeakSet();
 const unionOf = new Map();
+// A property may also reference a variant (`allOf: [{ $ref: RegularCustomer }]`). The API accepts
+// every variant of the base there, so such a reference becomes the base union too.
+const variantUnion = new Map();
 for (const [key, base] of Object.entries(schemas)) {
   const mapping = base.discriminator?.mapping;
   if (!mapping) continue;
   const ref = `#/components/schemas/${key}`;
   for (const variantRef of Object.values(mapping)) {
+    variantUnion.set(variantRef, `${ref}Union`);
     for (const part of schemas[variantRef.split("/").pop()]?.allOf ?? []) {
       if (part.$ref === ref) keep.add(part);
     }
@@ -116,9 +120,9 @@ const rewrite = (node, topLevel = false) => {
   // share. Make it a plain reference to the union.
   const only =
     !topLevel && Array.isArray(node.allOf) && node.allOf.length === 1 ? node.allOf[0] : undefined;
-  if (only && unionOf.has(only.$ref) && !keep.has(only)) {
+  if (only?.$ref && !keep.has(only)) {
     delete node.allOf;
-    node.oneOf = [{ $ref: unionOf.get(only.$ref) }];
+    node.oneOf = [{ $ref: unionOf.get(only.$ref) ?? variantUnion.get(only.$ref) ?? only.$ref }];
     return;
   }
   const union = typeof node.$ref === "string" ? unionOf.get(node.$ref) : undefined;

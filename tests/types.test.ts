@@ -5,7 +5,10 @@ import type {
   FinanceBalanceSheetListParams,
   NomenclatureProductListV2Params,
   RequestOf,
+  ReservesCreateParams,
   ResponseOf,
+  TableOrdersByIdResponse,
+  TableOrdersCreateParams,
 } from "../src/index.js";
 import { fakeIiko, makeClient } from "./helpers.js";
 
@@ -116,6 +119,34 @@ describe("customers", () => {
     // @ts-expect-error surname belongs to the regular variant only
     const mixed: CreateOrderCustomer = { type: "one-time", name: "Guest", surname: "Lee" };
     void [regular, anonymous, nameless, mixed];
+  });
+});
+
+describe("customer unions", () => {
+  it("accepts both customer kinds in reserves", () => {
+    expectTypeOf<ReservesCreateParams["customer"]["type"]>().toEqualTypeOf<
+      "regular" | "one-time"
+    >();
+
+    const regular: ReservesCreateParams["customer"] = { type: "regular", name: "Ann" };
+    const oneTime: ReservesCreateParams["customer"] = { type: "one-time", name: "Guest" };
+    void [regular, oneTime];
+  });
+
+  it("accepts both customer kinds in table orders", () => {
+    type TableOrder = NonNullable<TableOrdersCreateParams["order"]>;
+    type Customer = NonNullable<TableOrder["customer"]>;
+    expectTypeOf<Customer["type"]>().toEqualTypeOf<"regular" | "one-time">();
+
+    const regular: TableOrder["customer"] = { type: "regular", name: "Ann" };
+    const oneTime: TableOrder["customer"] = { type: "one-time", name: "Guest" };
+    void [regular, oneTime];
+  });
+
+  it("keeps customer.type in a table order response", () => {
+    type Order = NonNullable<TableOrdersByIdResponse["orders"][number]["order"]>;
+    type Customer = NonNullable<Order["customer"]>;
+    expectTypeOf<Customer["type"]>().toEqualTypeOf<"regular" | "one-time">();
   });
 });
 
