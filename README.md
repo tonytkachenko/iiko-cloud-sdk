@@ -66,11 +66,11 @@ try {
 | `retries` | `3` | Retries for HTTP 429 only |
 | `retryBaseMs` | `1000` | First backoff delay; doubled with jitter |
 | `fetch` | global `fetch` | Custom fetch for tests or proxies |
-| `logger`, `debug` | off, `false` | Debug logging; bodies are redacted |
+| `logger`, `debug` | off, `false` | Debug logging; bodies are redacted for credentials only |
 | `userAgent` | `iiko-cloud-sdk/<version>` | Override the User-Agent |
 | `onAttempt` | — | Called after every HTTP attempt: path, attempt, status, duration, correlationId, error |
 
-Credentials are kept in memory and never logged. Debug output and error bodies pass through `redact()`, which removes `appId`, `clientSecret`, `apiKey`, `Authorization` and `token`.
+Credentials are kept in memory and never logged. Debug output and error bodies pass through `redact()`, which removes `appId`, `clientSecret`, `apiKey`, `Authorization` and `token`. It does not remove customer data: names, phones and addresses remain in debug bodies, so do not enable `debug` in production without a data policy. Use `onAttempt` for metadata without bodies.
 
 ## Errors
 
@@ -99,6 +99,22 @@ A token request that fails with 429, 5xx, a network error or a timeout keeps tha
 - 401 invalidates the token and replays once. A 401 from the token endpoint is not replayed.
 - Aborting the caller's signal cancels a pending 429 backoff immediately.
 - Timeouts use iiko's `Timeout` header; the client gives up five seconds later.
+
+## Commands
+
+Many mutations return a `correlationId` before the front has processed them. `commands.wait` polls
+`commands.status` until `Success`:
+
+```ts
+await iiko.transport.commands.wait(
+  { organizationId, correlationId },
+  { timeoutMs: 60_000, intervalMs: 500, signal },
+);
+```
+
+It throws `IikoCommandError` on state `Error` and `IikoTimeoutError` at the deadline. The default
+deadline is 30 s and the polling interval is 500 ms; `intervalMs` must be positive and `timeoutMs`
+non-negative. The caller's signal cancels the wait, including the sleep between polls.
 
 ## Types
 

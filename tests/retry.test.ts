@@ -167,6 +167,44 @@ describe("timeouts and cancellation", () => {
     await expect(result).resolves.toMatchObject({ name: "AbortError" });
     expect(iiko.api()).toHaveLength(1);
   });
+
+  it("applies the per-call timeout to the token request", async () => {
+    vi.useFakeTimers();
+    const iiko = fakeIiko(() => organizations, { token: (_call, signal) => hang(signal) });
+    const client = makeClient(iiko.fetch, { timeoutSec: 30 });
+    let settled = false;
+    const result = client.transport.organizations
+      .list({}, { timeoutSec: 1 })
+      .catch((error: unknown) => error)
+      .then((value) => {
+        settled = true;
+        return value;
+      });
+
+    await vi.advanceTimersByTimeAsync(5_999);
+    expect(settled).toBe(false);
+    await vi.advanceTimersByTimeAsync(2);
+
+    expect(settled).toBe(true);
+    await expect(result).resolves.toBeInstanceOf(IikoTimeoutError);
+    expect(iiko.api()).toHaveLength(0);
+  });
+
+  it("does not sleep when the signal is already aborted during a 429", async () => {
+    const controller = new AbortController();
+    const iiko = fakeIiko(() => json({ message: "slow down" }, 429, { "retry-after": "30" }));
+    const client = makeClient(iiko.fetch, {
+      retries: 3,
+      onAttempt: (event) => {
+        if (event.status === 429) controller.abort();
+      },
+    });
+
+    await expect(
+      client.transport.organizations.list({}, { signal: controller.signal }),
+    ).rejects.toMatchObject({ name: "AbortError" });
+    expect(iiko.api()).toHaveLength(1);
+  });
 });
 
 describe("observability", () => {

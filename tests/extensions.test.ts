@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   IikoCommandError,
   IikoTimeoutError,
@@ -6,6 +6,10 @@ import {
   toIikoDateUtc,
 } from "../src/index.js";
 import { fakeIiko, makeClient, ORG } from "./helpers.js";
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 describe("office", () => {
   it("calls a generated Office method with its path and body", async () => {
@@ -79,6 +83,56 @@ describe("commands.wait", () => {
         { intervalMs: 1, timeoutMs: 5 },
       ),
     ).rejects.toBeInstanceOf(IikoTimeoutError);
+  });
+
+  it("stops polling when the caller aborts during the interval", async () => {
+    vi.useFakeTimers();
+    const iiko = fakeIiko(() => ({ state: "InProgress" }));
+    const client = makeClient(iiko.fetch);
+    const controller = new AbortController();
+    let settled = false;
+    const result = client.transport.commands
+      .wait(
+        { organizationId: ORG, correlationId: "cmd-1" },
+        { intervalMs: 1_000, timeoutMs: 30_000, signal: controller.signal },
+      )
+      .catch((error: unknown) => error)
+      .then((value) => {
+        settled = true;
+        return value;
+      });
+
+    await vi.advanceTimersByTimeAsync(1);
+    expect(iiko.api()).toHaveLength(1);
+
+    controller.abort();
+    await vi.advanceTimersByTimeAsync(0);
+
+    expect(settled).toBe(true);
+    await expect(result).resolves.toMatchObject({ name: "AbortError" });
+    expect(iiko.api()).toHaveLength(1);
+  });
+
+  it("rejects a non-positive interval", async () => {
+    const client = makeClient(fakeIiko().fetch);
+
+    await expect(
+      client.transport.commands.wait(
+        { organizationId: ORG, correlationId: "cmd-1" },
+        { intervalMs: 0, timeoutMs: 1 },
+      ),
+    ).rejects.toBeInstanceOf(RangeError);
+  });
+
+  it("rejects a negative timeout", async () => {
+    const client = makeClient(fakeIiko().fetch);
+
+    await expect(
+      client.transport.commands.wait(
+        { organizationId: ORG, correlationId: "cmd-1" },
+        { intervalMs: 1, timeoutMs: -1 },
+      ),
+    ).rejects.toBeInstanceOf(RangeError);
   });
 });
 

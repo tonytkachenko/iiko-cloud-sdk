@@ -11,6 +11,7 @@ import {
   responseError,
 } from "./errors.js";
 import { redact } from "./redact.js";
+import { sleep } from "./sleep.js";
 import type { CallArgs, CallOptions, Path, ResponseOf } from "./types.js";
 
 export interface AttemptEvent {
@@ -26,25 +27,6 @@ export interface AttemptEvent {
 
 /** The client gives up this long after the server-side timeout. */
 const CLIENT_GRACE_SEC = 5;
-
-/** Resolves after `ms`, or rejects with the caller's abort reason. */
-function sleep(ms: number, signal?: AbortSignal): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (signal?.aborted) {
-      reject(signal.reason ?? new DOMException("The operation was aborted.", "AbortError"));
-      return;
-    }
-    const onAbort = () => {
-      clearTimeout(timer);
-      reject(signal?.reason ?? new DOMException("The operation was aborted.", "AbortError"));
-    };
-    const timer = setTimeout(() => {
-      signal?.removeEventListener("abort", onAbort);
-      resolve();
-    }, ms);
-    signal?.addEventListener("abort", onAbort, { once: true });
-  });
-}
 
 /** Only 429 is retried: iiko refuses it before running the operation. */
 function retryDelay(error: unknown, attempt: number, baseMs: number): number | undefined {
@@ -79,7 +61,9 @@ export class Transport {
     this.#config = config;
     this.#fetch = config.fetch;
     this.#logger = config.logger;
-    this.#tokens = new AuthService(() => this.#requestToken());
+    this.#tokens = new AuthService((timeoutSec) =>
+      this.#requestToken(timeoutSec ?? this.#config.timeoutSec),
+    );
   }
 
   async call<P extends Path>(path: P, ...args: CallArgs<P>): Promise<ResponseOf<P>> {
@@ -101,7 +85,7 @@ export class Transport {
     }
   }
 
-  async #requestToken(): Promise<string> {
+  async #requestToken(timeoutSec: number): Promise<string> {
     const body = await this.#once(
       "/api/v2/access_token",
       {
@@ -109,7 +93,7 @@ export class Transport {
         appId: this.#config.appId,
         clientSecret: this.#config.clientSecret,
       },
-      {},
+      { timeoutSec },
       0,
     );
     const token =
@@ -130,8 +114,15 @@ export class Transport {
     options: CallOptions,
     attempt: number,
   ): Promise<unknown> {
+    const timeoutSec = options.timeoutSec ?? this.#config.timeoutSec;
     try {
-      return await this.#once(path, body, options, attempt, await this.#tokens.getToken());
+      return await this.#once(
+        path,
+        body,
+        options,
+        attempt,
+        await this.#tokens.getToken(timeoutSec),
+      );
     } catch (error) {
       // A 401 means the request was not processed, so replaying it is safe.
       // A rejected token request is not an API 401 and must not be replayed.
@@ -144,7 +135,7 @@ export class Transport {
         throw error;
       }
       this.#tokens.invalidate();
-      return this.#once(path, body, options, attempt, await this.#tokens.getToken());
+      return this.#once(path, body, options, attempt, await this.#tokens.getToken(timeoutSec));
     }
   }
 

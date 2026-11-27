@@ -1,11 +1,14 @@
 export interface TokenProvider {
-  getToken(): Promise<string>;
+  /** The first caller's timeout applies while a token request is in flight. */
+  getToken(timeoutSec?: number): Promise<string>;
   /** Drops the cached token so the next call fetches a new one. */
   invalidate(): void;
 }
 
-/** Refresh this long before the JWT expires. */
+/** Refresh this long before the JWT expires, capped at half the remaining TTL. */
 const REFRESH_MARGIN_MS = 5 * 60_000;
+/** Cache a token whose reported expiry is already past, so clock skew does not fetch per call. */
+const CLOCK_SKEW_CACHE_MS = 30_000;
 /** iiko tokens live one hour; used when `exp` cannot be read. */
 const FALLBACK_TTL_MS = 60 * 60_000;
 
@@ -37,17 +40,22 @@ export class AuthService implements TokenProvider {
   #token?: CachedToken;
   #pending?: Promise<string>;
 
-  constructor(private readonly fetchToken: () => Promise<string>) {}
+  constructor(private readonly fetchToken: (timeoutSec?: number) => Promise<string>) {}
 
-  getToken(): Promise<string> {
+  getToken(timeoutSec?: number): Promise<string> {
     if (this.#token && this.#token.expiresAt > Date.now()) {
       return Promise.resolve(this.#token.value);
     }
-    this.#pending ??= this.fetchToken()
+    // Single-flight: a caller that joins an in-flight request shares its timeout.
+    this.#pending ??= this.fetchToken(timeoutSec)
       .then((value) => {
+        const now = Date.now();
+        const expiry = tokenExpiryMs(value);
+        const ttl = expiry === undefined ? FALLBACK_TTL_MS : expiry - now;
+        const margin = Math.min(REFRESH_MARGIN_MS, Math.max(ttl / 2, 0));
         this.#token = {
           value,
-          expiresAt: (tokenExpiryMs(value) ?? Date.now() + FALLBACK_TTL_MS) - REFRESH_MARGIN_MS,
+          expiresAt: ttl <= 0 ? now + CLOCK_SKEW_CACHE_MS : now + Math.max(ttl - margin, 0),
         };
         return value;
       })

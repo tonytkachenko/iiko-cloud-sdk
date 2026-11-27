@@ -2,10 +2,12 @@ import { readFileSync } from "node:fs";
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { createIikoClient, IikoError, IikoValidationError } from "../src/index.js";
 import { resolveConfig } from "../src/core/config.js";
+import { withHelpers } from "../src/transport/helpers.js";
 import { fakeIiko, json, makeClient } from "./helpers.js";
 
 const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as {
   version: string;
+  scripts: { prepublishOnly?: string };
 };
 
 const organizations = {
@@ -15,6 +17,29 @@ const organizations = {
     { id: "org-2", name: "Second" },
   ],
 };
+
+const generatedTransport = (organizationsResource: object, commandsResource: object) =>
+  ({
+    organizations: organizationsResource,
+    commands: commandsResource,
+  }) as unknown as Parameters<typeof withHelpers>[0];
+
+describe("helpers", () => {
+  it("fails fast when a generated operation collides with a helper", () => {
+    expect(() => withHelpers(generatedTransport({ getById: () => undefined }, {}))).toThrow(
+      /organizations\.getById/,
+    );
+    expect(() => withHelpers(generatedTransport({}, { wait: () => undefined }))).toThrow(
+      /commands\.wait/,
+    );
+  });
+});
+
+describe("package", () => {
+  it("builds before a manual publish", () => {
+    expect(pkg.scripts.prepublishOnly).toContain("build");
+  });
+});
 
 describe("transport", () => {
   it("lists organizations with the documented POST and no body", async () => {

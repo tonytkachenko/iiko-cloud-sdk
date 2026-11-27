@@ -87,6 +87,40 @@ describe("auth", () => {
     vi.useRealTimers();
   });
 
+  it("does not refetch a short-lived token on every call", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const iiko = fakeIiko(() => organizations, {
+      token: { token: jwt(Date.now() + 4 * 60_000) },
+    });
+    const client = makeClient(iiko.fetch);
+
+    await client.transport.organizations.list();
+    await client.transport.organizations.list();
+    expect(iiko.tokenRequests()).toBe(1);
+
+    vi.setSystemTime(Date.now() + 121_000); // past the halved margin
+    await client.transport.organizations.list();
+    expect(iiko.tokenRequests()).toBe(2);
+    vi.useRealTimers();
+  });
+
+  it("caches a token whose expiry is already past to survive clock skew", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const iiko = fakeIiko(() => organizations, {
+      token: { token: jwt(Date.now() - 60_000) },
+    });
+    const client = makeClient(iiko.fetch);
+
+    await client.transport.organizations.list();
+    await client.transport.organizations.list();
+    expect(iiko.tokenRequests()).toBe(1);
+
+    vi.setSystemTime(Date.now() + 31_000);
+    await client.transport.organizations.list();
+    expect(iiko.tokenRequests()).toBe(2);
+    vi.useRealTimers();
+  });
+
   it("reports a rejected token request as an auth error", async () => {
     const iiko = fakeIiko(() => organizations, {
       token: json({ errorDescription: "bad credentials" }, 401),

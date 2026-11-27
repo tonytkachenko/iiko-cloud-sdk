@@ -1,18 +1,18 @@
 import { IikoCommandError, IikoTimeoutError } from "../core/errors.js";
+import { sleep } from "../core/sleep.js";
 import type { CallOptions } from "../core/types.js";
 import type { CommandsStatusParams, CommandsStatusResponse } from "../transport/generated/types.js";
 
 export type CommandStatus = CommandsStatusResponse;
 
 export interface WaitOptions {
-  /** Give up after this long. Defaults to 30 s. */
+  /** Give up after this long. Defaults to 30 s; must be non-negative. */
   timeoutMs?: number;
-  /** Delay between status calls. Defaults to 500 ms. */
+  /** Delay between status calls. Defaults to 500 ms; must be positive. */
   intervalMs?: number;
+  /** Cancels the wait, including the sleep between polls. */
   signal?: AbortSignal;
 }
-
-const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 /** Adds `wait` to the generated `commands` resource. */
 export function commandsExtension(
@@ -22,6 +22,7 @@ export function commandsExtension(
     /**
      * Polls until the command succeeds.
      *
+     * @throws RangeError when `timeoutMs` or `intervalMs` is invalid.
      * @throws IikoCommandError when iiko reports state `Error`.
      * @throws IikoTimeoutError when the command is still running at the deadline.
      */
@@ -29,6 +30,13 @@ export function commandsExtension(
       body: CommandsStatusParams,
       { timeoutMs = 30_000, intervalMs = 500, signal }: WaitOptions = {},
     ) {
+      if (!Number.isFinite(timeoutMs) || timeoutMs < 0) {
+        throw new RangeError("iiko: commands.wait timeoutMs must be a non-negative number");
+      }
+      if (!Number.isFinite(intervalMs) || intervalMs <= 0) {
+        throw new RangeError("iiko: commands.wait intervalMs must be a positive number");
+      }
+
       const deadline = Date.now() + timeoutMs;
       for (;;) {
         const current = await status(body, { signal });
@@ -42,7 +50,7 @@ export function commandsExtension(
             { correlationId: body.correlationId },
           );
         }
-        await sleep(intervalMs);
+        await sleep(intervalMs, signal);
       }
     },
   };

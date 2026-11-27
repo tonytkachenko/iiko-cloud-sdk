@@ -8,6 +8,13 @@ type GeneratedTransport = ReturnType<typeof createGeneratedTransport>;
  * `transport` comes straight from the generator.
  */
 export function withHelpers(transport: GeneratedTransport) {
+  // The generator does not know about hand-written helpers; fail fast instead of shadowing.
+  if ("getById" in transport.organizations) {
+    throw new Error("iiko: generated organizations.getById collides with the hand-written helper");
+  }
+  if ("wait" in transport.commands) {
+    throw new Error("iiko: generated commands.wait collides with the hand-written helper");
+  }
   return {
     ...transport,
     organizations: {

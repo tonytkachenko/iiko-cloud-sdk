@@ -2,7 +2,10 @@ const SECRET_KEY = /^(appId|clientSecret|apiKey|authorization|token)$/i;
 const BEARER = /(Bearer\s+)[\w.~+/-]+=*/gi;
 const REDACTED = "[redacted]";
 
-/** Replaces credentials found in keys or `Bearer` values, recursively. */
+/**
+ * Replaces credentials found in keys or `Bearer` values, recursively.
+ * Other body data (names, phones, addresses) is not redacted.
+ */
 export function redact(value: unknown, seen = new WeakSet<object>()): unknown {
   if (typeof value === "string") return value.replace(BEARER, `$1${REDACTED}`);
   if (Array.isArray(value)) return value.map((item) => redact(item, seen));

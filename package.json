@@ -35,6 +35,7 @@
   ],
   "scripts": {
     "build": "tsup && node -e \"require('node:fs').rmSync('dist/index.d.cts',{force:true})\"",
+    "prepublishOnly": "pnpm build",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint src tests examples scripts",
     "format": "oxfmt src tests examples scripts",
