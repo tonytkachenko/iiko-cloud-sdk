@@ -1,3 +1,9 @@
 {
-  "ignorePatterns": ["src/generated/**", "dist/**", "coverage/**"]
+  "ignorePatterns": [
+    "src/generated/**",
+    "dist/**",
+    "coverage/**",
+    "src/transport/generated/**",
+    "src/office/generated/**"
+  ]
 }

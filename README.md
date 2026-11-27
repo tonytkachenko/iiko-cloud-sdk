@@ -1,21 +1,24 @@
-# @toniq/iiko-cloud-sdk
+# iiko-cloud-sdk
 
-> **This is not an official iiko package.** It is an unofficial, community TypeScript SDK for the [iikoCloud API](https://api-ru.iiko.help/docs/). iiko does not support or endorse it.
+Unofficial TypeScript SDK for the iikoCloud API (`https://api-ru.iiko.services`).
+**Not affiliated with iiko.** It wraps the public iikoCloud Transport and Office APIs, generated from the official OpenAPI document.
 
-Typed HTTP client for iikoCloud: generated request/response types, JWT handling, typed errors, retries and timeouts.
+- 360 active operations: 126 Transport, 234 Office.
+- Typed requests and responses, including discriminated unions for payments, customers and order items.
+- JWT auth with a single-flight token cache, 401 replay, 429 retries and typed errors.
+- Zero runtime dependencies. ESM and CommonJS. Node.js 22.12+.
 
 ## Install
 
 ```bash
-pnpm add @toniq/iiko-cloud-sdk
+npm install iiko-cloud-sdk
+# or: pnpm add iiko-cloud-sdk
 ```
-
-Requires Node.js 22.12 or newer. ESM only — CommonJS projects can use `require()` from Node 20.19+.
 
 ## Quick start
 
 ```ts
-import { createIikoClient } from "@toniq/iiko-cloud-sdk";
+import { createIikoClient, IikoError, IikoRateLimitError } from "iiko-cloud-sdk";
 
 const iiko = createIikoClient({
   appId: process.env.IIKO_APP_ID!,
@@ -23,98 +26,156 @@ const iiko = createIikoClient({
   apiKey: process.env.IIKO_API_KEY!,
 });
 
-const { data, error } = await iiko.organizations.list();
+try {
+  const { organizations } = await iiko.transport.organizations.list();
 
-if (error) throw error;
-console.log(data?.organizations);
-```
+  const { correlationId } = await iiko.transport.deliveries.create({
+    organizationId: organizations[0]!.id,
+    terminalGroupId: "terminal-group-id",
+    order: {
+      phone: "+10000000000",
+      orderServiceType: "DeliveryByCourier",
+      items: [{ type: "Product", productId: "product-id", price: 450, amount: 1 }],
+    },
+  });
 
-## Resources
+  // Many mutations are commands: wait until the front has processed them.
+  await iiko.transport.commands.wait({
+    organizationId: organizations[0]!.id,
+    correlationId,
+  });
 
-| Resource | Method | iikoCloud operation |
-|---|---|---|
-| `organizations` | `list()` | `GET /api/1/organizations` |
-| `organizations` | `getById(id)` | `POST /api/1/organizations` |
-| `terminals` | `list(organizationId)` | `POST /api/1/terminal_groups` |
-| `menu` | `getExternalMenu(organizationId, externalMenuId, options?)` | `POST /api/2/menu/by_id` |
-
-Only these operations are covered in 1.0.0. Everything else waits for a real use case.
-
-## Authentication
-
-`appId`, `clientSecret` and `apiKey` are exchanged for a JWT at `POST /api/v2/access_token`. The token is cached in memory only — never written to disk, Redis or any store.
-
-- There is no refresh token. When iiko rejects a token with `401`, the SDK fetches a new one and replays the request **once**.
-- Tokens are refreshed 60 seconds before the `exp` claim when it can be read.
-- Concurrent calls share one token request.
-- Credentials and the `Authorization` header never appear in logs, errors or stack traces.
-
-## Errors
-
-Every method returns `{ data, error }` — like `openapi-fetch`. **Errors are not thrown**; check `error` before using `data`.
-
-```ts
-const { data, error } = await iiko.terminals.list(organizationId);
-
-if (error) {
-  console.error(error.name, error.status, error.correlationId);
+  // Office API, same client:
+  const { products } = await iiko.office.nomenclature.product.listV2({ limit: 100 });
+} catch (error) {
+  if (error instanceof IikoRateLimitError) {
+    console.error("rate limited, retry after", error.retryAfterMs);
+  } else if (error instanceof IikoError) {
+    console.error(error.name, error.status, error.message, error.correlationId);
+  }
 }
 ```
 
+## Client options
+
+| Option | Default | Meaning |
+|---|---|---|
+| `appId`, `clientSecret`, `apiKey` | required | iiko app credentials and the organization API key |
+| `baseUrl` | `https://api-ru.iiko.services` | API host; a query string is rejected |
+| `timeoutSec` | `15` | Sent as the `Timeout` header; the client waits five seconds longer |
+| `retries` | `3` | Retries for HTTP 429 only |
+| `retryBaseMs` | `1000` | First backoff delay; doubled with jitter |
+| `fetch` | global `fetch` | Custom fetch for tests or proxies |
+| `logger`, `debug` | off, `false` | Debug logging; bodies are redacted for credentials only |
+| `userAgent` | `iiko-cloud-sdk/<version>` | Override the User-Agent |
+| `onAttempt` | — | Called after every HTTP attempt: path, attempt, status, duration, correlationId, error |
+
+Credentials are kept in memory and never logged. Debug output and error bodies pass through `redact()`, which removes `appId`, `clientSecret`, `apiKey`, `Authorization` and `token`. It does not remove customer data: names, phones and addresses remain in debug bodies, so do not enable `debug` in production without a data policy. Use `onAttempt` for metadata without bodies.
+
+## Errors
+
+Errors are thrown, not returned. Every error has `status`, `code`, `correlationId`, `endpoint` and `retryAfterMs` where applicable.
+
 | Class | When |
 |---|---|
-| `IikoAuthError` | token endpoint failure, or `401` after re-authentication |
-| `IikoValidationError` | `400`, `409`, `422` |
-| `IikoRateLimitError` | `429`, with `retryAfterMs` |
-| `IikoServerError` | `5xx` |
-| `IikoNetworkError` | fetch failure, or caller abort (`code: "ABORTED"`) |
-| `IikoTimeoutError` | local timeout or `408` |
-| `IikoError` | other `4xx` and the base class |
+| `IikoAuthError` | 401 or 403 from the API or the token endpoint |
+| `IikoValidationError` | 400, 404, 409, 422 |
+| `IikoRateLimitError` | 429, with `retryAfterMs` |
+| `IikoServerError` | 5xx |
+| `IikoTimeoutError` | 408 and client timeouts |
+| `IikoNetworkError` | fetch failed |
+| `IikoCommandError` | `commands.wait` saw state `Error` |
+| `IikoApiError`, `IikoError` | generic bases |
 
-Each error carries `status`, `code`, `correlationId`, `endpoint`, `method`, `requestBody`, `responseBody` and `retryAfterMs` where available, with credentials redacted.
+A token request that fails with 429, 5xx, a network error or a timeout keeps that class; only
+401/403 from the token endpoint are `IikoAuthError`.
 
 ## Retries and timeouts
 
-- Timeout per attempt: `timeoutMs` (default `15_000`).
-- Retried: `GET`, `PUT`, `DELETE` on network errors and `408`, `429`, `500`, `502`, `503`, `504`.
-- `POST` is not retried unless an operation opts in with the `x-iiko-retry: true` header (stripped before sending).
-- Backoff is exponential with jitter: 500 ms, 1 s, 2 s. `Retry-After` wins on `429`.
-- Cancellation: pass an `AbortSignal` as the last argument of any method.
+- Only HTTP 429 is retried, for reads and writes alike: the limiter refuses the request before it runs.
+- Token requests follow the same policy: a 429 is retried; 5xx, network errors and timeouts are not.
+- `Retry-After` is honoured as seconds or an HTTP date for 429 retries; the parsed value is exposed as `retryAfterMs` on any error response.
+- 5xx, network errors and timeouts are never retried: the operation may have run.
+- 401 invalidates the token and replays once. A 401 from the token endpoint is not replayed.
+- Aborting the caller's signal cancels a pending 429 backoff immediately.
+- Timeouts use iiko's `Timeout` header; the client gives up five seconds later.
 
-## Configuration
+## Commands
 
-| Option | Type | Default |
-|---|---|---|
-| `appId` | `string` | required |
-| `clientSecret` | `string` | required |
-| `apiKey` | `string` | required |
-| `baseUrl` | `string` | `https://api-ru.iiko.services` |
-| `timeoutMs` | `number` | `15_000` |
-| `maxRetries` | `number` | `2` |
-| `logger` | `ILogger` | off |
-| `fetch` | `typeof fetch` | global `fetch` |
-| `debug` | `boolean` | `false` |
+Many mutations return a `correlationId` before the front has processed them. `commands.wait` polls
+`commands.status` until `Success`:
 
-Environment variables used by the example: `IIKO_APP_ID`, `IIKO_CLIENT_SECRET`, `IIKO_API_KEY`.
-
-## Updating the OpenAPI types
-
-`src/generated/` is produced from the live spec and must never be edited by hand.
-
-```bash
-pnpm iiko:sync   # download openapi.json + regenerate schema.ts
+```ts
+await iiko.transport.commands.wait(
+  { organizationId, correlationId },
+  { timeoutMs: 60_000, intervalMs: 500, signal },
+);
 ```
 
-CI re-runs this and fails when the spec changed. An incompatible schema change ships as a major version.
+It throws `IikoCommandError` on state `Error` and `IikoTimeoutError` at the deadline. The default
+deadline is 30 s and the polling interval is 500 ms; `intervalMs` must be positive and `timeoutMs`
+non-negative. The caller's signal cancels the wait, including the sleep between polls.
 
-## Status
+## Types
 
-Unpublished. No release job yet; changes are recorded with Changesets.
+Each operation has named types: `<Domain><Method>Params` and `<Domain><Method>Response` (`DeliveriesCreateParams`, `InventoryIncomingInvoiceCreateV1Params`, …). Path-based aliases are also available: `RequestOf<'/api/1/deliveries/create'>`, `ResponseOf<'/api/1/organizations'>`.
+
+A body whose fields are all optional can be omitted; the client sends `{}`, because iiko rejects a POST with no body.
+
+Discriminated schemas are real unions, so a wrong payment kind or a missing order item field is a compile error:
+
+```ts
+import type { DeliveriesCreateParams } from "iiko-cloud-sdk";
+
+type Payment = NonNullable<NonNullable<DeliveriesCreateParams["order"]>["payments"]>[number];
+const payment: Payment = { paymentTypeKind: "Cash", sum: 450, paymentTypeId };
+```
+
+Unions are closed over the variants known to the current spec. Regenerate after an iiko update to see new ones.
+
+Filter operators are literal unions too: `op: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank"`, so the editor suggests them and a typo fails to compile.
+
+## Dates
+
+`toIikoDateUtc(date)` and `fromIikoDateUtc(string)` handle iiko's `yyyy-MM-dd HH:mm:ss.fff` format for fields documented as UTC. Fields documented as terminal-local time have no time zone; format those yourself.
+
+## Deprecated operations
+
+Deprecated operations have no typed wrappers. They remain reachable by path:
+
+```ts
+await iiko.call("/api/2/menu/by_id", { externalMenuId, organizationIds });
+```
+
+`call` enforces the same body rule as generated methods: a body with required fields is a required
+argument.
+
+## Updating the spec
+
+`spec/raw.json` is committed; `spec/normalized.json` and `src/generated` are produced from it.
+
+```bash
+pnpm spec:sync    # download the live document, normalize, regenerate
+pnpm spec:build   # regenerate from the committed document
+```
+
+The generator fails on an unnamed active operation, a stale naming entry, a non-POST operation or a duplicate name/type. Update names in `scripts/names/transport.json` or `scripts/names/office.json` and rerun.
+
+## Development
+
+```bash
+pnpm install
+pnpm spec:build
+pnpm check         # tsc + 452 tests, coverage thresholds
+pnpm build         # tsup: ESM + CJS + one shared .d.ts
+```
+
+GitHub Actions is not used at the moment; run the checks locally.
+
+The public API is frozen in `tests/api.snapshot.txt`. Update it only with `pnpm exec vitest run tests/api.test.ts -u` and review the diff: a removed or renamed name is a major version.
+
+See `docs/ARCHITECTURE.md`, `docs/adr/` and `CONTRIBUTING.md`.
 
 ## License
 
-MIT. See [LICENSE](LICENSE). Not affiliated with iiko.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+MIT. Not an official iiko package.

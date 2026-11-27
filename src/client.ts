@@ -1,40 +1,28 @@
-import { AuthService } from "./auth.js";
-import { resolveConfig, type IikoClientOptions } from "./config.js";
-import { HttpClient } from "./http.js";
-import { createMenuResource } from "./resources/menu.js";
-import { createOrganizationsResource } from "./resources/organizations.js";
-import { createTerminalsResource } from "./resources/terminals.js";
-
-export type { IikoClientOptions } from "./config.js";
+import { resolveConfig, type IikoClientOptions } from "./core/config.js";
+import { Transport as CoreTransport } from "./core/transport.js";
+import { createOffice, type Office } from "./office/index.js";
+import { createTransport, type Transport } from "./transport/index.js";
 
 export interface IikoClient {
-  organizations: ReturnType<typeof createOrganizationsResource>;
-  terminals: ReturnType<typeof createTerminalsResource>;
-  menu: ReturnType<typeof createMenuResource>;
+  /** Every active iikoCloud Transport API operation, grouped by domain. */
+  transport: Transport;
+  /** Every active iikoCloud Office API operation, grouped by domain and subresource. */
+  office: Office;
+  /** Typed call to any POST operation by path, deprecated ones included. */
+  call: CoreTransport["call"];
 }
 
 /**
  * Creates an iikoCloud client.
  *
  * Credentials are kept in memory only and never logged.
- * API errors come back in `error`; they are never thrown.
+ * API errors are thrown as typed `IikoError` subclasses.
  */
 export function createIikoClient(options: IikoClientOptions): IikoClient {
-  const config = resolveConfig(options);
-  const auth = new AuthService({
-    appId: config.appId,
-    clientSecret: config.clientSecret,
-    apiKey: config.apiKey,
-    baseUrl: config.baseUrl,
-    timeoutMs: config.timeoutMs,
-    fetch: config.fetch,
-    logger: config.logger,
-  });
-  const http = new HttpClient(config, auth);
-
+  const core = new CoreTransport(resolveConfig(options));
   return {
-    organizations: createOrganizationsResource(http),
-    terminals: createTerminalsResource(http),
-    menu: createMenuResource(http),
+    transport: createTransport(core),
+    office: createOffice(core),
+    call: core.call.bind(core) as CoreTransport["call"],
   };
 }

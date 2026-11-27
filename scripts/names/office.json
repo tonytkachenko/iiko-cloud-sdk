@@ -1,0 +1,88 @@
+{
+  "service": "office",
+  "prefixes": [
+    {
+      "prefix": "/api/nomenclature/v1",
+      "domain": "nomenclature",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/nomenclature/v2",
+      "domain": "nomenclature",
+      "version": "v2"
+    },
+    {
+      "prefix": "/api/nomenclature/v3",
+      "domain": "nomenclature",
+      "version": "v3"
+    },
+    {
+      "prefix": "/api/inventory/v1",
+      "domain": "inventory",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/inventory/v2",
+      "domain": "inventory",
+      "version": "v2"
+    },
+    {
+      "prefix": "/api/finance/v1",
+      "domain": "finance",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/employees/v1",
+      "domain": "employees",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/purchasing/v1",
+      "domain": "purchasing",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/reporting/v1",
+      "domain": "reporting",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/terminals/v1",
+      "domain": "terminals",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/platform/v1",
+      "domain": "platform",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/pricing/v1",
+      "domain": "pricing",
+      "version": "v1"
+    },
+    {
+      "prefix": "/api/licenses/v2",
+      "domain": "licenses",
+      "version": "v2"
+    }
+  ],
+  "overrides": {
+    "/api/nomenclature/v1/outer_economic_activity_nomenclature_codes/get": {
+      "subresource": "economicActivityCodes",
+      "name": "getV1"
+    },
+    "/api/nomenclature/v1/outer_economic_activity_nomenclature_codes/list": {
+      "subresource": "economicActivityCodes",
+      "name": "listV1"
+    },
+    "/api/employees/v1/schedule/schedule_types/list": {
+      "subresource": "schedule",
+      "name": "typesList"
+    },
+    "/api/terminals/v1/terminals/list": {
+      "subresource": null,
+      "name": "list"
+    }
+  }
+}

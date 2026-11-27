@@ -3329,7 +3329,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequest"];
+                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequestUnion"];
                 };
             };
             responses: {
@@ -7167,7 +7167,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Notifications.SendNotificationRequest"];
+                    "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Notifications.SendNotificationRequestUnion"];
                 };
             };
             responses: {
@@ -7264,7 +7264,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponse"];
+                        "application/json": components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponseUnion"];
                     };
                 };
                 /** @description Bad Request */
@@ -9743,7 +9743,7 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequest"];
+                    "application/json": components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequestUnion"];
                 };
             };
             responses: {
@@ -41878,7 +41878,7 @@ export interface components {
              */
             name: string;
             /** @default false */
-            isDeleted: Record<string, never>;
+            isDeleted: boolean;
         };
         /**  */
         AllergenGroupListRequest: {
@@ -42475,7 +42475,7 @@ export interface components {
              * Format: uuid
              * @description Category id(can be null)
              */
-            id: Record<string, never>;
+            id: string;
             /** @description Category name */
             name?: string | null;
             /** @description Combos in category */
@@ -42485,11 +42485,12 @@ export interface components {
             /** @description Combo name */
             name: string;
             /**
+             * Format: float
              * @description Combo price, if price strategy is fixed
              * @default 0
              * @example 0
              */
-            price: Record<string, never>;
+            price: number;
             groups?: components["schemas"]["ComboGroupDto"][];
             /** @description Combo image */
             image: (components["schemas"]["ButtonImageDto"] | null)[];
@@ -42500,8 +42501,8 @@ export interface components {
             description: string;
             /** @description Available sizes for combo (can be empty) */
             sizes?: components["schemas"]["ComboSizeDto"][];
-            /** @example {"BY_COMPONENT", "FIXED", "CALCULATE"} */
-            priceStrategy: Record<string, never>;
+            /** @enum {string} */
+            priceStrategy: "BY_COMPONENT" | "FIXED" | "CALCULATE";
             /**
              * @description The date when the combo will be available until
              * @example {"2018-01-01T00:00:00+00:00"}
@@ -42519,7 +42520,8 @@ export interface components {
             id: string;
         };
         ComboGroupDto: {
-            id: Record<string, never>;
+            /** Format: uuid */
+            id: string;
             name: string;
             /** @description Includes main dishes - these are the items around which the combo set is built. If a main dish is added to the order, the system can display a prompt 'build a combo set'. */
             isMainGroup: boolean;
@@ -43423,8 +43425,11 @@ export interface components {
         EmployeePositionFilterItem: {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank") */
-            op?: string;
+            /**
+             * @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank")
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Value for filtering by the field */
             value?: unknown;
             /** @description Values for multi-value filtering ("in", "nin") */
@@ -43786,7 +43791,7 @@ export interface components {
              */
             type: "DISH" | "COMBO";
             /** @default false */
-            canBeDivided: Record<string, never>;
+            canBeDivided: boolean;
             /**
              * @description Can set open price flag
              * @default false
@@ -43910,7 +43915,7 @@ export interface components {
              * @example 00000000-0000-0000-0000-000000000000
              */
             id: string;
-            splittable: Record<string, never>;
+            splittable: boolean;
         };
         ExternalMenuItemSize: {
             /**
@@ -43927,11 +43932,12 @@ export interface components {
              */
             isDefault: boolean;
             /**
+             * Format: float
              * @description Size's weight
              * @default 0
              * @example 0.0
              */
-            portionWeightGrams: Record<string, never>;
+            portionWeightGrams: number;
             itemModifierGroups: components["schemas"]["ExternalMenuModifierGroup"][];
             /**
              * @description ID size, can be empty if the default size is selected and it is the only size in the list
@@ -43980,7 +43986,8 @@ export interface components {
              * @example https://102922.selcdn.ru/ecomm/someimage.png
              */
             buttonImageUrl?: string | null;
-            weight: Record<string, never>;
+            /** Format: float */
+            weight: number;
             /** @example 00000000-0000-0000-0000-000000000000 */
             id: string;
         };
@@ -44000,7 +44007,7 @@ export interface components {
             }) | null;
             items: components["schemas"]["ExternalMenuModifierItem"][];
             /** @default false */
-            canBeDivided: Record<string, never>;
+            canBeDivided: boolean;
             /** @example 00000000-0000-0000-0000-000000000000 */
             itemGroupId?: string | null;
             /** @default false */
@@ -44043,7 +44050,7 @@ export interface components {
              * @default
              */
             sku: string;
-            splittable: Record<string, never>;
+            splittable: boolean;
             /** @example 00000000-0000-0000-0000-000000000000 */
             id?: string | null;
         };
@@ -44068,11 +44075,12 @@ export interface components {
             /** @description Nutrition per 100 g of modifier product */
             nutritionPerHundredGrams?: components["schemas"]["NutritionInfoDto"][] | null;
             /**
+             * Format: float
              * @description Modifier's weight in gramms
              * @default 0
              * @example 0.0
              */
-            portionWeightGrams: Record<string, never>;
+            portionWeightGrams: number;
             /** @description List of tag names */
             tags?: components["schemas"]["TagDto"][];
             /** @description List of label names */
@@ -44144,16 +44152,18 @@ export interface components {
             tags: string[];
             /** Format: uuid */
             id: string;
-            weight: Record<string, never>;
+            /** Format: float */
+            weight: number;
         };
         ExternalMenuPriceByDepartmentsDto: {
             /** @description List of organization GUIDs */
             organizations?: string[];
             /**
+             * Format: float
              * @description Product size prices for the organization, if the value is null, then the product/size is not for sale, the price always belongs to the price category that was selected at the time of the request
              * @example 0
              */
-            price: Record<string, never>;
+            price: number;
             /**
              * Format: uuid
              * @description taxCategory id
@@ -44269,8 +44279,11 @@ export interface components {
         FilterCondition: {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank") */
-            op?: string;
+            /**
+             * @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank")
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Value for filtering by the field */
             value?: unknown;
         };
@@ -44278,8 +44291,11 @@ export interface components {
         FilterConditionV1: {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank") */
-            op?: string;
+            /**
+             * @description Operation ("eq", "ne", "gt", "gte", "lt", "lte", "in", "nin", "like", "blank", "notblank")
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Value for filtering by the field */
             value?: unknown;
         };
@@ -44792,6 +44808,12 @@ export interface components {
              * @enum {string}
              */
             type: "cardNumber";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "cardNumber";
         });
         /**
          *
@@ -44801,6 +44823,12 @@ export interface components {
             /** @description Customer card track. */
             cardTrack?: string;
         } & (Omit<components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequest"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "cardTrack";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -44820,6 +44848,12 @@ export interface components {
              * @enum {string}
              */
             type: "email";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "email";
         });
         /**
          *
@@ -44834,6 +44868,12 @@ export interface components {
              * @enum {string}
              */
             type: "id";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "id";
         });
         /**
          *
@@ -44843,6 +44883,12 @@ export interface components {
             /** @description Customer phone number. */
             phone?: string;
         } & (Omit<components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequest"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "phone";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -45219,7 +45265,7 @@ export interface components {
          */
         "iikoNet.Service.Contracts.Api.iikoTransport.LoyaltyResult.CalculateComboPriceRequest": {
             /** @description Items with modifiers included in combo. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * Format: uuid
              * @description Organization id.
@@ -46385,7 +46431,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of cities. */
-            cities: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            cities: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -46454,7 +46500,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of districts. */
-            regions: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            regions: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -46693,6 +46739,12 @@ export interface components {
              * @enum {string}
              */
             state: "Error";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            state: "Error";
         });
         /**
          *
@@ -46729,12 +46781,24 @@ export interface components {
              * @enum {string}
              */
             state: "InProgress";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            state: "InProgress";
         };
         /**
          *
          * @description Command completed successfully.
          */
         "iikoTransport.PublicApi.Contracts.Commands.SuccessCommandStatus": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponse"], "state"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            state: "Success";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -46779,7 +46843,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.City, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46794,7 +46858,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Address.Region, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46809,7 +46873,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46824,7 +46888,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46839,7 +46903,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46854,7 +46918,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46869,7 +46933,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46884,7 +46948,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46899,7 +46963,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46914,7 +46978,7 @@ export interface components {
          *
          * @description RMS pair wrapping - list of response items that belong to this RMS.
          */
-        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]": {
+        "iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]": {
             /**
              * Format: uuid
              * @description Organization ID.
@@ -46955,6 +47019,12 @@ export interface components {
              */
             cardType?: string | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Card";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47005,6 +47075,31 @@ export interface components {
         };
         /**
          *
+         * @description Additional data for credit payment item.
+         */
+        "iikoTransport.PublicApi.Contracts.Deliveries.Common.CreditPaymentAdditionalData": {
+            /**
+             * Format: uuid
+             * @description Counteragent ID.
+             *
+             *      > Allowed from version `9.2.6`.
+             */
+            counteragentId: string;
+        } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Credit";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Credit";
+        });
+        /**
+         *
          * @description Delivery order statuses.
          * @enum {string}
          */
@@ -47020,9 +47115,19 @@ export interface components {
          * @description Additional data for external payment item.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Common.ExternalPaymentAdditionalData": {
-            /** @description Payment custom data. */
+            /**
+             * @description Payment custom data.
+             *
+             *      > Allowed from version `8.7.6`.
+             */
             customData: string;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "External";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47050,6 +47155,12 @@ export interface components {
             /** @description Guest credential search scope. */
             searchScope: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.IikoCardSearchScope"];
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "LoyaltyCard";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47236,7 +47347,7 @@ export interface components {
              *     - should be used if a customer does not agree to take part in the store's loyalty programs or an aggregator (external system) does not provide customer details
              *     - customer details will NOT be added to the store's customer database and will be used ONLY to complete the current order
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /** @description Guest details. Not equal to the customer who makes an order. */
             guests?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Guests"] | null;
             /**
@@ -47276,17 +47387,20 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -47539,7 +47653,7 @@ export interface components {
              */
             organizationId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * @description Combos.
              *
@@ -47748,6 +47862,12 @@ export interface components {
              * @enum {string}
              */
             type: "city";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "city";
         });
         /**
          *
@@ -47787,6 +47907,12 @@ export interface components {
              * @enum {string}
              */
             type: "legacy";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "legacy";
         });
         /**
          *
@@ -47798,6 +47924,12 @@ export interface components {
             /** @description Customer name. */
             name: string;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "one-time";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47821,6 +47953,12 @@ export interface components {
              * @enum {string}
              */
             paymentTypeKind: "Card";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Card";
         });
         /**
          *
@@ -47833,6 +47971,12 @@ export interface components {
              */
             number?: string | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Card";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47852,6 +47996,12 @@ export interface components {
              * @enum {string}
              */
             paymentTypeKind: "Cash";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Cash";
         };
         /**
          *
@@ -47861,6 +48011,12 @@ export interface components {
          *     </remarks>
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CashTipsPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Cash";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -47951,6 +48107,12 @@ export interface components {
              * @enum {string}
              */
             type: "Compound";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Compound";
         });
         /**
          *
@@ -47976,6 +48138,24 @@ export interface components {
              *     > If sent null, it generates automatically on iikoTransport side.
              */
             positionId?: string | null;
+        };
+        /**
+         *
+         * @description Credit payment (cashless payment charged to a counteragent).
+         *     Supported for delivery orders only.
+         */
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CreditPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Credit";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "Credit";
         };
         /**
          *
@@ -48065,7 +48245,7 @@ export interface components {
              *     - should be used if a customer does not agree to take part in the store's loyalty programs or an aggregator (external system) does not provide customer details
              *     - customer details will NOT be added to the store's customer database and will be used ONLY to complete the current order
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /** @description Guest details. Not equal to the customer who makes an order. */
             guests?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Guests"] | null;
             /**
@@ -48105,17 +48285,20 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -48148,7 +48331,7 @@ export interface components {
              *
              *     > Can be obtained by `/api/1/organizations` or `/api/1/organizations/settings` operations (`addressFormatType` parameter).
              */
-            address?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Address"], "type"> | null;
+            address?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressUnion"] | null;
             /** @description Delivery location custom code in customer's API system. */
             externalCartographyId?: string | null;
             /** @description Additional information. */
@@ -48184,7 +48367,7 @@ export interface components {
              *
              *      > Type **iikoCard** allowed from version `7.4.4`.
              */
-            discounts?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Discount"][] | null;
+            discounts?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.DiscountUnion"][] | null;
             /** @description Whether loyalty discounts should be fixed. */
             fixedLoyaltyDiscounts?: boolean | null;
         };
@@ -48229,12 +48412,24 @@ export interface components {
              * @enum {string}
              */
             paymentTypeKind: "External";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "External";
         };
         /**
          *
          * @description External tips payment type
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ExternalTipsPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "External";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48274,6 +48469,12 @@ export interface components {
              * @enum {string}
              */
             type: "iikoCard";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "iikoCard";
         });
         /**
          *
@@ -48301,6 +48502,12 @@ export interface components {
          * @description Payment with Card loyalty system.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.LoyaltyCardPayment": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"], "paymentTypeKind"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            paymentTypeKind: "LoyaltyCard";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48436,7 +48643,7 @@ export interface components {
              *     - should be used if a customer does not agree to take part in the store's loyalty programs or an aggregator (external system) does not provide customer details
              *     - customer details will NOT be added to the store's customer database and will be used ONLY to complete the current order
              */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion"] | null;
             /** @description Guest details. Not equal to the customer who makes an order. */
             guests?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Guests"] | null;
             /**
@@ -48476,17 +48683,20 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -48551,7 +48761,7 @@ export interface components {
             /** @description Whether payment item is processed by external payment system (made from outside). */
             isProcessedExternally?: boolean;
             /** @description Additional payment parameters. */
-            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
             /**
              * @description Whether the payment item is externally fiscalized.
              *
@@ -48561,6 +48771,7 @@ export interface components {
             /**
              * @deprecated
              * @description Whether the payment item is prepay. Unavailable for `paymentKindType.LoyaltyCard`.
+             *     Not supported for `paymentTypeKind.Credit`.
              *
              *      > Allowed from version `8.2.6`.
              */
@@ -48595,6 +48806,12 @@ export interface components {
              */
             positionId?: string | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Product";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48648,6 +48865,12 @@ export interface components {
              * @enum {string}
              */
             type: "regular";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "regular";
         });
         /**
          *
@@ -48673,6 +48896,12 @@ export interface components {
             /** @description Order item positions. */
             selectivePositions?: string[] | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Discount"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "RMS";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -48729,7 +48958,7 @@ export interface components {
             /** @description Whether payment item is processed by external payment system (made from outside). */
             isProcessedExternally?: boolean;
             /** @description Additional payment parameters. */
-            paymentAdditionalData?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalData"], "type"> | null;
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
             /**
              * @description Whether the payment item is externally fiscalized.
              *
@@ -48739,6 +48968,7 @@ export interface components {
             /**
              * @deprecated
              * @description Whether the payment item is prepay. Unavailable for `paymentKindType.LoyaltyCard`.
+             *     Not supported for `paymentTypeKind.Credit`.
              *
              *      > Allowed from version `8.2.6`.
              */
@@ -49227,16 +49457,27 @@ export interface components {
              * @description Order ID.
              */
             orderId: string;
-            /** @description Order payments. */
-            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
+            /**
+             * @description Order payments.
+             *     > Payment item type Credit is supported for delivery orders only.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
+             */
+            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][];
             /** @description Order tips. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
         };
         /**
          *
          * @description Change order's delivery type to DeliveryByClient.
          */
         "iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeDeliveryByClient": Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequest"], "newServiceType"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            newServiceType: "DeliveryByClient";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -49251,6 +49492,12 @@ export interface components {
             /** @description Address of delivery. */
             deliveryPoint: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.DeliveryPoint"];
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequest"], "newServiceType"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            newServiceType: "DeliveryByCourier";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -49441,6 +49688,12 @@ export interface components {
              * @enum {string}
              */
             type: "one-time";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "one-time";
         });
         /**
          *
@@ -49534,6 +49787,12 @@ export interface components {
             /** @description Modifier scheme. */
             template?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CompoundItemTemplate"] | null;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Compound";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -49802,7 +50061,7 @@ export interface components {
              */
             parentDeliveryId?: string | null;
             /** @description Delivery customer. */
-            customer?: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.Customer"], "type"> | null;
+            customer?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion"] | null;
             /** @description Delivery phone number. */
             phone: string;
             /** @description Extension delivery phone number. */
@@ -50019,7 +50278,7 @@ export interface components {
             /** @description Information about order guests. */
             guestsInfo: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.GuestsInfo"] | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion"][];
             /** @description Combo. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderCombo"][] | null;
             /** @description Payments. */
@@ -50295,6 +50554,8 @@ export interface components {
              *      > Allowed from version `7.7.6`.
              */
             isPrepay: boolean;
+            /** @description Additional payment parameters. Filled for payment type kind Credit. */
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
         };
         /**
          *
@@ -50414,6 +50675,12 @@ export interface components {
              * @enum {string}
              */
             type: "Product";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Product";
         });
         /**
          *
@@ -50474,6 +50741,12 @@ export interface components {
              * @enum {string}
              */
             type: "regular";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "regular";
         });
         /**
          *
@@ -50501,6 +50774,12 @@ export interface components {
              */
             cost: number;
         } & (Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"], "type"> & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "Service";
+        } & {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -50558,6 +50837,8 @@ export interface components {
              *      > Allowed from version `7.7.6`.
              */
             isPrepay: boolean;
+            /** @description Additional payment parameters. Filled for payment type kind Credit. */
+            paymentAdditionalData?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion"] | null;
         };
         /**
          *
@@ -51227,7 +51508,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of discounts/surcharges. */
-            discounts: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            discounts: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Discounts.DiscountCardTypeInfo, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51305,7 +51586,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of courier's locations. */
-            activeCourierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            activeCourierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.ActiveCourierLocation, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51409,7 +51690,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of drivers' coordinates broken down by organizations. */
-            courierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            courierLocations: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.CourierLocations, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51523,7 +51804,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of drivers. */
-            employees: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            employees: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.Employee, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -51536,7 +51817,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of drivers. */
-            employeesWithCheckRoles: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            employeesWithCheckRoles: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Employees.EmployeeWithCheckedRole, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -52472,6 +52753,235 @@ export interface components {
         };
         /**
          *
+         * @description Combo meal.
+         *     Consists of component groups, each group offers a choice of products.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Combo": {
+            /**
+             * Format: uuid
+             * @description Unique combo ID.
+             *     Unique within the combos[] array — each combo appears only once.
+             */
+            id: string;
+            /** @description Combo SKU. */
+            sku: string;
+            /**
+             * @description Pricing strategy.
+             *     BY_COMPONENT (default): price is composed from selected components.
+             *     FIXED: fixed combo price.
+             * @default null
+             */
+            priceStrategy: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.PriceStrategy"] | null;
+            /** @description Combo component groups (Burger, Drink, Fries, etc.). */
+            componentGroups: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentGroup"][] | null;
+            /**
+             * @description List of website tags.
+             * @default null
+             */
+            labels: string[] | null;
+            /**
+             * @description List of internal tags.
+             * @default null
+             */
+            tags: string[] | null;
+        };
+        /**
+         *
+         * @description Combo meal component group (e.g. "Burger", "Drink", "Fries").
+         *     Stored inline with original UUIDs for compatibility with external systems.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentGroup": {
+            /**
+             * Format: uuid
+             * @description Unique group ID (original UUID).
+             */
+            id: string;
+            /** @description Group name (e.g. "Drink"). */
+            name: string;
+            /**
+             * @description Whether the group is the main one (primary combo product).
+             *     The main group usually determines the combo name.
+             * @default false
+             */
+            isMainGroup: boolean;
+            /**
+             * @description Skip selection step in UI (auto-select the only/default product).
+             *     Used for mandatory components without choice.
+             * @default false
+             */
+            skipStep: boolean;
+            /**
+             * @description List of products available for selection in this group.
+             *     Contains combo-specific prices (different from retail prices).
+             * @default null
+             */
+            products: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentProduct"][] | null;
+        };
+        /**
+         *
+         * @description Product available for selection in a combo meal component group.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboComponentProduct": {
+            /**
+             * Format: uuid
+             * @description Reference to a product from the Menu.products[] catalog.
+             */
+            productId: string;
+            /**
+             * @description Product prices in combo for different sizes.
+             *     If absent or empty — the product is not available for sale in the combo.
+             *     CRITICAL: prices differ from retail by 8-39%.
+             */
+            sizePrices: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboSizePrice"][] | null;
+            /**
+             * @description List of modifier IDs that cannot be applied to this product in a combo.
+             * @default null
+             */
+            forbiddenModifiers: string[] | null;
+            /**
+             * Format: double
+             * @description Extra charge or discount for this product within the combo (in rubles).
+             *     Positive = extra charge, negative = discount.
+             *     Depends on PriceStrategy: always 0 for BY_COMPONENT.
+             * @default 0
+             */
+            priceModificationAmount: number;
+        };
+        /**
+         *
+         * @description Combo size with visualization info.
+         *     Used in Item.sizes[] for COMBO elements.
+         *     Contains data specific to placement in a group.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboSize": {
+            /**
+             * Format: uuid
+             * @description Combo size ID.
+             *     Corresponds to product size IDs (Product.sizePrices[].sizeId).
+             */
+            sizeId: string;
+            /** @description Size name. IMPORTANT: may be an empty string "" — this is a valid value. */
+            name: string;
+            /**
+             * @description Short name (e.g. "L").
+             * @default null
+             */
+            shortName: string | null;
+            /**
+             * @description Whether this size is hidden.
+             * @default false
+             */
+            isHidden: boolean;
+            /**
+             * @deprecated
+             * @description Button image URL.
+             * @default null
+             */
+            buttonImageUrl: string | null;
+            /**
+             * @description Combo size image (placement-specific). Replaces ButtonImageUrl.
+             * @default null
+             */
+            image: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Image"] | null;
+        };
+        /**
+         *
+         * @description Product price within a combo meal for a specific size combination.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ComboSizePrice": {
+            /**
+             * Format: uuid
+             * @description Combo size ID (from ComboSize.sizeId).
+             */
+            comboSizeId: string;
+            /**
+             * Format: uuid
+             * @description Product size ID (from Product.sizePrices[].sizeId).
+             *     Can be null for products without a size.
+             * @default null
+             */
+            productSizeId: string | null;
+            /**
+             * Format: double
+             * @description Product price in combo for this size combination.
+             *     Can be null — the product/size is not available for sale.
+             *     Can be 0 — the component is included in the combo at no extra charge.
+             *     This is NOT a retail price (8-39% lower).
+             * @default null
+             */
+            price: number | null;
+        };
+        /**
+         *
+         * @description Conformity confirmation of the product.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Conformity": {
+            /**
+             * @description Conformity confirmation status.
+             *     Known values: `not_required`, `certification` (certificates), `declaration` (declarations),
+             *     `certification_and_declaration` (both). New values may be added.
+             *     Always present in the block.
+             */
+            status: string;
+            /**
+             * @description Certificates of conformity. Never returned as an empty array.
+             *     Default: null. Omitted from the response when status is neither `certification` nor
+             *     `certification_and_declaration`, or there are no certificates.
+             * @default null
+             */
+            certificates: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ConformityDocument"][] | null;
+            /**
+             * @description Declarations of conformity. Never returned as an empty array.
+             *     Default: null. Omitted from the response when status is neither `declaration` nor
+             *     `certification_and_declaration`, or there are no declarations.
+             * @default null
+             */
+            declarations: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.ConformityDocument"][] | null;
+        };
+        /**
+         *
+         * @description Certificate or declaration of conformity.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.ConformityDocument": {
+            /**
+             * @description Document number.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            number: string | null;
+            /**
+             * @description Start of validity. Expected format: `YYYY-MM-DD`.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            validFrom: string | null;
+            /**
+             * @description End of validity. Expected format: `YYYY-MM-DD`.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            validTo: string | null;
+            /**
+             * @description Link to the document. Expected format: an `http://` or `https://` URL.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            link: string | null;
+            /**
+             * @description Manufacturer stated in the document.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            manufacturer: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Manufacturer"] | null;
+            /**
+             * @description Production site addresses. Never returned as an empty array.
+             *     Default: null. Omitted from the response when no addresses.
+             * @default null
+             */
+            productionAddresses: string[] | null;
+        };
+        /**
+         *
          * @description Customer tag group.
          */
         "iikoTransport.PublicApi.Contracts.NomenclatureV3.CustomerTagGroup": {
@@ -52502,6 +53012,28 @@ export interface components {
             customerTagGroupId: string;
             /** @description Set of selected tag IDs within the group. */
             selectedTagIds: string[];
+        };
+        /**
+         *
+         * @description Unified image object.
+         *     Replaces the deprecated buttonImageUrl field across all entities.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Image": {
+            /** @description Public URL of the image in the file storage. */
+            url: string;
+            /**
+             * @description SHA-1 hash of the image file bytes.
+             *     Used for detecting changes without re-downloading.
+             * @default null
+             */
+            hash: string | null;
+            /**
+             * Format: yyyy-MM-dd HH:mm:ss.fff
+             * @description Date and time of the last image update (UTC).
+             * @default null
+             * @example 2019-08-24 14:15:22.123
+             */
+            updatedAt: string | null;
         };
         /**
          *
@@ -52564,6 +53096,24 @@ export interface components {
              * @default null
              */
             menuItemId: string | null;
+            /**
+             * @description OKPD2 product classification code.
+             *     Expected format: `NN`, `NN.N`, `NN.NN`, `NN.NN.N`, `NN.NN.NN` or `NN.NN.NN.NNN`, e.g. `10.85.19.000`.
+             *     No value is substituted if the code is not filled in.
+             *     Not returned for combo items.
+             *     Default: null. Omitted from the response when the code is not filled in.
+             * @default null
+             */
+            okpd2Code: string | null;
+            /**
+             * @description Regulatory information about the item: state registration and conformity confirmation
+             *     (certificates and declarations), returned as entered by the user.
+             *     No values are substituted: absence means "not filled in", not "not required".
+             *     Not returned for combo items.
+             *     Default: null. Omitted from the response when nothing is filled in.
+             * @default null
+             */
+            legalRequirements: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.LegalRequirements"] | null;
         };
         /**
          *
@@ -52609,6 +53159,42 @@ export interface components {
              * @default null
              */
             items: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Item"][] | null;
+        };
+        /**
+         *
+         * @description Regulatory information about the item.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.LegalRequirements": {
+            /**
+             * @description State registration of the product.
+             *     Default: null. Omitted from the response when not specified.
+             * @default null
+             */
+            stateRegistration: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.StateRegistration"] | null;
+            /**
+             * @description Conformity confirmation of the product.
+             *     Default: null. Omitted from the response when not specified.
+             * @default null
+             */
+            conformity: components["schemas"]["iikoTransport.PublicApi.Contracts.NomenclatureV3.Conformity"] | null;
+        };
+        /**
+         *
+         * @description Manufacturer of the product.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.Manufacturer": {
+            /**
+             * @description Manufacturer name.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            name: string | null;
+            /**
+             * @description Manufacturer address.
+             *     Default: null. Omitted from the response when not filled in.
+             * @default null
+             */
+            location: string | null;
         };
         /**
          *
@@ -52983,6 +53569,12 @@ export interface components {
         };
         /**
          *
+         * @description Combo meal pricing strategy.
+         * @enum {string}
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.PriceStrategy": "BY_COMPONENT" | "FIXED";
+        /**
+         *
          * @description Product.
          */
         "iikoTransport.PublicApi.Contracts.NomenclatureV3.Product": {
@@ -53227,6 +53819,43 @@ export interface components {
         };
         /**
          *
+         * @description State registration of the product.
+         */
+        "iikoTransport.PublicApi.Contracts.NomenclatureV3.StateRegistration": {
+            /**
+             * @description State registration status.
+             *     Known values: `required` means the product is subject to state registration and registration
+             *     details are provided; `not_required` means it is not. New values may be added.
+             *     Always present in the block.
+             */
+            status: string;
+            /**
+             * @description State registration certificate number.
+             *     Default: null. Omitted from the response when status is not `required`.
+             * @default null
+             */
+            certificateNumber: string | null;
+            /**
+             * @description Link to the state registration certificate. Expected format: an `http://` or `https://` URL.
+             *     Default: null. Omitted from the response when status is not `required`.
+             * @default null
+             */
+            certificateLink: string | null;
+            /**
+             * @description Registration date. Expected format: `YYYY-MM-DD`.
+             *     Default: null. Omitted from the response when status is not `required`.
+             * @default null
+             */
+            registrationDate: string | null;
+            /**
+             * @description Product name as stated in the certificate.
+             *     Default: null. Omitted from the response when not filled in (optional even when status is `required`).
+             * @default null
+             */
+            productName: string | null;
+        };
+        /**
+         *
          * @description Tag.
          */
         "iikoTransport.PublicApi.Contracts.NomenclatureV3.TagItem": {
@@ -53370,6 +53999,12 @@ export interface components {
              * @enum {string}
              */
             messageType: "order_attention";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            messageType: "order_attention";
         });
         /**
          *
@@ -53394,7 +54029,7 @@ export interface components {
              */
             orderId: string;
             /** @description Order tips. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /**
              * Format: uuid
              * @description Organization ID.
@@ -53402,8 +54037,13 @@ export interface components {
              *     Can be obtained by `/api/1/organizations` operation.
              */
             organizationId: string;
-            /** @description Order payments. */
-            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
+            /**
+             * @description Order payments.
+             *     > Payment item type Credit is supported for delivery orders only.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
+             */
+            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][];
         };
         /**
          *
@@ -53499,7 +54139,7 @@ export interface components {
              */
             correlationId: string;
             /** @description List of order types. */
-            orderTypes: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            orderTypes: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.OrderTypes.OrderType, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -53599,6 +54239,12 @@ export interface components {
              * @enum {string}
              */
             responseType: "Extended";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            responseType: "Extended";
         });
         /**
          *
@@ -53636,7 +54282,7 @@ export interface components {
              *
              *     Can be obtained by `/api/1/organizations` operation.
              */
-            organizations: components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.OrganizationInfo"][];
+            organizations: components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.OrganizationInfoUnion"][];
         };
         /**
          *
@@ -53877,6 +54523,12 @@ export interface components {
              * @enum {string}
              */
             responseType: "Simple";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            responseType: "Simple";
         };
         /**
          *
@@ -54049,7 +54701,7 @@ export interface components {
              */
             organizationId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * @description Combos.
              *
@@ -54074,8 +54726,13 @@ export interface components {
              *     Can be obtained by `/api/1/organizations` operation.
              */
             organizationId: string;
-            /** @description Order payments. */
-            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][];
+            /**
+             * @description Order payments.
+             *     > Payment item type Credit is supported for delivery orders only.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
+             */
+            payments: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][];
         };
         /**
          *
@@ -54115,7 +54772,7 @@ export interface components {
              */
             reserveId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][] | null;
+            items?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][] | null;
             /** @description Combos. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
         };
@@ -54389,17 +55046,20 @@ export interface components {
              */
             menuId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -54428,7 +55088,7 @@ export interface components {
          */
         "iikoTransport.PublicApi.Contracts.Reserves.Reserve": {
             /** @description Client that placed the reserve. */
-            customer: Omit<components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.Customer"], "type">;
+            customer: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion"];
             /**
              * Format: int32
              * @description Estimated guests count.
@@ -54622,7 +55282,7 @@ export interface components {
             /** @description Information about order guests. */
             guestsInfo: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.GuestsInfo"] | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion"][];
             /** @description Combo. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderCombo"][] | null;
             /** @description Payments. */
@@ -54974,7 +55634,7 @@ export interface components {
              */
             terminalGroupId: string;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
         };
         /**
          *
@@ -55116,7 +55776,7 @@ export interface components {
              */
             correlationId: string;
             /** @description Set of out-of-stock lists */
-            terminalGroupStopLists: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            terminalGroupStopLists: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.StopLists.TerminalGroupStopList, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -55192,7 +55852,7 @@ export interface components {
              */
             organizationId: string;
             /** @description Order items (may include ProductOrderItem or CompoundOrderItem). */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /**
              * @description Combos.
              *
@@ -55448,17 +56108,20 @@ export interface components {
              */
             priceCategoryId?: string | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion"][];
             /** @description Combos included in order. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Combo"][] | null;
             /**
              * @description Order payment components.
+             *     > Payment item type Credit is supported for delivery orders only.
              *
              *      > Type **LoyaltyCard** allowed from version `7.1.5`.
+             *
+             *      > Type **Credit** allowed from version `9.2.6`.
              */
-            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.Payment"][] | null;
+            payments?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion"][] | null;
             /** @description Order tips components. */
-            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPayment"][] | null;
+            tips?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion"][] | null;
             /** @description The string key (marker) of the source (partner - api user) that created the order. Needed to limit the visibility of orders for external integration. */
             sourceKey?: string | null;
             /** @description Discounts/surcharges. */
@@ -55603,7 +56266,7 @@ export interface components {
             /** @description Information about order guests. */
             guestsInfo: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.GuestsInfo"] | null;
             /** @description Order items. */
-            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItem"][];
+            items: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion"][];
             /** @description Combo. */
             combos?: components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderCombo"][] | null;
             /** @description Payments. */
@@ -55873,13 +56536,13 @@ export interface components {
              */
             correlationId: string;
             /** @description List of terminal groups broken down by organizations. */
-            terminalGroups: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            terminalGroups: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
             /**
              * @description Terminal groups are in sleep mode because they are not active.
              *
              *     Can be awakened by `/api/1/terminal_groups/awake` operation.
              */
-            terminalGroupsInSleep: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.3.2, Culture=neutral, PublicKeyToken=null]]"][];
+            terminalGroupsInSleep: components["schemas"]["iikoTransport.PublicApi.Contracts.Common.RmsItemsResponseWrapper`1[[iikoTransport.PublicApi.Contracts.Terminals.TerminalGroup, iikoTransport.PublicApi.Contracts, Version=9.9.4.2, Culture=neutral, PublicKeyToken=null]]"][];
         };
         /**
          *
@@ -55927,8 +56590,9 @@ export interface components {
             /**
              * @description Event type.
              * @example DeliveryOrderError
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "DeliveryOrderError";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -55958,8 +56622,9 @@ export interface components {
             /**
              * @description Event type.
              * @example DeliveryOrderUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "DeliveryOrderUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56021,8 +56686,9 @@ export interface components {
             /**
              * @description Event type.
              * @example PersonalShift
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "PersonalShift";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56052,8 +56718,9 @@ export interface components {
             /**
              * @description Event type.
              * @example ReserveError
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "ReserveError";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56083,8 +56750,9 @@ export interface components {
             /**
              * @description Event type.
              * @example ReserveUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "ReserveUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56114,8 +56782,9 @@ export interface components {
             /**
              * @description Event type.
              * @example StopListUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "StopListUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56145,8 +56814,9 @@ export interface components {
             /**
              * @description Event type.
              * @example TableOrderError
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "TableOrderError";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -56176,8 +56846,9 @@ export interface components {
             /**
              * @description Event type.
              * @example TableOrderUpdate
+             * @enum {string}
              */
-            eventType?: Record<string, never>;
+            eventType?: "TableOrderUpdate";
             /**
              * Format: yyyy-MM-dd HH:mm:ss.fff
              * @description Event date and time (UTC).
@@ -57702,8 +58373,11 @@ export interface components {
         "internal_document_assembly_chart_v3.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57769,8 +58443,11 @@ export interface components {
         "internal_document_nomenclature_group_v1.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57780,8 +58457,11 @@ export interface components {
         "internal_document_nomenclature_group_v2.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57791,8 +58471,11 @@ export interface components {
         "internal_document_nomenclature_product_v1.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57802,8 +58485,11 @@ export interface components {
         "internal_document_nomenclature_product_v2.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57813,8 +58499,11 @@ export interface components {
         "internal_document_product_scale.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: string;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57987,8 +58676,11 @@ export interface components {
         "internal_entities_alcohol_class.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -57998,8 +58690,11 @@ export interface components {
         "internal_entities_allergen_group.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58009,8 +58704,11 @@ export interface components {
         "internal_entities_amount_unit.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58020,8 +58718,11 @@ export interface components {
         "internal_entities_container.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58031,8 +58732,11 @@ export interface components {
         "internal_entities_custom_category.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58042,8 +58746,11 @@ export interface components {
         "internal_entities_discount_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58053,8 +58760,11 @@ export interface components {
         "internal_entities_menu_section.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58064,8 +58774,11 @@ export interface components {
         "internal_entities_modifier_schema.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58075,8 +58788,11 @@ export interface components {
         "internal_entities_nutrition_component.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58086,8 +58802,11 @@ export interface components {
         "internal_entities_pay_in_out_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58097,8 +58816,11 @@ export interface components {
         "internal_entities_place_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58108,8 +58830,11 @@ export interface components {
         "internal_entities_producer.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58119,8 +58844,11 @@ export interface components {
         "internal_entities_product_size.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58130,8 +58858,11 @@ export interface components {
         "internal_entities_product_tag.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58141,8 +58872,11 @@ export interface components {
         "internal_entities_schedule_type.Filter": {
             /** @description Field name for filtering */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value in list — uses values[]), "nin" (value not in list — uses values[]), "like" (case-insensitive substring), "blank" (null or empty string), "notblank" (not null and not empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multi-value filtering (used with "in", "nin") */
@@ -58380,8 +59114,11 @@ export interface components {
         "internal_finance_accounts.Filter": {
             /** @description Field name to filter by */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multiple filtering (used with "in", "nin") */
@@ -58528,8 +59265,11 @@ export interface components {
         "internal_finance_cashflowcategories.Filter": {
             /** @description Field name to filter by */
             field?: string;
-            /** @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string) */
-            op?: string;
+            /**
+             * @description Comparison operator: "eq" (equal), "ne" (not equal), "gt" (greater than), "gte" (greater than or equal), "lt" (less than), "lte" (less than or equal), "in" (value is in the list - uses values[]), "nin" (value is not in the list - uses values[]), "like" (substring search, case-insensitive), "blank" (null or empty string), "notblank" (neither null nor empty string)
+             * @enum {string}
+             */
+            op?: "eq" | "ne" | "gt" | "gte" | "lt" | "lte" | "in" | "nin" | "like" | "blank" | "notblank";
             /** @description Scalar value for filtering (used with eq, ne, gt, gte, lt, lte, like) */
             value?: unknown;
             /** @description Array of values for multiple filtering (used with "in", "nin") */
@@ -59650,7 +60390,7 @@ export interface components {
              * @description Default amount
              * @default 0
              */
-            byDefault: Record<string, never>;
+            byDefault: number;
             /** @default false */
             hideIfDefaultQuantity: boolean;
         };
@@ -59673,7 +60413,7 @@ export interface components {
             /** @default false */
             hideIfDefaultQuantity: boolean;
             /** @description Default amount */
-            defaultQuantity: Record<string, never>;
+            defaultQuantity: number;
         };
         /**  */
         ModifierSchema: {
@@ -62894,14 +63634,17 @@ export interface components {
              * @description Organization IDs.
              *     Can be obtained by `/api/1/organizations` operation.
              */
-            organizationIds: Record<string, never>;
+            organizationIds: string[];
             /**
              * @description Price category id.
              *     Can be obtained by `api/2/menu` operation.
              */
             priceCategoryId?: string | null;
-            /** @description Version of the result data model. */
-            version?: Record<string, never> | null;
+            /**
+             * Format: int32
+             * @description Version of the result data model.
+             */
+            version?: number | null;
             /** @description Language of the external menu. */
             language?: string | null;
             /**
@@ -62910,8 +63653,11 @@ export interface components {
              * @default false
              */
             asyncMode: boolean;
-            /** @description Start revision. */
-            startRevision?: Record<string, never> | null;
+            /**
+             * Format: int64
+             * @description Start revision.
+             */
+            startRevision?: number | null;
         };
         /**  */
         ReturnedInvoiceCreateItem: {
@@ -64691,6 +65437,20 @@ export interface components {
             /** @description Write-off storage identifier (GUID) */
             storageFrom: string;
         };
+        "iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoRequestUnion": components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByPhoneRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByCardTrackRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByCardNumberRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByEmailRequest"] | components["schemas"]["iikoNet.Service.Contracts.Api.iikoTransport.Customer.GetCustomerInfoByIdRequest"];
+        "iikoTransport.PublicApi.Contracts.Commands.GetCommandStatusResponseUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.InProgressCommandStatus"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.SuccessCommandStatus"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Commands.ErrorCommandStatus"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Common.PaymentAdditionalDataUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.LoyaltyCardPaymentAdditionalData"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.CardPaymentAdditionalData"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.ExternalPaymentAdditionalData"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Common.CreditPaymentAdditionalData"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressLegacy"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AddressCity"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CustomerUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.RegularCustomer"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.AnonymousCustomer"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.DiscountUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.RmsDiscount"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.IikoCardDiscount"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.OrderItemUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ProductOrderItem"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CompoundOrderItem"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.PaymentUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CashPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CardPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.LoyaltyCardPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ExternalPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CreditPayment"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.TipsPaymentUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CashTipsPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.CardTipsPayment"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.CreateOrder.ExternalTipsPayment"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeRequestUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeDeliveryByCourier"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Request.UpdateOrder.ChangeServiceTypeDeliveryByClient"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CustomerUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.RegularCustomer"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.AnonymousCustomer"];
+        "iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.OrderItemUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.ProductOrderItem"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.CompoundOrderItem"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Deliveries.Response.Order.ServiceOrderItem"];
+        "iikoTransport.PublicApi.Contracts.Notifications.SendNotificationRequestUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Notifications.OrderAttentionNotificationRequest"];
+        "iikoTransport.PublicApi.Contracts.Organizations.OrganizationInfoUnion": components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.SimpleOrganizationInfo"] | components["schemas"]["iikoTransport.PublicApi.Contracts.Organizations.ExtendedOrganizationInfo"];
     };
     responses: never;
     parameters: never;

@@ -4,22 +4,54 @@
 
 ```bash
 pnpm install
+pnpm spec:build
 pnpm typecheck && pnpm lint && pnpm test
+pnpm build
 ```
 
 ## Before opening a pull request
 
-- `pnpm format` and `pnpm lint` must be clean.
-- `pnpm test` must stay above the 85% coverage thresholds.
-- Never edit `src/generated/` by hand. Run `pnpm iiko:sync` instead.
+- `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test` and `pnpm build` must be clean.
+- Never edit `src/generated/`, `src/transport/generated/` or `src/office/generated/` by hand. Run `pnpm spec:build` instead.
+- Add or rename public methods in `scripts/names/transport.json` or `scripts/names/office.json`, then regenerate. The generator fails on collisions, stale entries and unnamed active operations.
+- The public API is frozen in `tests/api.snapshot.txt`. Update it only with `pnpm exec vitest run tests/api.test.ts -u` and review the diff; a removed or renamed name is a breaking change.
 - Add a Changeset (`pnpm changeset`) for anything that changes published behaviour.
 - Use Conventional Commits: `fix:` patch, `feat:` minor, `BREAKING CHANGE:` major.
 
-## Adding an API operation
+## Naming
 
-1. Confirm the operation in the live spec: `pnpm iiko:sync`.
-2. Add the method to the matching resource in `src/resources/`, typed from the generated `paths`.
-3. Add a test in `tests/` asserting method, path and body.
-4. Document parameters and that errors are returned, not thrown.
+- Transport: mutations are verb-first (`addCustomerCard`, `holdCustomerWallet`, `sendSms`); queries are noun-first (`customerInfo`, `customerCategories`, `customerTransactionsByDate`). Curate them in `scripts/names/transport.json`.
+- Office: `<domain>.<subresource>.<method>` (`inventory.incomingInvoice.create`); a version suffix is added only when a domain has several versions.
+- A renamed or removed published name is a breaking change; `tests/api.snapshot.txt` freezes the surface.
 
-Do not add endpoints "just in case" — every method needs a use case.
+## Agents
+
+Canonical role prompts live in `.agents/`. OpenCode definitions are in `opencode.jsonc`; Claude
+Code uses the wrappers in `.claude/agents/`, which point back to `.agents/`.
+
+## Updating the spec
+
+1. `pnpm spec:sync` downloads `spec/raw.json`, normalizes it and regenerates types, wrappers and the manifest.
+2. Check the generation diff and `src/generated/operations.ts`.
+3. If a new active operation is unnamed, the generator names the path and stops; add its public name to the matching naming table.
+4. `pnpm test` must pass; the spec-coverage test compares the generated list with `spec/raw.json`.
+5. Commit `spec/raw.json` together with the regenerated files.
+
+## Tests worth knowing
+
+- `tests/operations.test.ts` calls every active operation and checks method, path and body.
+- `tests/api.test.ts` freezes the export list; `tests/api.snapshot.txt` is the contract.
+- `tests/retry.test.ts` pins the 429-only policy; widening it is an ADR-level decision.
+- `tests/types.test.ts` checks unions, required fields and JSON 200/201 responses.
+- `pnpm live:check` (manual, needs real keys) runs read-only calls against production.
+
+## Release
+
+1. `pnpm changeset version` bumps `package.json` and the changelog.
+2. `pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && npm pack --dry-run`.
+3. Commit, tag `v<version>` and publish with `npm publish --access public` (or `pnpm publish`).
+   `prepublishOnly` rebuilds `dist`; push the tag afterwards.
+
+GitHub Actions is not used at the moment. The publish workflow and the nightly spec-sync job are
+removed; run `pnpm spec:sync` manually when the upstream document changes. When Actions is
+restored, bring back the workflows and configure npm trusted publishing.

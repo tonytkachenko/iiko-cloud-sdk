@@ -7,7 +7,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.ts"],
-      exclude: ["src/generated/**"],
+      exclude: ["src/generated/**", "src/transport/generated/**", "src/office/generated/**"],
       thresholds: {
         statements: 85,
         branches: 85,
