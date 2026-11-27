@@ -1,3 +1,4 @@
+import { commandsExtension } from "../extensions/commands.js";
 import type { createGeneratedTransport } from "./generated/index.js";
 
 type GeneratedTransport = ReturnType<typeof createGeneratedTransport>;
@@ -28,6 +29,10 @@ export function withHelpers(transport: GeneratedTransport) {
         );
         return organizations?.[0];
       },
+    },
+    commands: {
+      ...transport.commands,
+      ...commandsExtension(transport.commands.status),
     },
   };
 }

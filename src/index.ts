@@ -4,6 +4,10 @@ export type { IikoClientOptions } from "./core/config.js";
 export type { CallArgs, CallOptions, Path, RequestOf, ResponseOf } from "./core/types.js";
 export type { AttemptEvent } from "./core/transport.js";
 export type { Transport } from "./transport/index.js";
+export type { Office } from "./office/index.js";
+export type { CommandStatus, WaitOptions } from "./extensions/commands.js";
+
+export { fromIikoDateUtc, toIikoDateUtc } from "./core/dates.js";
 
 export {
   IikoError,
