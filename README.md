@@ -63,8 +63,8 @@ try {
 | Option | Default | Meaning |
 |---|---|---|
 | `appId`, `clientSecret`, `apiKey` | required | iiko app credentials and the organization API key |
-| `baseUrl` | `https://api-ru.iiko.services` | API host; a query string is rejected |
-| `timeoutSec` | `15` | Sent as the `Timeout` header; the client waits five seconds longer |
+| `baseUrl` | `https://api-ru.iiko.services` | HTTP(S) API host; a query string is rejected |
+| `timeoutSec` | `15` | Positive integer seconds, sent as the `Timeout` header; the client waits five seconds longer |
 | `retries` | `3` | Retries for HTTP 429 only |
 | `retryBaseMs` | `1000` | First backoff delay; doubled with jitter |
 | `fetch` | global `fetch` | Custom fetch for tests or proxies |
