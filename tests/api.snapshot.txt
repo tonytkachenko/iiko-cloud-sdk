@@ -80,6 +80,8 @@ type  DeliveriesUpdateOrderProblemParams
 type  DeliveriesUpdateOrderProblemResponse
 type  DeliveriesUpdateTrackingLinkParams
 type  DeliveriesUpdateTrackingLinkResponse
+type  DeliveryOrderErrorEvent
+type  DeliveryOrderUpdateEvent
 type  DictionariesAllowedDeliveryRestrictionsParams
 type  DictionariesAllowedDeliveryRestrictionsResponse
 type  DictionariesCancelCausesParams
@@ -613,6 +615,7 @@ type  OrganizationsListResponse
 type  OrganizationsSettingsParams
 type  OrganizationsSettingsResponse
 type  Path
+type  PersonalShiftEvent
 type  PlatformEventsListParams
 type  PlatformEventsListResponse
 type  PlatformEventsMetadataListParams
@@ -652,6 +655,8 @@ type  ReportingOlapPresetsGetResponse
 type  ReportingOlapPresetsListParams
 type  ReportingOlapPresetsListResponse
 type  RequestOf
+type  ReserveErrorEvent
+type  ReserveUpdateEvent
 type  ReservesAddItemsParams
 type  ReservesAddItemsResponse
 type  ReservesAddPaymentsParams
@@ -677,6 +682,7 @@ type  ReservesRestaurantSectionsWorkloadResponse
 type  ReservesStatusByIdParams
 type  ReservesStatusByIdResponse
 type  ResponseOf
+type  StopListUpdateEvent
 type  StopListsAddParams
 type  StopListsAddResponse
 type  StopListsCheckParams
@@ -687,6 +693,8 @@ type  StopListsListParams
 type  StopListsListResponse
 type  StopListsRemoveParams
 type  StopListsRemoveResponse
+type  TableOrderErrorEvent
+type  TableOrderUpdateEvent
 type  TableOrdersAddCustomerParams
 type  TableOrdersAddCustomerResponse
 type  TableOrdersAddItemsParams
@@ -724,7 +732,11 @@ type  TerminalsCashRegistersListResponse
 type  TerminalsListParams
 type  TerminalsListResponse
 type  Transport
+type  UnsupportedWebhookEvent
+type  UnsupportedWebhookEventType
 type  WaitOptions
+type  WebhookEvent
+type  WebhookEventType
 type  WebhooksSettingsParams
 type  WebhooksSettingsResponse
 type  WebhooksUpdateSettingsParams
@@ -738,6 +750,8 @@ value IikoRateLimitError
 value IikoServerError
 value IikoTimeoutError
 value IikoValidationError
+value UNSUPPORTED_WEBHOOK_EVENT_TYPES
+value WEBHOOK_EVENT_TYPES
 value createIikoClient
 value fromIikoDateUtc
 value toIikoDateUtc

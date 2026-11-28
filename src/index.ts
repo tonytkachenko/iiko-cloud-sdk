@@ -25,3 +25,5 @@ export type { ILogger } from "./logger.js";
 
 export type * from "./transport/generated/types.js";
 export type * from "./office/generated/types.js";
+export type * from "./webhooks/index.js";
+export { UNSUPPORTED_WEBHOOK_EVENT_TYPES, WEBHOOK_EVENT_TYPES } from "./webhooks/index.js";
