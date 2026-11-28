@@ -8,4 +8,5 @@ coverage/
 
 # generated spec artifacts
 spec/normalized.json
+spec/raw.json.tmp
 *.tgz
