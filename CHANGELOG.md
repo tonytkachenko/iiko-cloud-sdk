@@ -1,5 +1,44 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- a2c89cb: Handle `402 Payment Required` and `423 Locked` the way iiko documents, like `401`: map them to
+  `IikoAuthError`, invalidate the token, fetch a new one and replay the request once. A second
+  auth error propagates, and `403` still does not replay. See ADR-0005.
+- f7484e6: Add typed iikoCloud webhook events: the 8 payload types from `x-webhooks` plus
+  `UnsupportedWebhookEvent` for the three event names that the spec enum documents without a payload
+  schema.
+
+### Patch Changes
+
+- 5d1e458: Generated JSDoc now includes the minimum iiko RMS version when the spec documents one, so methods
+  such as `transport.dictionaries.tipsTypes` show that they require RMS 7.7.4 or newer.
+- e870b2c: `call()` now sends `{}` when a documented body is optional and the caller omits it, matching the
+  generated methods. Operations without a documented body still send nothing.
+- e445042: `IikoCommandError` now exposes the command's `exception` payload from `commands.status`, alongside
+  `reason`.
+- ac54524: `commands.wait` now polls every 2 seconds instead of 500 ms and waits 120 seconds instead of 30 by
+  default, matching iiko's recommended 2–5 s polling interval and the 1–2 minutes an order can spend
+  before it settles. Pass `intervalMs` or `timeoutMs` to override.
+- f49b7d3: `baseUrl` must now use `http:` or `https:`, and `timeoutSec` must be a positive integer both in the
+  client options and per call. A fractional timeout no longer produces a non-integer `Timeout`
+  header.
+- f91ef93: `reserves.create` and `tableOrders.create` now type `customer` as the documented union of a
+  `regular` and a `one-time` customer instead of `Omit<RegularCustomer, "type">`. Table order
+  responses expose `customer.type` again, and the delivery customer, address and payment unions stay
+  intact.
+- 46e1d6b: The nested error envelope's `errorCode` is now used as `IikoError.code` when the flat `error` and
+  `code` fields are absent. A response with only `errorCode`, `message` and `httpStatusCode` no
+  longer loses its machine-readable code.
+- ff2ef14: A per-call `timeoutSec` must now be a positive finite number, like the client option. Values such
+  as `0`, `NaN` or `Infinity` throw a `TypeError` before any request is sent instead of producing a
+  `Timeout: NaN` header and an immediately aborted request.
+- f49b7d3: A request body that cannot be serialized to JSON now throws a `TypeError` with the cause instead of
+  being reported as `IikoNetworkError`. Circular objects and `BigInt` values are caller errors, not
+  network failures.
+
 ## 0.4.1
 
 ### Patch Changes

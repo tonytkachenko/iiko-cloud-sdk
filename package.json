@@ -1,6 +1,6 @@
 {
   "name": "iiko-cloud-sdk",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Unofficial TypeScript SDK for the iikoCloud API: typed requests, JWT auth, retries and typed errors.",
   "type": "module",
   "license": "MIT",
