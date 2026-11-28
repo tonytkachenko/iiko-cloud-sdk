@@ -56,13 +56,16 @@ export function resolveConfig(options: IikoClientOptions): ResolvedConfig {
   } catch {
     throw new TypeError('iiko: option "baseUrl" must be a valid absolute URL');
   }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new TypeError('iiko: option "baseUrl" must use http or https');
+  }
   if (parsed.search) {
     throw new TypeError('iiko: option "baseUrl" must not contain a query string');
   }
 
   const timeoutSec = options.timeoutSec ?? DEFAULT_TIMEOUT_SEC;
-  if (!Number.isFinite(timeoutSec) || timeoutSec <= 0) {
-    throw new TypeError('iiko: option "timeoutSec" must be a positive number');
+  if (!Number.isInteger(timeoutSec) || timeoutSec <= 0) {
+    throw new TypeError('iiko: option "timeoutSec" must be a positive integer');
   }
 
   const retries = options.retries ?? DEFAULT_RETRIES;

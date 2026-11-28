@@ -40,8 +40,9 @@ describe("package", () => {
     expect(pkg.scripts.prepublishOnly).toContain("build");
   });
 
-  it("fails the spec download on an HTTP error", () => {
+  it("fails the spec download on an HTTP error and swaps the file atomically", () => {
     expect(pkg.scripts["spec:download"]).toContain("curl -fsSL");
+    expect(pkg.scripts["spec:download"]).toContain("mv spec/raw.json.tmp spec/raw.json");
   });
 });
 
@@ -57,6 +58,21 @@ describe("transport", () => {
     expect(call?.method).toBe("POST");
     expect(call?.path).toBe("/api/1/organizations");
     expect(call?.body).toEqual({});
+  });
+
+  it("reports an unserializable body as a TypeError", async () => {
+    const iiko = fakeIiko(() => organizations);
+    const client = makeClient(iiko.fetch);
+    const body: Record<string, unknown> = {};
+    body.self = body;
+
+    const error = await client.transport.organizations
+      .list(body as never)
+      .catch((caught: unknown) => caught);
+
+    expect(error).toBeInstanceOf(TypeError);
+    expect(error).toMatchObject({ message: "iiko: request body is not JSON-serializable" });
+    expect(iiko.api()).toHaveLength(0);
   });
 
   it("fetches a single organization by id", async () => {
@@ -153,7 +169,9 @@ describe("config", () => {
 
   it("rejects invalid numeric and URL options", () => {
     expect(() => createIikoClient({ ...valid, baseUrl: "not a url" })).toThrow(TypeError);
+    expect(() => createIikoClient({ ...valid, baseUrl: "ftp://proxy.test" })).toThrow(TypeError);
     expect(() => createIikoClient({ ...valid, timeoutSec: 0 })).toThrow(TypeError);
+    expect(() => createIikoClient({ ...valid, timeoutSec: 1.5 })).toThrow(TypeError);
     expect(() => createIikoClient({ ...valid, retries: -1 })).toThrow(TypeError);
     expect(() => createIikoClient({ ...valid, retries: 1.5 })).toThrow(TypeError);
     expect(() => createIikoClient({ ...valid, retryBaseMs: 0 })).toThrow(TypeError);

@@ -46,6 +46,15 @@ const parse = (text: string): unknown => {
   }
 };
 
+const serialize = (body: unknown): string | undefined => {
+  if (body === undefined) return undefined;
+  try {
+    return JSON.stringify(body);
+  } catch (error) {
+    throw new TypeError("iiko: request body is not JSON-serializable", { cause: error });
+  }
+};
+
 const correlationOf = (body: unknown): string | undefined => {
   if (body === null || typeof body !== "object") return undefined;
   const value = (body as { correlationId?: unknown }).correlationId;
@@ -73,8 +82,8 @@ export class Transport {
     // wrappers already default to {}, so the escape hatch must do the same.
     const body = rawBody === undefined && !NO_BODY_PATHS.has(path) ? {} : rawBody;
     const timeoutSec = options?.timeoutSec;
-    if (timeoutSec !== undefined && (!Number.isFinite(timeoutSec) || timeoutSec <= 0)) {
-      throw new TypeError('iiko: option "timeoutSec" must be a positive number');
+    if (timeoutSec !== undefined && (!Number.isInteger(timeoutSec) || timeoutSec <= 0)) {
+      throw new TypeError('iiko: option "timeoutSec" must be a positive integer');
     }
     for (let attempt = 0; ; attempt++) {
       try {
@@ -155,6 +164,7 @@ export class Transport {
     attempt: number,
     token?: string,
   ): Promise<unknown> {
+    const payload = serialize(body);
     const timeoutSec = options.timeoutSec ?? this.#config.timeoutSec;
     const controller = new AbortController();
     const caller = options.signal;
@@ -183,7 +193,7 @@ export class Transport {
       const response = await this.#fetch(`${this.#config.baseUrl}${path}`, {
         method: "POST",
         headers,
-        body: body === undefined ? undefined : JSON.stringify(body),
+        body: payload,
         signal: controller.signal,
       });
       event.status = response.status;

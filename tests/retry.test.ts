@@ -113,12 +113,12 @@ describe("timeouts and cancellation", () => {
   });
 
   it("rejects an invalid per-call timeout before sending", async () => {
-    for (const timeoutSec of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+    for (const timeoutSec of [0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY]) {
       const iiko = fakeIiko(() => organizations);
       const client = makeClient(iiko.fetch);
 
       await expect(client.transport.organizations.list({}, { timeoutSec })).rejects.toThrow(
-        'iiko: option "timeoutSec" must be a positive number',
+        'iiko: option "timeoutSec" must be a positive integer',
       );
       expect(iiko.calls).toHaveLength(0);
     }
