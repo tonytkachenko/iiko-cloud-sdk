@@ -33,7 +33,7 @@ Code uses the wrappers in `.claude/agents/`, which point back to `.agents/`.
 
 1. `pnpm spec:sync` downloads `spec/raw.json`, normalizes it and regenerates types, wrappers and the manifest.
 2. Check the generation diff and `src/generated/operations.ts`.
-3. If a new active operation is unnamed, the generator names the path and stops; add its public name to the matching naming table.
+3. If a new active operation is unnamed, the generator fails with the path and stops; add its public name to the matching naming table.
 4. `pnpm test` must pass; the spec-coverage test compares the generated list with `spec/raw.json`.
 5. Commit `spec/raw.json` together with the regenerated files.
 

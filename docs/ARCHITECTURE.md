@@ -52,6 +52,7 @@ Generated files are never edited by hand. They are excluded from lint, format an
 - [ADR-0001](adr/0001-merged-sdk.md): one package for Transport and Office.
 - [ADR-0002](adr/0002-retry-policy.md): only HTTP 429 is retried.
 - [ADR-0003](adr/0003-errors-and-results.md): typed errors are thrown, not returned.
+- [ADR-0004](adr/0004-declaration-size.md): one declaration file; service subpaths deferred.
 - [ADR-0005](adr/0005-auth-replay-402-423.md): 402/423 refresh the token and replay once, like 401.
 
 ## Known limits

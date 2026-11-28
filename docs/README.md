@@ -1,6 +1,6 @@
 # Documentation
 
-- [PLAN.md](PLAN.md) — delivery plan and fixed decisions.
+- [PLAN.md](PLAN.md) — historical delivery plan, kept for context.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — spec pipeline, runtime and generated code.
 - [adr/](adr/) — decisions that shaped the SDK:
   - [0001](adr/0001-merged-sdk.md) — one package for Transport and Office;
