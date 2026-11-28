@@ -50,6 +50,7 @@ export class IikoCommandError extends IikoError {
   constructor(
     correlationId: string,
     readonly reason?: string,
+    readonly exception?: unknown,
   ) {
     super(`iiko command ${correlationId} failed${reason ? `: ${reason}` : ""}`, { correlationId });
   }

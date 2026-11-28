@@ -104,8 +104,9 @@ describe("commands.wait", () => {
     await expect(result).resolves.toBeInstanceOf(IikoTimeoutError);
   });
 
-  it("throws IikoCommandError with the reason on state Error", async () => {
-    const iiko = fakeIiko(() => ({ state: "Error", errorReason: "Table is busy" }));
+  it("throws IikoCommandError with the reason and exception on state Error", async () => {
+    const exception = { message: "front rejected" };
+    const iiko = fakeIiko(() => ({ state: "Error", errorReason: "Table is busy", exception }));
     const client = makeClient(iiko.fetch);
 
     const error = await client.transport.commands
@@ -113,7 +114,11 @@ describe("commands.wait", () => {
       .catch((caught: unknown) => caught);
 
     expect(error).toBeInstanceOf(IikoCommandError);
-    expect(error).toMatchObject({ correlationId: "cmd-1", reason: "Table is busy" });
+    expect(error).toMatchObject({
+      correlationId: "cmd-1",
+      reason: "Table is busy",
+      exception,
+    });
   });
 
   it("throws IikoTimeoutError when the command never finishes", async () => {

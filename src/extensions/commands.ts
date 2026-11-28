@@ -44,7 +44,11 @@ export function commandsExtension(
         const current = await status(body, { signal });
         if (current.state === "Success") return current;
         if (current.state === "Error") {
-          throw new IikoCommandError(body.correlationId, current.errorReason ?? undefined);
+          throw new IikoCommandError(
+            body.correlationId,
+            current.errorReason ?? undefined,
+            current.exception,
+          );
         }
         if (Date.now() + intervalMs > deadline) {
           throw new IikoTimeoutError(
